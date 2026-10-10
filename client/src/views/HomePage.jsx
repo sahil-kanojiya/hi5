@@ -19,30 +19,32 @@ const HomePage = () => {
   return (
     <>
       <MainLayout>
-        <div className="mx-auto mt-[60px] flex w-full items-start justify-center gap-5 bg-gray-100 p-2 dark:bg-gray-900 sm:mt-[50px] sm:p-4 md:mt-[10px] md:pl-[70px] md:pt-[0px] lg:pl-[260px]">
+        <div className="mx-auto mt-[60px] flex w-full items-start justify-center gap-5 bg-background p-2 sm:mt-[50px] sm:p-4 md:mt-[10px] md:pl-[70px] md:pt-[0px] lg:pl-[260px]">
           <div className="flex w-full max-w-2xl flex-col items-center px-2 sm:px-3 lg:max-w-xl xl:px-4">
             <Stories />
 
             <CreatePost />
 
-            <div className="flex w-full max-w-xl rounded-lg bg-white shadow-md dark:bg-black">
+            <div className="mb-4 flex w-full max-w-xl rounded-xl border border-border bg-card shadow-sm">
               <div
-                className="relative flex flex-1 cursor-pointer justify-center rounded-lg p-3 hover:bg-gray-200 hover:dark:bg-gray-800"
+                className={`relative flex flex-1 cursor-pointer justify-center rounded-l-xl p-4 font-medium transition-colors hover:bg-muted ${feedType === 'FOR_YOU' ? 'text-foreground' : 'text-muted-foreground'}`}
                 onClick={forYouTabClickHandle}
               >
                 For You
                 {feedType === 'FOR_YOU' && (
-                  <div className="absolute bottom-0 h-1 w-10 rounded-full bg-gray-800 dark:bg-gray-200"></div>
+                  <div className="absolute bottom-0 h-1 w-12 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary),0.5)]"></div>
                 )}
               </div>
 
+              <div className="my-2 w-px bg-border"></div>
+
               <div
-                className="relative flex flex-1 cursor-pointer justify-center rounded-lg p-3 hover:bg-gray-200 hover:dark:bg-gray-800"
+                className={`relative flex flex-1 cursor-pointer justify-center rounded-r-xl p-4 font-medium transition-colors hover:bg-muted ${feedType === 'FOLLOWINGS' ? 'text-foreground' : 'text-muted-foreground'}`}
                 onClick={followingTabClickHandle}
               >
                 Following
                 {feedType === 'FOLLOWINGS' && (
-                  <div className="absolute bottom-0 h-1 w-10 rounded-full bg-gray-800 dark:bg-gray-200"></div>
+                  <div className="absolute bottom-0 h-1 w-12 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary),0.5)]"></div>
                 )}
               </div>
             </div>

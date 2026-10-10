@@ -11,8 +11,6 @@ const useForgotPassword = () => {
     if (step === 0) {
       setIsLoading(true);
       try {
-        console.log('Form Value email:', values.email);
-        console.log('Form Value username:', values.username);
         if (selectedTab === 'email') {
           const response = await forgotPassword({
             email: values.email.toLowerCase(),
@@ -35,7 +33,6 @@ const useForgotPassword = () => {
           setError(null);
         }
       } catch (err) {
-        console.log('Error ' + err);
         setError(err?.response?.data?.message || 'Something went wrong, please try again.');
       } finally {
         setIsLoading(false);
@@ -43,8 +40,6 @@ const useForgotPassword = () => {
     } else if (step === 1) {
       setIsLoading(true);
       try {
-        console.log('Form Value OTP:', values.otp);
-        console.log('Form Value username:', values.password);
         if (selectedTab === 'email') {
           const response = await forgotPasswordVerifyOTP(values.otp, {
             email: values.email.toLowerCase(),
@@ -69,7 +64,6 @@ const useForgotPassword = () => {
           setError(null);
         }
       } catch (err) {
-        console.log('Error ' + err);
         setError(err?.response?.data?.message || 'Something went wrong, please try again.');
       } finally {
         setIsLoading(false);

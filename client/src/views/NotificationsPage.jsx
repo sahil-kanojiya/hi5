@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom';
-import { Favorite, ChatBubble, PersonAdd, Email, Public, Notifications } from '@mui/icons-material';
+import {
+  Favorite,
+  ChatBubble,
+  PersonAdd,
+  Email,
+  Public,
+  Notifications,
+  DeleteOutline,
+} from '@mui/icons-material';
 import MainLayout from '../components/layout/MainLayout';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import axiosInstance from '../services/axios.config';
@@ -168,27 +176,27 @@ const NotificationsPage = () => {
       case 'LIKE_REEL':
       case 'LIKE_STORY':
       case 'LIKE_COMMENT':
-        return <Favorite className="text-red-500" />;
+        return <Favorite fontSize="small" className="text-red-500" />;
 
       case 'COMMENT_POST':
       case 'COMMENT_REEL':
-        return <ChatBubble className="text-blue-500" />;
+        return <ChatBubble fontSize="small" className="text-blue-500" />;
 
       case 'FOLLOW':
       case 'FOLLOW_REQUEST':
       case 'FOLLOW_REQUEST_ACCEPT':
-        return <PersonAdd className="text-green-500" />;
+        return <PersonAdd fontSize="small" className="text-green-500" />;
 
       case 'NETWORK_NEW_POST':
       case 'NETWORK_NEW_REEL':
       case 'NETWORK_NEW_STORY':
-        return <Public className="text-purple-500" />;
+        return <Public fontSize="small" className="text-purple-500" />;
 
       case 'MESSAGE':
-        return <Email className="text-yellow-500" />;
+        return <Email fontSize="small" className="text-yellow-500" />;
 
       default:
-        return <Notifications className="text-gray-500" />;
+        return <Notifications fontSize="small" className="text-primary" />;
     }
   };
 
@@ -198,176 +206,157 @@ const NotificationsPage = () => {
       case 'LIKE_REEL':
       case 'LIKE_STORY':
       case 'LIKE_COMMENT':
-        return `@${username} liked your ${type.replace('LIKE_', '').toLowerCase()}`;
+        return (
+          <span>
+            <span className="font-semibold text-foreground">@{username}</span> liked your{' '}
+            {type.replace('LIKE_', '').toLowerCase()}
+          </span>
+        );
 
       case 'COMMENT_POST':
       case 'COMMENT_REEL':
-        return `@${username} commented on your ${type.replace('COMMENT_', '').toLowerCase()}`;
+        return (
+          <span>
+            <span className="font-semibold text-foreground">@{username}</span> commented on your{' '}
+            {type.replace('COMMENT_', '').toLowerCase()}
+          </span>
+        );
 
       case 'FOLLOW':
-        return `@${username} started following you`;
+        return (
+          <span>
+            <span className="font-semibold text-foreground">@{username}</span> started following you
+          </span>
+        );
 
       case 'FOLLOW_REQUEST':
-        return `@${username} sent you a follow request`;
+        return (
+          <span>
+            <span className="font-semibold text-foreground">@{username}</span> sent you a follow
+            request
+          </span>
+        );
 
       case 'FOLLOW_REQUEST_ACCEPT':
-        return `@${username} accepted your follow request`;
+        return (
+          <span>
+            <span className="font-semibold text-foreground">@{username}</span> accepted your follow
+            request
+          </span>
+        );
 
       case 'NETWORK_NEW_POST':
       case 'NETWORK_NEW_REEL':
       case 'NETWORK_NEW_STORY':
-        return `@${username} posted a new ${type.replace('NETWORK_NEW_', '').toLowerCase()}`;
+        return (
+          <span>
+            <span className="font-semibold text-foreground">@{username}</span> posted a new{' '}
+            {type.replace('NETWORK_NEW_', '').toLowerCase()}
+          </span>
+        );
 
       default:
-        return 'You have a new notification';
+        return <span>You have a new notification</span>;
     }
   };
 
-  // const getLink = (type, relevantId, userId) => {
-  //   switch (type) {
-  //     case "LIKE_POST":
-  //     case "COMMENT_POST":
-  //     case "NETWORK_NEW_POST":
-  //       return (
-  //         <Link
-  //           to={`/share/post/${relevantId}`}
-  //           className="ml-auto text-gray-600 hover:text-gray-900 dark:hover:text-gray-100 dark:text-gray-500 text-xs sm:text-sm"
-  //         >
-  //           View
-  //         </Link>
-  //       );
-  //     case "LIKE_REEL":
-  //     case "COMMENT_REEL":
-  //     case "NETWORK_NEW_REEL":
-  //       return (
-  //         <Link
-  //           to={`/share/reel/${relevantId}`}
-  //           className="ml-auto text-gray-600 hover:text-gray-900 dark:hover:text-gray-100 dark:text-gray-500 text-xs sm:text-sm"
-  //         >
-  //           View
-  //         </Link>
-  //       );
-  //     case "LIKE_STORY":
-  //     case "LIKE_COMMENT":
-  //     case "FOLLOW":
-  //     case "FOLLOW_REQUEST":
-  //     case "FOLLOW_REQUEST_ACCEPT":
-  //     case "NETWORK_NEW_STORY":
-  //       return (
-  //         <Link
-  //           to={`/profile/${userId}`}
-  //           className="ml-auto text-gray-600 hover:text-gray-900 dark:hover:text-gray-100 dark:text-gray-500 text-xs sm:text-sm"
-  //         >
-  //           View
-  //         </Link>
-  //       );
-  //   }
-  // };
-
   return (
     <MainLayout>
-      <div className="mx-auto flex h-full w-full justify-center pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
-        <div className="flex w-full max-w-3xl justify-center">
-          <div className="my-0 flex w-full flex-col justify-center rounded-lg bg-white px-4 shadow-lg dark:bg-black md:my-4">
-            <div className="sticky top-0 z-0 rounded-md p-2 md:p-6">
+      <div className="mx-auto flex h-full w-full justify-center bg-background pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
+        <div className="flex w-full max-w-2xl justify-center">
+          <div className="my-0 flex w-full flex-col rounded-xl border-x border-border bg-card shadow-sm md:my-4 md:min-h-[auto] md:border-y">
+            <div className="sticky top-0 z-10 rounded-t-xl border-b border-border bg-card/80 p-4 backdrop-blur-md md:p-6">
               <div className="flex items-center justify-between">
-                <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                  Notifications
-                </p>
+                <p className="text-2xl font-bold tracking-tight text-foreground">Notifications</p>
                 <button
-                  className="text-md rounded-md bg-red-500 px-2 py-1 text-white transition hover:bg-red-600 sm:px-3 sm:py-2"
+                  className="flex items-center gap-1.5 rounded-lg bg-destructive/10 px-3 py-1.5 text-sm font-medium text-destructive transition hover:bg-destructive hover:text-destructive-foreground active:scale-95"
                   onClick={openDeleteModal}
                 >
-                  Remove All
+                  <DeleteOutline fontSize="small" />
+                  <span className="hidden sm:inline">Clear All</span>
                 </button>
               </div>
             </div>
-            <div className="h-1 rounded-lg bg-slate-200 dark:bg-slate-800 sm:mx-3"></div>
-            <div className="hide-scrollbar mb-10 mt-0 flex flex-1 flex-col space-y-3 overflow-y-auto pb-4 min-[450px]:p-4 sm:mb-3">
+
+            <div className="hide-scrollbar mb-10 flex flex-1 flex-col overflow-y-auto bg-card sm:mb-0">
               {!isLoading && notifications.length === 0 && (
-                <div className="flex flex-1 items-center justify-center">
-                  <p>No Notifications</p>
+                <div className="flex h-64 flex-col items-center justify-center gap-3 text-muted-foreground">
+                  <div className="rounded-full bg-muted p-4">
+                    <Notifications fontSize="large" />
+                  </div>
+                  <p className="font-medium">You&apos;re all caught up!</p>
+                  <p className="text-sm">No new notifications</p>
                 </div>
               )}
+
               {!isLoading && notifications.length > 0 && (
-                <>
+                <div className="divide-y divide-border">
                   {notifications.map((notification) => (
                     <div
                       key={notification?.id}
-                      className="flex flex-col items-start justify-between rounded-lg bg-white p-4 shadow-md transition-colors hover:bg-gray-200 dark:bg-black dark:shadow-gray-900 dark:hover:bg-gray-800 sm:flex-row sm:gap-4"
+                      className="group flex flex-col items-start justify-between p-4 transition-colors hover:bg-muted/50 sm:flex-row sm:items-center sm:gap-4"
                     >
-                      <div className="flex items-center gap-1 sm:gap-2">
+                      <div className="flex w-full items-start gap-3 sm:w-auto sm:gap-4">
                         <Link
                           to={`/profile/${notification?.userId}`}
-                          className="avatar h-10 w-10 overflow-hidden rounded-full sm:h-12 sm:w-12"
+                          className="relative h-12 w-12 shrink-0 rounded-full"
                         >
                           <img
                             src={notification.profilePictureUrl}
                             alt="Profile"
-                            className="h-full w-full rounded-full object-cover"
+                            className="h-full w-full rounded-full border border-border object-cover"
                           />
-                        </Link>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <p className="flex flex-col gap-2 text-sm font-semibold text-gray-900 dark:text-gray-100 sm:flex-row sm:text-base">
-                              <span className="flex items-center gap-2">
-                                {getIcon(notification.type)}
-                                {notification.fullname}
-                              </span>
-                              <span className="font-normal text-gray-600 dark:text-gray-400">
-                                {getMsg(notification.type, notification.username)}
-                              </span>
-                            </p>
-
-                            <p className="text-xs text-gray-500 sm:text-sm">
-                              <TimeAgo date={notification.createdAt} />
-                            </p>
+                          <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border border-border bg-card shadow-sm">
+                            {getIcon(notification.type)}
                           </div>
+                        </Link>
+
+                        <div className="flex flex-col pt-1">
+                          <p className="text-sm leading-snug text-foreground/90">
+                            {getMsg(notification.type, notification.username)}
+                          </p>
+                          <p className="mt-1 text-xs font-medium text-muted-foreground">
+                            <TimeAgo date={notification.createdAt} />
+                          </p>
                         </div>
                       </div>
-                      {notification.type === 'FOLLOW_REQUEST' ? (
-                        <div className="ml-auto flex gap-2">
+
+                      {notification.type === 'FOLLOW_REQUEST' && (
+                        <div className="ml-14 mt-3 flex gap-2 sm:ml-auto sm:mt-0">
                           <button
-                            className="rounded-md bg-green-500 px-4 py-2 text-sm text-white hover:bg-green-600 sm:text-base"
-                            onClick={() => {
-                              handleAllowClick(notification?.id);
-                            }}
+                            className="rounded-md bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+                            onClick={() => handleAllowClick(notification?.id)}
                           >
-                            Allow
+                            Accept
                           </button>
                           <button
-                            className="rounded-md bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-600 sm:text-base"
-                            onClick={() => {
-                              handleDenyClick(notification?.id);
-                            }}
+                            className="rounded-md border border-border bg-secondary px-4 py-1.5 text-sm font-medium text-secondary-foreground shadow-sm transition-colors hover:bg-muted"
+                            onClick={() => handleDenyClick(notification?.id)}
                           >
-                            Deny
+                            Decline
                           </button>
                         </div>
-                      ) : (
-                        // <>
-                        //   {getLink(
-                        //     notification.type,
-                        //     notification.relevantId,
-                        //     notification?.userId
-                        //   )}
-                        // </>
-                        <></>
                       )}
                     </div>
                   ))}
+
                   {!isLoading && error === null && (
-                    <div ref={loaderRef} className="flex h-11 items-center justify-center"></div>
+                    <div ref={loaderRef} className="flex h-12 items-center justify-center">
+                      {hasMore && (
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                      )}
+                    </div>
                   )}
+
                   {!isLoading && error !== null && (
                     <div
                       ref={loaderRef}
-                      className="flex h-16 items-center justify-center text-white"
+                      className="flex h-16 items-center justify-center text-sm text-destructive"
                     >
-                      Something error occured.
+                      Failed to load notifications.
                     </div>
                   )}
-                </>
+                </div>
               )}
             </div>
           </div>

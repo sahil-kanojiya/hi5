@@ -4,8 +4,8 @@ import Reels from '../components/reel/Reels';
 const ReelsPage = () => {
   return (
     <MainLayout>
-      <div className="flex items-center justify-center gap-5 md:pl-[70px] lg:pl-[260px]">
-        <div className="mr-auto flex w-full max-w-lg flex-col items-center justify-center gap-10 bg-white dark:bg-black">
+      <div className="flex min-h-screen items-center justify-center gap-5 bg-background md:pl-[70px] lg:pl-[260px]">
+        <div className="mx-auto flex w-full max-w-lg flex-col items-center justify-center gap-10">
           <Reels feedType="RANDOM" />
         </div>
       </div>

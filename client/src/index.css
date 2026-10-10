@@ -2,6 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 257 60% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 257 60% 90%;
+    --accent-foreground: 257 60% 40%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 257 60% 50%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 257 60% 60%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 257 60% 20%;
+    --accent-foreground: 257 60% 80%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 257 60% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply border border-white/20 bg-white/70 backdrop-blur-md dark:border-white/10 dark:bg-black/70;
+  }
+  .glass-card {
+    @apply border border-white/30 bg-white/40 shadow-xl backdrop-blur-lg dark:border-gray-700/50 dark:bg-gray-900/40;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent;
+  }
+}
+
 /* Lobster font */
 @font-face {
   font-family: 'Lobster';
@@ -11,54 +106,35 @@
 }
 
 /* Roboto fonts */
-
-/* Regular (400) */
-@font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-/* Bold (700) */
-@font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-
-/* Light (300) */
-@font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-/* Medium (500) */
-@font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/Roboto-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-/* Thin (100) */
 @font-face {
   font-family: 'Roboto';
   src: url('/fonts/Roboto-Thin.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
 }
-
-.hide-scrollbar {
-  overflow-x: auto; /* Enable horizontal scrolling */
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
 }
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
 }
 
 input[type='password']::-ms-reveal,
@@ -67,72 +143,3 @@ input[type='password']::-webkit-credentials-auto-fill-button,
 input[type='password']::-webkit-clear-button {
   display: none !important;
 }
-
-/* .invert {
-  filter: invert(1);
-} */
-
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
-:root {
-  --background-color-light: #ffffff;
-  --background-color-dark: #1a1a1a;
-  --text-color-light: #000000;
-  --text-color-dark: #ffffff;
-}
-
-[data-theme="light"] {
-  --background-color: var(--background-color-light);
-  --text-color: var(--text-color-light);
-}
-
-[data-theme="dark"] {
-  --background-color: var(--background-color-dark);
-  --text-color: var(--text-color-dark);
-}
-
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
-} */
-
-/* @font-face {
-  font-family: 'Agdasima';
-  src: url('/fonts/Agdasima/Agdasima-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Agdasima';
-  src: url('/fonts/Agdasima/Agdasima-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-} */
-
-/* @font-face {
-  font-family: "TechnoGrazer";
-  src: url("./fonts/TechnoGrazerRegular-DYdaW.ttf") format("truetype"),
-    url("./fonts/TechnoGrazerRegular-AR0mL.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Ramus";
-  src: url("/path/to/fonts/RamusBoldItalic-3zB16.ttf") format("truetype");
-  font-weight: bold;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "BebasNeue";
-  src: url("/src/assets/fonts/BebasNeue-Regular.ttf") format("truetype"),
-    url("/src/assets/fonts/BebasNeue-Regular.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-} */

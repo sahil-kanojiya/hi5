@@ -16,9 +16,6 @@ const useLogin = () => {
     if (step === 0) {
       setIsLoading(true);
       try {
-        console.log('Form Value email:', values.email);
-        console.log('Form Value username:', values.username);
-        console.log('Form Value password:', values.password);
         if (selectedTab == 'email') {
           const response = await login({
             email: values.email.toLowerCase(),
@@ -61,7 +58,6 @@ const useLogin = () => {
           setError(null);
         }
       } catch (err) {
-        console.log('Error ' + err);
         setError(err?.response?.data?.message || 'Something went wrong, please try again.');
       } finally {
         setIsLoading(false);
@@ -69,7 +65,6 @@ const useLogin = () => {
     } else if (step === 1) {
       setIsLoading(true);
       try {
-        console.log('Form Value OTP:', values.otp);
         const response = await loginVerifyOTP(values.otp, identificationToken);
 
         setToken(response.data.authToken);
@@ -83,7 +78,6 @@ const useLogin = () => {
 
         setError(null);
       } catch (err) {
-        console.log('Error ' + err);
         setError(err?.response?.data?.message || 'Something went wrong, please try again.');
 
         setStep(2);

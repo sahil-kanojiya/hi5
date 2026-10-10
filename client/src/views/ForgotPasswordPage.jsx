@@ -58,16 +58,21 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <section className="mx-auto flex min-h-screen flex-col items-center justify-center bg-gray-100 px-6 py-8 dark:bg-gray-900">
-      <div className="relative w-full max-w-md rounded-lg border-gray-300 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-black sm:p-8">
-        <div className="my-4 flex items-center justify-center text-center">
-          <a href="/">
-            <img className="h-16 w-auto" src={logo} alt="Hi5" />
-          </a>
+    <section className="relative mx-auto flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-8">
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/10 to-pink-500/20 dark:from-indigo-900/40 dark:via-purple-900/20 dark:to-pink-900/40" />
+      <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-primary/30 blur-3xl" />
+      <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-accent/30 blur-3xl" />
+
+      <div className="glass-card relative z-10 w-full max-w-md rounded-2xl p-8 sm:px-10">
+        <div className="mb-6 flex items-center justify-center text-center">
+          <Link to="/" className="group transition-transform hover:scale-105">
+            <img className="h-16 w-auto drop-shadow-md" src={logo} alt="Hi5" />
+          </Link>
         </div>
 
-        <h1 className="mb-4 text-center text-xl font-bold">
-          {step === validationSchemas.length ? 'Reset Your Password' : 'Forgot Password'}
+        <h1 className="text-gradient mb-8 text-center text-2xl font-bold tracking-tight">
+          {step === validationSchemas.length ? 'Reset Successful' : 'Reset Password'}
         </h1>
 
         <Formik
@@ -81,17 +86,17 @@ const ForgotPasswordPage = () => {
                 isLoading ? 'opacity-50' : 'opacity-100'
               }`}
             >
-              {/* Email/Username & Password Form Step */}
+              {/* Email/Username Form Step */}
               {step === 0 && (
                 <>
-                  <div className="mb-4 flex justify-center space-x-4">
+                  <div className="mb-6 flex justify-center space-x-2 rounded-lg bg-muted/50 p-1">
                     <button
                       type="reset"
                       disabled={isLoading}
-                      className={`p-2 text-sm font-medium transition-all duration-300 ${
+                      className={`flex-1 rounded-md p-2 text-sm font-medium transition-all duration-300 ${
                         selectedTab === 'email'
-                          ? 'border-b-2 border-blue-600 text-blue-600'
-                          : 'border-b-2 border-white text-gray-600 hover:border-gray-200'
+                          ? 'bg-background text-foreground shadow-sm'
+                          : 'text-muted-foreground hover:bg-muted/80'
                       }`}
                       onClick={() => setSelectedTab('email')}
                     >
@@ -100,10 +105,10 @@ const ForgotPasswordPage = () => {
                     <button
                       type="reset"
                       disabled={isLoading}
-                      className={`p-2 text-sm font-medium transition-all duration-300 ${
+                      className={`flex-1 rounded-md p-2 text-sm font-medium transition-all duration-300 ${
                         selectedTab === 'username'
-                          ? 'border-b-2 border-blue-600 text-blue-600'
-                          : 'border-b-2 border-white text-gray-600 hover:border-gray-200'
+                          ? 'bg-background text-foreground shadow-sm'
+                          : 'text-muted-foreground hover:bg-muted/80'
                       }`}
                       onClick={() => setSelectedTab('username')}
                     >
@@ -111,47 +116,47 @@ const ForgotPasswordPage = () => {
                     </button>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-5">
                     {selectedTab === 'email' && (
-                      <div>
+                      <div className="space-y-1.5">
                         <label
                           htmlFor="email"
-                          className="block text-sm font-medium text-gray-900 dark:text-white"
+                          className="block text-sm font-medium text-foreground"
                         >
-                          Your Email
+                          Email address
                         </label>
                         <Field
                           name="email"
                           type="email"
                           id="email"
                           placeholder="name@company.com"
-                          className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                          className="w-full rounded-lg border border-border bg-input/50 p-3 text-foreground transition-colors focus:border-primary focus:bg-background focus:outline-none focus:ring-1 focus:ring-primary"
                           disabled={isLoading}
                         />
                         {touched.email && errors.email && (
-                          <p className="ml-1 mt-2 text-sm text-red-700">{errors.email}</p>
+                          <p className="mt-1 text-xs text-destructive">{errors.email}</p>
                         )}
                       </div>
                     )}
 
                     {selectedTab === 'username' && (
-                      <div>
+                      <div className="space-y-1.5">
                         <label
                           htmlFor="username"
-                          className="block text-sm font-medium text-gray-900 dark:text-white"
+                          className="block text-sm font-medium text-foreground"
                         >
-                          Your Username
+                          Username
                         </label>
                         <Field
                           name="username"
                           type="text"
                           id="username"
                           placeholder="Enter your username"
-                          className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                          className="w-full rounded-lg border border-border bg-input/50 p-3 text-foreground transition-colors focus:border-primary focus:bg-background focus:outline-none focus:ring-1 focus:ring-primary"
                           disabled={isLoading}
                         />
                         {touched.username && errors.username && (
-                          <p className="ml-1 mt-2 text-sm text-red-700">{errors.username}</p>
+                          <p className="mt-1 text-xs text-destructive">{errors.username}</p>
                         )}
                       </div>
                     )}
@@ -161,94 +166,93 @@ const ForgotPasswordPage = () => {
 
               {/* OTP Form Step */}
               {step === 1 && (
-                <>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    A one-time password (OTP) has been sent to your email. Please enter the 6-digit
-                    code below to verify your email address.
-                  </p>
-                  <div>
-                    <label
-                      htmlFor="otp"
-                      className="block text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      OTP
+                <div className="space-y-5">
+                  <div className="rounded-lg border border-primary/20 bg-primary/10 p-4 text-sm text-foreground/80">
+                    A verification code has been sent to your email. Enter it below along with your
+                    new password.
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label htmlFor="otp" className="block text-sm font-medium text-foreground">
+                      Verification Code
                     </label>
                     <Field
                       name="otp"
                       type="text"
                       id="otp"
-                      placeholder="Choose a username"
-                      className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                      placeholder="000000"
+                      className="w-full rounded-lg border border-border bg-input/50 p-3 text-center text-2xl tracking-widest text-foreground transition-colors focus:border-primary focus:bg-background focus:outline-none focus:ring-1 focus:ring-primary"
                       disabled={isLoading}
                     />
                     {touched.otp && errors.otp && (
-                      <p className="ml-1 mt-2 text-sm text-red-700">{errors.otp}</p>
+                      <p className="mt-1 text-center text-xs text-destructive">{errors.otp}</p>
                     )}
                   </div>
 
-                  <div>
-                    <label
-                      htmlFor="password"
-                      className="block text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Password
+                  <div className="space-y-1.5">
+                    <label htmlFor="password" className="block text-sm font-medium text-foreground">
+                      New Password
                     </label>
-                    <div className="mt-2 flex w-full items-center justify-between gap-2 rounded-lg border focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                    <div className="relative flex w-full items-center justify-between rounded-lg border border-border bg-input/50 transition-colors focus-within:border-primary focus-within:bg-background focus-within:ring-1 focus-within:ring-primary">
                       <Field
                         id="password"
                         name="password"
                         type={showPassword ? 'text' : 'password'}
                         placeholder="••••••••"
                         disabled={isLoading}
-                        className="w-full bg-transparent p-2 focus:outline-none"
+                        className="w-full bg-transparent p-3 focus:outline-none"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword((prev) => !prev)}
-                        className="p-2 text-blue-600 hover:text-blue-800 focus:outline-none"
+                        className="p-3 text-muted-foreground transition-colors hover:text-foreground focus:outline-none"
                         disabled={isLoading}
                         tabIndex={-1}
                       >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        {showPassword ? (
+                          <VisibilityOff fontSize="small" />
+                        ) : (
+                          <Visibility fontSize="small" />
+                        )}
                       </button>
                     </div>
                     {touched.password && errors.password && (
-                      <p className="ml-1 mt-2 text-sm text-red-700">{errors.password}</p>
+                      <p className="mt-1 text-xs text-destructive">{errors.password}</p>
                     )}
                   </div>
-                </>
-              )}
-
-              {/* Show error from backend if exists */}
-              {error && <div className="ml-1 text-xs text-red-500">{error}</div>}
-
-              {(step == 0 || step == 1) && (
-                <div className="mt-4 flex items-center justify-between">
-                  <button
-                    type="submit"
-                    className="w-full rounded-lg bg-blue-600 p-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-                    disabled={isLoading}
-                  >
-                    {step === 0 ? 'Continue' : 'Verify'}
-                  </button>
                 </div>
               )}
 
+              {/* Show error from backend if exists */}
+              {error && (
+                <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
+                  {error}
+                </div>
+              )}
+
+              {(step == 0 || step == 1) && (
+                <button
+                  type="submit"
+                  className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-primary/25 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:scale-[0.98]"
+                  disabled={isLoading}
+                >
+                  {step === 0 ? 'Send Reset Link' : 'Reset Password'}
+                </button>
+              )}
+
               {step == 2 && (
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                  Your Password reset successful
-                </p>
+                <div className="rounded-lg border border-green-500/20 bg-green-500/10 p-4 text-center text-sm font-medium text-green-600 dark:text-green-400">
+                  Your password was successfully reset. You can now login with your new password.
+                </div>
               )}
 
               {(step == 0 || step == 2) && (
-                <>
-                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                    Back to
-                    <Link to="/login" className="pl-2 font-medium text-blue-600 hover:underline">
-                      Login
-                    </Link>
-                  </p>
-                </>
+                <div className="mt-4 text-center text-sm text-muted-foreground">
+                  Back to{' '}
+                  <Link to="/login" className="font-semibold text-primary hover:underline">
+                    Login
+                  </Link>
+                </div>
               )}
             </Form>
           )}

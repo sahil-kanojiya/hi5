@@ -2,7 +2,7 @@ import MainLayout from '../components/layout/MainLayout';
 import { useEffect, useState } from 'react';
 import { createModeratorAccount, getModerators } from '../services/api';
 import ModeratorSearchCard from '../components/moderation/moderatorControl/ModeratorSearchCard';
-import { PersonAdd } from '@mui/icons-material';
+import { PersonAdd, Search } from '@mui/icons-material';
 import NewModeratorCreateModal from '../components/moderation/moderatorControl/NewModeratorCreateModal';
 import * as Yup from 'yup';
 
@@ -87,30 +87,35 @@ const ModeratorControlPage = () => {
 
   return (
     <MainLayout>
-      <div className="mx-auto flex h-full w-full justify-center pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
-        <div className="flex w-full max-w-3xl justify-center">
-          <div className="my-0 flex w-full flex-col justify-center rounded-lg bg-white px-4 shadow-lg dark:bg-black md:my-4">
-            <div className="sticky top-0 w-full p-2 md:p-6">
+      <div className="mx-auto flex h-full w-full justify-center bg-background pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
+        <div className="flex w-full max-w-2xl justify-center">
+          <div className="my-0 flex w-full flex-col rounded-xl border-x border-border bg-card shadow-sm md:my-4 md:min-h-[auto] md:border-y">
+            <div className="sticky top-0 z-10 w-full rounded-t-xl border-b border-border bg-card/80 p-4 backdrop-blur-md md:p-6">
               <div className="flex items-center justify-between">
-                <h1 className="hidden text-xl font-semibold md:block lg:text-2xl">Moderators</h1>
+                <h1 className="hidden text-xl font-bold tracking-tight text-foreground md:block lg:text-2xl">
+                  Moderators
+                </h1>
                 <button
-                  className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 font-medium text-white transition hover:bg-blue-600"
+                  className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90"
                   onClick={openCreateNewModeratorModal}
                 >
-                  <PersonAdd />
+                  <PersonAdd fontSize="small" />
                   <span className="hidden sm:inline">New Moderator</span>
                 </button>
               </div>
             </div>
-            <div className="mx-3 h-1 rounded-lg bg-slate-200 dark:bg-slate-800"></div>
-            <div className="hide-scrollbar mb-10 mt-0 flex flex-1 flex-col space-y-4 overflow-y-auto pb-4 min-[450px]:p-4 sm:mb-3">
+
+            <div className="hide-scrollbar mb-10 flex flex-1 flex-col overflow-y-auto bg-card sm:mb-0">
               {!isLoading && users.length === 0 && (
-                <div className="flex flex-1 items-center justify-center">
-                  <p className="text-center">No Moderators Found</p>
+                <div className="flex h-64 flex-col items-center justify-center gap-3 text-muted-foreground">
+                  <div className="rounded-full bg-muted p-4">
+                    <Search fontSize="large" />
+                  </div>
+                  <p className="font-medium text-foreground">No Moderators Found</p>
                 </div>
               )}
               {users.length > 0 && (
-                <>
+                <div className="flex flex-col gap-2 p-2 sm:p-4">
                   {users.map((user, index) => (
                     <ModeratorSearchCard
                       key={user.id}
@@ -119,14 +124,19 @@ const ModeratorControlPage = () => {
                       removeModerator={removeModerator}
                     />
                   ))}
-                </>
-              )}
-              {isLoading && users.length === 0 && (
-                <div className="flex flex-col justify-center">
-                  <p className="text-center">Loading...</p>
                 </div>
               )}
-              {!isLoading && error && <p className="my-4 text-center text-red-500">{error}</p>}
+              {isLoading && users.length === 0 && (
+                <div className="flex h-32 flex-col items-center justify-center gap-3">
+                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                  <p className="text-sm text-muted-foreground">Loading moderators...</p>
+                </div>
+              )}
+              {!isLoading && error && (
+                <div className="m-4 rounded-md border border-destructive/20 bg-destructive/10 p-4 text-center text-sm font-medium text-destructive">
+                  {error}
+                </div>
+              )}
             </div>
           </div>
         </div>

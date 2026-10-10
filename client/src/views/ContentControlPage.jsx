@@ -18,46 +18,44 @@ const ContentControlPage = () => {
 
   return (
     <MainLayout>
-      <div className="mx-auto flex h-full w-full justify-center pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
-        <div className="flex w-full max-w-3xl justify-center">
-          <div className="my-0 flex w-full flex-col justify-center rounded-lg bg-white px-4 shadow-lg dark:bg-black md:my-4">
-            <div className="sticky top-0 w-full p-2 md:p-2">
-              <div className="flex w-full rounded-lg bg-white shadow-md dark:bg-black">
-                <div
-                  className="relative flex flex-1 cursor-pointer justify-center rounded-lg p-3 hover:bg-gray-200 hover:dark:bg-gray-800"
+      <div className="mx-auto flex h-full w-full justify-center bg-background pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
+        <div className="flex w-full max-w-2xl justify-center">
+          <div className="my-0 flex w-full flex-col rounded-xl border-x border-border bg-card shadow-sm md:my-4 md:min-h-[auto] md:border-y">
+            <div className="sticky top-0 z-10 w-full rounded-t-xl border-b border-border bg-card/80 p-2 backdrop-blur-md">
+              <div className="flex w-full rounded-lg bg-transparent">
+                <button
+                  className={`relative flex flex-1 items-center justify-center rounded-lg p-3 text-sm font-medium transition-colors hover:bg-muted ${feedType === 'POST' ? 'text-foreground' : 'text-muted-foreground'}`}
                   onClick={postTabClickHandle}
                 >
-                  Post
+                  Posts
                   {feedType === 'POST' && (
-                    <div className="absolute bottom-0 h-1 w-10 rounded-full bg-gray-800 dark:bg-gray-200"></div>
+                    <div className="absolute bottom-0 h-1 w-12 rounded-full bg-primary"></div>
                   )}
-                </div>
+                </button>
 
-                <div
-                  className="relative flex flex-1 cursor-pointer justify-center rounded-lg p-3 hover:bg-gray-200 hover:dark:bg-gray-800"
+                <button
+                  className={`relative flex flex-1 items-center justify-center rounded-lg p-3 text-sm font-medium transition-colors hover:bg-muted ${feedType === 'REEL' ? 'text-foreground' : 'text-muted-foreground'}`}
                   onClick={reelTabClickHandle}
                 >
                   Reels
                   {feedType === 'REEL' && (
-                    <div className="absolute bottom-0 h-1 w-10 rounded-full bg-gray-800 dark:bg-gray-200"></div>
+                    <div className="absolute bottom-0 h-1 w-12 rounded-full bg-primary"></div>
                   )}
-                </div>
+                </button>
 
-                <div
-                  className="relative flex flex-1 cursor-pointer justify-center rounded-lg p-3 hover:bg-gray-200 hover:dark:bg-gray-800"
+                <button
+                  className={`relative flex flex-1 items-center justify-center rounded-lg p-3 text-sm font-medium transition-colors hover:bg-muted ${feedType === 'COMMENT' ? 'text-foreground' : 'text-muted-foreground'}`}
                   onClick={commentTabClickHandle}
                 >
                   Comments
                   {feedType === 'COMMENT' && (
-                    <div className="absolute bottom-0 h-1 w-10 rounded-full bg-gray-800 dark:bg-gray-200"></div>
+                    <div className="absolute bottom-0 h-1 w-12 rounded-full bg-primary"></div>
                   )}
-                </div>
+                </button>
               </div>
             </div>
 
-            <div className="h-1 rounded-lg bg-slate-200 dark:bg-slate-800"></div>
-
-            <div className="hide-scrollbar mb-2 flex flex-1 flex-col items-center space-y-1 overflow-y-auto rounded-b-lg">
+            <div className="hide-scrollbar mb-2 flex flex-1 flex-col items-center space-y-1 overflow-y-auto rounded-b-xl bg-card">
               {feedType === 'POST' && <PostModeration />}
               {feedType === 'REEL' && <ReelModeration />}
               {feedType === 'COMMENT' && <CommentModeration />}

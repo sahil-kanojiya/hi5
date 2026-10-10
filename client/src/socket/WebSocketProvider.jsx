@@ -6,7 +6,6 @@ import WebSocketService from './WebSocketService';
 const WebSocketContext = createContext(null);
 
 const WebSocketProvider = ({ children }) => {
-  console.log('WebSocketProvider');
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isInitializing = useSelector((state) => state.auth.isInitializing);
@@ -16,13 +15,11 @@ const WebSocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (isAuthenticated && !isInitializing && userId) {
-      console.log('Connecting WebSocket...');
       clientRef.current = WebSocketService;
       clientRef.current.connect(userId, () => {
         setIsConnected(true);
       });
       return () => {
-        console.log('Disconnecting WebSocket...');
         clientRef.current.disconnect();
         setIsConnected(false);
       };

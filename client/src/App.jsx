@@ -5,7 +5,7 @@ const App = () => {
 
   return (
     <>
-      <div className="bg-gray-100 font-roboto text-base text-black dark:bg-gray-900 dark:text-white">
+      <div className="min-h-screen bg-background font-roboto text-base text-foreground">
         <RoutesConfig />
       </div>
     </>

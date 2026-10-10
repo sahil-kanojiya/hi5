@@ -21,19 +21,27 @@ const BanPage = () => {
   }, []);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-red-50">
-      <div className="max-w-md rounded-2xl bg-white p-8 text-center shadow-lg">
-        <Block className="mb-4 text-red-500" style={{ fontSize: 48 }} />
-        <h1 className="mb-2 text-3xl font-semibold text-red-600">Account Banned</h1>
-        <p className="mb-4 text-gray-700">
-          Your account is banned
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 text-center shadow-lg">
+        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-destructive/10">
+          <Block className="text-destructive" style={{ fontSize: 48 }} />
+        </div>
+
+        <h1 className="mb-3 text-2xl font-bold tracking-tight text-foreground">
+          Account Suspended
+        </h1>
+
+        <p className="mb-6 text-sm text-muted-foreground">
+          Your account has been suspended due to violations of our terms of service
           {banData?.banUntil && ` until ${new Date(banData?.banUntil).toLocaleDateString('en-GB')}`}
+          .
         </p>
+
         <button
           onClick={() => (window.location.href = '/login')}
-          className="mt-4 rounded-2xl bg-red-500 px-4 py-2 font-bold text-white shadow-md transition-all duration-200 hover:bg-red-700"
+          className="w-full rounded-lg bg-destructive px-4 py-3 font-semibold text-destructive-foreground shadow-sm transition-all hover:bg-destructive/90 active:scale-[0.98]"
         >
-          Go to Login
+          Return to Login
         </button>
       </div>
     </div>

@@ -88,47 +88,75 @@ const SearchPage = () => {
 
   return (
     <MainLayout>
-      <div className="mx-auto flex h-full w-full justify-center pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
-        <div className="flex w-full max-w-3xl justify-center">
-          <div className="my-0 flex w-full flex-col justify-center rounded-lg bg-white px-4 shadow-lg dark:bg-black md:my-4">
-            <div className="sticky top-0 w-full p-2 md:p-6">
+      <div className="mx-auto flex h-full w-full justify-center bg-background pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
+        <div className="flex w-full max-w-2xl justify-center">
+          <div className="my-0 flex w-full flex-col rounded-xl border-x border-border bg-card shadow-sm md:my-4 md:min-h-[auto] md:border-y">
+            <div className="sticky top-0 z-10 w-full rounded-t-xl border-b border-border bg-card/80 p-4 backdrop-blur-md md:p-6">
               <div className="flex items-center justify-between">
-                <h1 className="hidden text-xl font-semibold md:block lg:text-2xl">Search Users</h1>
-                <div className="flex w-full items-center justify-between overflow-hidden rounded-md border border-gray-700 sm:w-auto">
+                <h1 className="hidden text-xl font-bold tracking-tight text-foreground md:block lg:text-2xl">
+                  Search Users
+                </h1>
+                <div className="flex w-full items-center justify-between overflow-hidden rounded-md border border-border bg-input transition-colors focus-within:border-primary focus-within:ring-1 focus-within:ring-primary sm:w-auto">
                   <input
                     type="text"
-                    placeholder="Search users..."
-                    className="w-full bg-white px-3 py-2 focus:outline-none dark:bg-black sm:w-64 sm:px-4"
+                    placeholder="Search users (min 3 chars)..."
+                    className="w-full bg-transparent px-4 py-2.5 text-foreground placeholder-muted-foreground focus:outline-none sm:w-72"
                     value={searchTerm}
                     onChange={handleSearchChange}
                   />
-                  <button className="p-3" aria-label="Search">
-                    <Search className="h-5 w-5 text-gray-300" />
+                  <button
+                    className="flex items-center justify-center p-2.5 text-muted-foreground transition-colors hover:text-foreground"
+                    aria-label="Search"
+                  >
+                    <Search fontSize="small" />
                   </button>
                 </div>
               </div>
             </div>
-            <div className="mx-3 h-1 rounded-lg bg-slate-200 dark:bg-slate-800"></div>
-            <div className="hide-scrollbar mb-10 mt-0 flex flex-1 flex-col space-y-4 overflow-y-auto pb-4 min-[450px]:p-4 sm:mb-3">
-              {!isLoading && users.length === 0 && (
-                <div className="flex flex-1 items-center justify-center">
-                  <p className="text-center">No Users Found</p>
+
+            <div className="hide-scrollbar mb-10 flex flex-1 flex-col overflow-y-auto bg-card sm:mb-0">
+              {!isLoading && users.length === 0 && debouncedSearchTerm.trim().length >= 3 && (
+                <div className="flex h-64 flex-col items-center justify-center gap-3 text-muted-foreground">
+                  <div className="rounded-full bg-muted p-4">
+                    <Search fontSize="large" />
+                  </div>
+                  <p className="font-medium text-foreground">No Users Found</p>
+                  <p className="text-sm">
+                    We couldn&apos;t find anyone matching &quot;{debouncedSearchTerm}&quot;
+                  </p>
                 </div>
               )}
+
+              {!isLoading && users.length === 0 && debouncedSearchTerm.trim().length < 3 && (
+                <div className="flex h-64 flex-col items-center justify-center gap-3 text-muted-foreground">
+                  <div className="rounded-full bg-muted p-4">
+                    <Search fontSize="large" />
+                  </div>
+                  <p className="text-sm font-medium">Type at least 3 characters to search</p>
+                </div>
+              )}
+
               {users.length > 0 && (
-                <>
+                <div className="flex flex-col gap-2 p-2 sm:p-4">
                   {users.map((user) => (
                     <UserSearchCard key={user.id} user={user} />
                   ))}
-                </>
-              )}
-              {isLoading && users.length === 0 && (
-                <div className="flex flex-col justify-center">
-                  <p className="text-center">Loading...</p>
                 </div>
               )}
-              <div ref={loaderRef}></div>
-              {!isLoading && error && <p className="my-4 text-center text-red-500">{error}</p>}
+
+              {isLoading && (
+                <div className="flex h-32 flex-col items-center justify-center gap-3">
+                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                  <p className="text-sm text-muted-foreground">Searching...</p>
+                </div>
+              )}
+
+              <div ref={loaderRef} className="h-4 w-full"></div>
+              {!isLoading && error && (
+                <div className="m-4 rounded-md border border-destructive/20 bg-destructive/10 p-4 text-center text-sm font-medium text-destructive">
+                  {error}
+                </div>
+              )}
             </div>
           </div>
         </div>

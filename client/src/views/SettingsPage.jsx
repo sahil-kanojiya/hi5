@@ -1,7 +1,17 @@
 import { useEffect, useState } from 'react';
 import MainLayout from '../components/layout/MainLayout';
 import * as Yup from 'yup';
-import { ArrowBackSharp, LightMode, DarkMode, Logout } from '@mui/icons-material';
+import {
+  ArrowBackSharp,
+  LightMode,
+  DarkMode,
+  Logout,
+  Security,
+  Person,
+  Notifications,
+  PrivacyTip,
+  Warning,
+} from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import useLogout from '../hooks/useLogout';
@@ -165,154 +175,166 @@ const SettingsPage = () => {
 
   return (
     <MainLayout>
-      <div className="mx-auto flex h-screen w-full justify-center pt-[60px] sm:pt-[80px] md:pl-[70px] md:pt-[0px] lg:pl-[260px]">
-        <div className="mx-auto flex w-full justify-center bg-gray-100 p-3 dark:bg-gray-900 sm:p-6">
-          <div className="mb-10 flex w-full max-w-2xl flex-col rounded-lg bg-white p-6 shadow-lg dark:bg-black">
+      <div className="mx-auto flex min-h-screen w-full justify-center bg-background pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
+        <div className="mx-auto flex w-full max-w-3xl flex-col p-4 sm:p-6">
+          <div className="mb-10 flex w-full flex-col rounded-xl border border-border bg-card p-6 shadow-sm">
             {/* Header */}
-            <div className="mb-6 flex items-center gap-4">
+            <div className="mb-8 flex items-center gap-4 border-b border-border pb-4">
               <div
                 onClick={handleBackClick}
-                className="cursor-pointer text-gray-500 dark:text-gray-400"
+                className="cursor-pointer rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 <ArrowBackSharp className="text-2xl" />
               </div>
-              <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">Settings</h1>
+              <h1 className="text-2xl font-bold tracking-tight text-foreground">Settings</h1>
             </div>
 
             {/* Content */}
-            <div className="hide-scrollbar flex h-screen flex-col space-y-8 overflow-y-auto">
-              <section className="flex flex-col">
-                <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
-                  Theme Settings
-                </h2>
-                <div
-                  onClick={changeThemeClickHandler}
-                  className="flex cursor-pointer items-center space-x-4 text-xl"
-                >
-                  {/* Sun Icon */}
-                  <div className="text-gray-800">
-                    <LightMode
-                      className={`transition-all duration-300 ${
-                        theme === 'dark' ? 'opacity-0' : 'opacity-100'
-                      }`}
-                    />
-                  </div>
-
-                  <div className="relative h-6 w-12 rounded-full bg-gray-300 dark:bg-gray-700">
-                    <div
-                      className={`absolute h-6 w-6 transform rounded-full bg-blue-400 transition-all duration-300 dark:bg-blue-600 ${
-                        theme === 'dark' ? 'translate-x-6' : 'translate-x-0'
-                      }`}
-                    />
-                  </div>
-
-                  <div className="dark:text-gray-200">
-                    <DarkMode
-                      className={`transition-all duration-300 ${
-                        theme === 'light' ? 'opacity-0' : 'opacity-100'
-                      }`}
-                    />
+            <div className="flex flex-col space-y-8">
+              {/* Theme Settings */}
+              <section className="flex flex-col rounded-lg border border-border bg-background p-5">
+                <div className="mb-4 flex items-center gap-2">
+                  <LightMode className="text-primary" />
+                  <h2 className="text-lg font-semibold text-foreground">Theme Settings</h2>
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-muted-foreground">
+                    Toggle between light and dark mode.
+                  </p>
+                  <div
+                    onClick={changeThemeClickHandler}
+                    className="flex cursor-pointer items-center space-x-3 rounded-full bg-input p-1"
+                  >
+                    <div className="relative h-7 w-14 rounded-full bg-muted shadow-inner">
+                      <div
+                        className={`absolute top-0.5 h-6 w-6 transform rounded-full bg-primary shadow-sm transition-all duration-300 ${
+                          theme === 'dark' ? 'left-[34px]' : 'left-[2px]'
+                        }`}
+                      >
+                        {theme === 'dark' ? (
+                          <DarkMode className="absolute inset-0 m-auto h-4 w-4 text-primary-foreground" />
+                        ) : (
+                          <LightMode className="absolute inset-0 m-auto h-4 w-4 text-primary-foreground" />
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </section>
 
               {/* Account Settings */}
-              <section className="flex flex-col">
-                <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
-                  Account Settings
-                </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Update your username to personalize your account.
+              <section className="flex flex-col rounded-lg border border-border bg-background p-5">
+                <div className="mb-4 flex items-center gap-2">
+                  <Person className="text-primary" />
+                  <h2 className="text-lg font-semibold text-foreground">Account Settings</h2>
+                </div>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  Update your username or sign out of your account.
                 </p>
-                <div className="mt-4 flex flex-col justify-between sm:flex-row sm:items-center">
-                  <span className="text-gray-600 dark:text-gray-400">Username: {username}</span>
-                  <button
-                    onClick={() => setIsUsernameUpdateModalOpen(true)}
-                    className="mt-1 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 sm:mt-0 sm:w-max"
-                  >
-                    Change Username
-                  </button>
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col justify-between rounded-md bg-muted/50 p-3 sm:flex-row sm:items-center">
+                    <span className="mb-2 text-sm font-medium text-foreground sm:mb-0">
+                      Username: <span className="ml-1 text-muted-foreground">@{username}</span>
+                    </span>
+                    <button
+                      onClick={() => setIsUsernameUpdateModalOpen(true)}
+                      className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-muted sm:w-max"
+                    >
+                      Change Username
+                    </button>
+                  </div>
+
+                  <div className="mt-2 flex flex-col justify-between rounded-md bg-muted/50 p-3 sm:flex-row sm:items-center">
+                    <span className="mb-2 text-sm font-medium text-foreground sm:mb-0">
+                      Active Session
+                    </span>
+                    <button
+                      onClick={logout}
+                      className="flex items-center justify-center gap-2 rounded-md border border-destructive/20 bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive hover:text-destructive-foreground sm:w-max"
+                    >
+                      <Logout fontSize="small" />
+                      Logout
+                    </button>
+                  </div>
                 </div>
               </section>
 
-              <section className="flex flex-col">
-                <p className="text-sm text-gray-600 dark:text-gray-400">Logout your account.</p>
-                <button
-                  onClick={logout}
-                  className="mt-2 flex items-center justify-center gap-2 rounded-md bg-red-600 px-4 py-2 text-white hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-900 sm:w-max"
-                >
-                  <Logout className="text-xl" />
-                  Logout
-                </button>
-              </section>
-
               {/* Privacy Settings */}
-              <section className="flex flex-col">
-                <h2 className="mb-4 flex flex-col text-xl font-bold text-gray-800 dark:text-gray-200">
-                  Privacy Settings
-                </h2>
-                <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
+              <section className="flex flex-col rounded-lg border border-border bg-background p-5">
+                <div className="mb-4 flex items-center gap-2">
+                  <PrivacyTip className="text-primary" />
+                  <h2 className="text-lg font-semibold text-foreground">Privacy Settings</h2>
+                </div>
+                <p className="mb-4 text-sm text-muted-foreground">
                   Manage your profile visibility and follow request behavior.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <button
                     onClick={() => setIsProfileTypeSettingModalOpen(true)}
-                    className="whitespace-nowrap rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900"
+                    className="flex-1 rounded-md border border-border bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-muted"
                   >
-                    Profile Type
+                    Profile Visibility ({profileType})
                   </button>
                   <button
                     onClick={() => setIsAutoFollowSettingModalOpen(true)}
-                    className="whitespace-nowrap rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900"
+                    className="flex-1 rounded-md border border-border bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-muted"
                   >
-                    Follow Request Behavior
+                    Follow Behavior ({autoFollow})
                   </button>
                 </div>
               </section>
 
               {/* Notification Settings */}
-              <section className="flex flex-col">
-                <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
-                  Notification Settings
-                </h2>
-                <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
-                  Customize your notifications.
+              <section className="flex flex-col rounded-lg border border-border bg-background p-5">
+                <div className="mb-4 flex items-center gap-2">
+                  <Notifications className="text-primary" />
+                  <h2 className="text-lg font-semibold text-foreground">Notification Settings</h2>
+                </div>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  Customize which notifications you receive.
                 </p>
                 <button
                   onClick={() => setIsNotificationsModalOpen(true)}
-                  className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 sm:w-max"
+                  className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-muted sm:w-max"
                 >
-                  Notifications
+                  Configure Notifications
                 </button>
               </section>
 
               {/* Security Settings */}
-              <section className="flex flex-col">
-                <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
-                  Security Settings
-                </h2>
-                <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
+              <section className="flex flex-col rounded-lg border border-border bg-background p-5">
+                <div className="mb-4 flex items-center gap-2">
+                  <Security className="text-primary" />
+                  <h2 className="text-lg font-semibold text-foreground">Security Settings</h2>
+                </div>
+                <p className="mb-4 text-sm text-muted-foreground">
                   Enable two-factor authentication to secure your account.
                 </p>
-                <button
-                  onClick={() => setIsTwoFactorAuthModalOpen(true)}
-                  className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 sm:w-max"
-                >
-                  Enable Two-Factor Authentication
-                </button>
+                <div className="flex items-center justify-between rounded-md bg-muted/50 p-3">
+                  <span className="text-sm font-medium text-foreground">
+                    Two-Factor Auth ({twoFactorAuth ? 'On' : 'Off'})
+                  </span>
+                  <button
+                    onClick={() => setIsTwoFactorAuthModalOpen(true)}
+                    className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-muted"
+                  >
+                    Configure
+                  </button>
+                </div>
               </section>
 
               {/* Danger Zone */}
-              <section className="flex flex-col">
-                <h2 className="mb-4 text-xl font-bold text-red-500 dark:text-red-400">
-                  Danger Zone
-                </h2>
-                <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
-                  This is where you can permanently delete your account.
+              <section className="flex flex-col rounded-lg border border-destructive/20 bg-destructive/5 p-5">
+                <div className="mb-4 flex items-center gap-2">
+                  <Warning className="text-destructive" />
+                  <h2 className="text-lg font-semibold text-destructive">Danger Zone</h2>
+                </div>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  Permanently delete your account and all of its data. This action cannot be undone.
                 </p>
                 <button
                   onClick={() => setIsDeleteAccountModalOpen(true)}
-                  className="rounded-md bg-red-600 p-2 text-white shadow-2xl transition duration-200 hover:bg-red-700 dark:text-gray-200 sm:w-max"
+                  className="rounded-md bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground shadow-sm transition-colors hover:bg-destructive/90 sm:w-max"
                 >
                   Delete Account
                 </button>
@@ -378,62 +400,86 @@ const SettingsPage = () => {
         onClose={() => setIsNotificationsModalOpen(false)}
         title="Notification Settings"
         content={
-          <div>
-            <CheckboxField
-              label="Network Posts Notifications"
-              checked={notificationsNetworkPosts}
-              onChange={(e) => setNotificationsNetworkPosts(e.target.checked)}
-            />
-            <CheckboxField
-              label="Network Reels Notifications"
-              checked={notificationsNetworkReels}
-              onChange={(e) => setNotificationsNetworkReels(e.target.checked)}
-            />
-            <CheckboxField
-              label="Network Story Notifications"
-              checked={notificationsNetworkStories}
-              onChange={(e) => setNotificationsNetworkStories(e.target.checked)}
-            />
-            <CheckboxField
-              label="Like Notifications (Posts)"
-              checked={notificationsPostLikes}
-              onChange={(e) => setNotificationsPostLikes(e.target.checked)}
-            />
-            <CheckboxField
-              label="Like Notifications (Reels)"
-              checked={notificationsReelLikes}
-              onChange={(e) => setNotificationsReelLikes(e.target.checked)}
-            />
-            <CheckboxField
-              label="Like Notifications (Stories)"
-              checked={notificationsStoryLikes}
-              onChange={(e) => setNotificationsStoryLikes(e.target.checked)}
-            />
-            <CheckboxField
-              label="Like Notifications (Comments)"
-              checked={notificationsCommentLikes}
-              onChange={(e) => setNotificationsCommentLikes(e.target.checked)}
-            />
-            <CheckboxField
-              label="Comment Notifications (Posts)"
-              checked={notificationsPostComments}
-              onChange={(e) => setNotificationsPostComments(e.target.checked)}
-            />
-            <CheckboxField
-              label="Comment Notifications (Reels)"
-              checked={notificationsReelComments}
-              onChange={(e) => setNotificationsReelComments(e.target.checked)}
-            />
-            <CheckboxField
-              label="Follow Notifications"
-              checked={notificationsUserFollows}
-              onChange={(e) => setNotificationsUserFollows(e.target.checked)}
-            />
-            <CheckboxField
-              label="Follow Request Notifications"
-              checked={notificationsFollowRequests}
-              onChange={(e) => setNotificationsFollowRequests(e.target.checked)}
-            />
+          <div className="hide-scrollbar max-h-[60vh] overflow-y-auto pr-2">
+            <div className="space-y-1 divide-y divide-border">
+              <div className="py-2">
+                <CheckboxField
+                  label="Network Posts"
+                  checked={notificationsNetworkPosts}
+                  onChange={(e) => setNotificationsNetworkPosts(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="Network Reels"
+                  checked={notificationsNetworkReels}
+                  onChange={(e) => setNotificationsNetworkReels(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="Network Stories"
+                  checked={notificationsNetworkStories}
+                  onChange={(e) => setNotificationsNetworkStories(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="Post Likes"
+                  checked={notificationsPostLikes}
+                  onChange={(e) => setNotificationsPostLikes(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="Reel Likes"
+                  checked={notificationsReelLikes}
+                  onChange={(e) => setNotificationsReelLikes(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="Story Likes"
+                  checked={notificationsStoryLikes}
+                  onChange={(e) => setNotificationsStoryLikes(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="Comment Likes"
+                  checked={notificationsCommentLikes}
+                  onChange={(e) => setNotificationsCommentLikes(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="Post Comments"
+                  checked={notificationsPostComments}
+                  onChange={(e) => setNotificationsPostComments(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="Reel Comments"
+                  checked={notificationsReelComments}
+                  onChange={(e) => setNotificationsReelComments(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="New Followers"
+                  checked={notificationsUserFollows}
+                  onChange={(e) => setNotificationsUserFollows(e.target.checked)}
+                />
+              </div>
+              <div className="py-2">
+                <CheckboxField
+                  label="Follow Requests"
+                  checked={notificationsFollowRequests}
+                  onChange={(e) => setNotificationsFollowRequests(e.target.checked)}
+                />
+              </div>
+            </div>
           </div>
         }
         onSave={updateSettings}
@@ -444,11 +490,13 @@ const SettingsPage = () => {
         onClose={() => setIsTwoFactorAuthModalOpen(false)}
         title="Two-Factor Authentication"
         content={
-          <CheckboxField
-            label="Enable Two-Factor Authentication"
-            checked={twoFactorAuth}
-            onChange={(e) => setTwoFactorAuth(e.target.checked)}
-          />
+          <div className="py-4">
+            <CheckboxField
+              label="Enable Two-Factor Authentication"
+              checked={twoFactorAuth}
+              onChange={(e) => setTwoFactorAuth(e.target.checked)}
+            />
+          </div>
         }
         onSave={updateSettings}
         type="SECURITY"
@@ -458,10 +506,11 @@ const SettingsPage = () => {
         onClose={() => setIsDeleteAccountModalOpen(false)}
         title="Delete Account"
         content={
-          <div>
-            <p className="text-gray-700 dark:text-gray-400">
-              Are you sure you want to delete your account? This action cannot be undone.
-            </p>
+          <div className="py-4">
+            <div className="rounded-md border border-destructive/20 bg-destructive/10 p-4 text-sm font-medium text-destructive">
+              Are you sure you want to delete your account? This action cannot be undone and you
+              will lose all data.
+            </div>
           </div>
         }
         onSave={handleDeleteAccount}
@@ -473,10 +522,7 @@ const SettingsPage = () => {
 
 const InputField = ({ label, type, value, onChange }) => (
   <div className="mb-4">
-    <label
-      htmlFor={label}
-      className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-400"
-    >
+    <label htmlFor={label} className="mb-1.5 block text-sm font-medium text-foreground">
       {label}
     </label>
     <input
@@ -484,7 +530,7 @@ const InputField = ({ label, type, value, onChange }) => (
       id={label}
       value={value}
       onChange={onChange}
-      className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-black"
+      className="w-full rounded-md border border-border bg-input px-3 py-2 text-foreground transition-colors focus:outline-none focus:ring-1 focus:ring-primary"
     />
   </div>
 );
@@ -498,17 +544,14 @@ InputField.propTypes = {
 
 const SelectField = ({ label, value, onChange, options }) => (
   <div className="mb-4">
-    <label
-      htmlFor={label}
-      className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-400"
-    >
+    <label htmlFor={label} className="mb-1.5 block text-sm font-medium text-foreground">
       {label}
     </label>
     <select
       id={label}
       value={value}
       onChange={onChange}
-      className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-black"
+      className="w-full cursor-pointer rounded-md border border-border bg-input px-3 py-2 capitalize text-foreground transition-colors focus:outline-none focus:ring-1 focus:ring-primary"
     >
       {options.map((option, index) => (
         <option key={index} value={option}>
@@ -527,12 +570,32 @@ SelectField.propTypes = {
 };
 
 const CheckboxField = ({ label, checked, onChange }) => (
-  <div className="mb-4">
-    <input type="checkbox" id={label} checked={checked} onChange={onChange} className="mr-2" />
-    <label htmlFor={label} className="text-gray-700 dark:text-gray-400">
+  <label className="group flex cursor-pointer items-center gap-3">
+    <div className="relative flex items-center justify-center">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+        className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-border bg-input transition-all checked:border-primary checked:bg-primary"
+      />
+      <svg
+        className="pointer-events-none absolute h-3.5 w-3.5 text-primary-foreground opacity-0 peer-checked:opacity-100"
+        viewBox="0 0 14 14"
+        fill="none"
+      >
+        <path
+          d="M3 8L6 11L11 3.5"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          stroke="currentColor"
+        ></path>
+      </svg>
+    </div>
+    <span className="text-sm font-medium text-foreground transition-colors group-hover:text-primary">
       {label}
-    </label>
-  </div>
+    </span>
+  </label>
 );
 
 CheckboxField.propTypes = {
@@ -545,15 +608,13 @@ const Modal = ({ isOpen, onClose, title, content, onSave, type }) => {
   const getButtonStyle = (type) => {
     switch (type) {
       case 'UPDATE':
-        return 'bg-blue-500 hover:bg-blue-600 text-white';
       case 'SETTING':
-        return 'bg-gray-500 hover:bg-gray-600 text-white';
       case 'SECURITY':
-        return 'bg-gray-500 hover:bg-gray-600 text-white';
+        return 'bg-primary hover:bg-primary/90 text-primary-foreground';
       case 'DANGER':
-        return 'bg-red-500 hover:bg-red-600 text-white';
+        return 'bg-destructive hover:bg-destructive/90 text-destructive-foreground';
       default:
-        return 'bg-gray-300 hover:bg-gray-400 text-black';
+        return 'bg-primary hover:bg-primary/90 text-primary-foreground';
     }
   };
 
@@ -575,18 +636,21 @@ const Modal = ({ isOpen, onClose, title, content, onSave, type }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="w-full max-w-sm rounded-lg border border-gray-500 bg-white p-6 shadow-lg dark:bg-black">
-        <h3 className="mb-4 text-lg font-semibold text-black dark:text-white">{title}</h3>
-        {content}
-        <div className="mt-4 flex justify-end gap-2">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-4 backdrop-blur-sm">
+      <div className="animate-in fade-in zoom-in-95 w-full max-w-sm rounded-xl border border-border bg-card p-6 shadow-lg duration-200">
+        <h3 className="mb-4 text-lg font-semibold tracking-tight text-foreground">{title}</h3>
+        <div className="mb-6">{content}</div>
+        <div className="flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="mr-2 rounded-md bg-gray-200 px-4 py-2 text-gray-600 dark:bg-gray-600 dark:text-gray-200"
+            className="rounded-md border border-border bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-muted"
           >
             Cancel
           </button>
-          <button onClick={onSave} className={`rounded-md px-4 py-2 ${getButtonStyle(type)}`}>
+          <button
+            onClick={onSave}
+            className={`rounded-md px-4 py-2 text-sm font-medium shadow-sm transition-colors ${getButtonStyle(type)}`}
+          >
             {getButtonText(type)}
           </button>
         </div>
@@ -601,7 +665,7 @@ Modal.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.node.isRequired,
   onSave: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(['CONFIRM', 'ALERT']).isRequired,
+  type: PropTypes.oneOf(['UPDATE', 'SETTING', 'SECURITY', 'DANGER']).isRequired,
 };
 
 export default SettingsPage;

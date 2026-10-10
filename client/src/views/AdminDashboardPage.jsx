@@ -2,10 +2,17 @@ import { useEffect, useState } from 'react';
 import BarChartOne from '../components/chart/BarChartOne';
 import LineChartOne from '../components/chart/LineChartOne';
 import MainLayout from '../components/layout/MainLayout';
-import { DashboardRounded } from '@mui/icons-material';
+import {
+  DashboardRounded,
+  People,
+  AdminPanelSettings,
+  Article,
+  Movie,
+  Person,
+  Block,
+} from '@mui/icons-material';
 import axiosInstance from '../services/axios.config';
 import { useWebSocket } from '../socket/WebSocketProvider';
-import { useSelector } from 'react-redux';
 
 export default function SocialMediaDashboard() {
   const [totalUsers, setTotalUsers] = useState(0);
@@ -150,173 +157,216 @@ export default function SocialMediaDashboard() {
     contentEngagementGrowthYearStats,
   ]);
 
-  const mode = useSelector((state) => state.theme.theme);
+
+
+  const statCards = [
+    {
+      label: 'Total Users',
+      value: totalUsers,
+      icon: People,
+      color: 'text-blue-500',
+      bg: 'bg-blue-500/10',
+    },
+    {
+      label: 'Total Moderators',
+      value: totalModerators,
+      icon: AdminPanelSettings,
+      color: 'text-purple-500',
+      bg: 'bg-purple-500/10',
+    },
+    {
+      label: 'Total Posts',
+      value: totalPosts,
+      icon: Article,
+      color: 'text-green-500',
+      bg: 'bg-green-500/10',
+    },
+    {
+      label: 'Total Reels',
+      value: totalReels,
+      icon: Movie,
+      color: 'text-pink-500',
+      bg: 'bg-pink-500/10',
+    },
+    {
+      label: 'Active Users',
+      value: totalActiveUsers,
+      icon: Person,
+      color: 'text-emerald-500',
+      bg: 'bg-emerald-500/10',
+    },
+    {
+      label: 'Banned Users',
+      value: totalBannedUsers,
+      icon: Block,
+      color: 'text-destructive',
+      bg: 'bg-destructive/10',
+    },
+  ];
 
   return (
     <MainLayout>
-      <div className="mx-auto flex h-full w-full justify-center pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
-        <div className="flex w-full max-w-5xl justify-center">
-          <div className="hide-scrollbar my-0 flex w-full flex-col items-center overflow-y-auto rounded-lg bg-white px-3 py-10 shadow-md dark:bg-black sm:px-6 md:my-4">
-            <div className="flex flex-col items-center">
-              <h2 className="mb-6 flex flex-wrap items-center gap-2 rounded-lg bg-gray-200 px-4 py-3 text-xl font-bold text-gray-800 dark:bg-gray-800 dark:text-gray-200 sm:text-2xl md:text-4xl">
-                <DashboardRounded sx={{ fontSize: { xs: 20, sm: 35, md: 40 } }} />
+      <div className="mx-auto flex min-h-screen w-full justify-center bg-background pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
+        <div className="flex w-full max-w-5xl justify-center p-4">
+          <div className="hide-scrollbar my-0 flex w-full flex-col items-center overflow-y-auto rounded-xl border border-border bg-card px-4 py-8 shadow-sm sm:px-8 md:my-4">
+            <div className="mb-8 flex flex-col items-center">
+              <div className="mb-4 inline-flex items-center justify-center rounded-full bg-primary/10 p-4 text-primary">
+                <DashboardRounded fontSize="large" />
+              </div>
+              <h2 className="text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 Admin Dashboard
               </h2>
-              <p className="mb-8 text-center text-lg text-gray-600">
+              <p className="mt-2 text-center text-lg text-muted-foreground">
                 Get insights on user activity and engagement trends.
               </p>
             </div>
 
-            <div className="xs:grid-cols-4 mb-8 grid w-full grid-cols-1 gap-4 rounded-3xl bg-gray-100 p-4 shadow-md dark:bg-gray-900 sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-4">
-              {[
-                { label: 'Total Users', value: totalUsers },
-                { label: 'Total Moderators', value: totalModerators },
-                { label: 'Total Posts', value: totalPosts },
-                { label: 'Total Reels', value: totalReels },
-                { label: 'Active Users', value: totalActiveUsers },
-                { label: 'Banned Users', value: totalBannedUsers },
-              ].map((item, index) => (
+            <div className="mb-10 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
+              {statCards.map((item, index) => (
                 <div
                   key={index}
-                  className="flex transform flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-blue-500 p-6 shadow-md transition-transform duration-300 hover:-translate-y-1 hover:scale-105"
+                  className="group flex flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/50 hover:shadow-md"
                 >
-                  <h3 className="mb-2 text-center text-xl font-semibold text-gray-700">
-                    {item.label}
-                  </h3>
-                  <p className="text-3xl font-bold text-gray-800">{item.value}</p>
+                  <div className="mb-4 flex items-center justify-between">
+                    <h3 className="text-sm font-medium text-muted-foreground">{item.label}</h3>
+                    <div className={`rounded-md p-2 ${item.bg}`}>
+                      <item.icon className={`h-5 w-5 ${item.color}`} />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-3xl font-bold tracking-tight text-foreground">
+                      {item.value}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
 
-            <div className="flex w-full flex-col gap-3 sm:gap-6">
-              <div className="flex flex-col gap-3 rounded-xl p-2 shadow-md hover:shadow-lg sm:p-4">
-                <div className="flex flex-wrap items-center justify-between">
-                  <h3 className="p-2 text-2xl font-semibold text-gray-700 dark:text-gray-300">
-                    User Growth
-                  </h3>
+            <div className="flex w-full flex-col gap-8">
+              {/* User Growth Chart */}
+              <div className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-6">
+                <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                  <div>
+                    <h3 className="text-xl font-bold tracking-tight text-foreground">
+                      User Growth
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Platform user acquisition trends
+                    </p>
+                  </div>
 
-                  <div className="flex flex-wrap gap-2 p-3 sm:p-0">
-                    <div
-                      className="bg-blue flex gap-2 rounded-md bg-gray-200 p-1 transition duration-300 dark:bg-gray-800"
-                      style={{
-                        backgroundColor: mode === 'dark' ? '#121212' : '#F4F4F5',
-                      }}
-                    >
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex items-center rounded-md border border-border bg-muted/50 p-1">
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeUserGrowthTimeType === 'day' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeUserGrowthTimeType === 'day' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setChartTypeUserGrowthTimeType('day')}
                       >
                         Day
                       </button>
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeUserGrowthTimeType === 'month' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeUserGrowthTimeType === 'month' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setChartTypeUserGrowthTimeType('month')}
                       >
                         Month
                       </button>
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeUserGrowthTimeType === 'year' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeUserGrowthTimeType === 'year' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setChartTypeUserGrowthTimeType('year')}
                       >
                         Year
                       </button>
                     </div>
 
-                    <div
-                      className="bg-blue flex gap-2 rounded-md bg-gray-200 p-1 transition duration-300 dark:bg-gray-800"
-                      style={{
-                        backgroundColor: mode === 'dark' ? '#121212' : '#F4F4F5',
-                      }}
-                    >
+                    <div className="flex items-center rounded-md border border-border bg-muted/50 p-1">
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeUserGrowth === 'bar' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeUserGrowth === 'bar' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setChartTypeUserGrowth('bar')}
                       >
-                        Bar Chart
+                        Bar
                       </button>
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeUserGrowth === 'line' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeUserGrowth === 'line' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setChartTypeUserGrowth('line')}
                       >
-                        Line Chart
+                        Line
                       </button>
                     </div>
                   </div>
                 </div>
-                {chartTypeUserGrowth === 'bar' ? (
-                  <BarChartOne name="Users" fileName="UserGrowth" seriesData={userGrowthData} />
-                ) : (
-                  <LineChartOne name="Users" fileName="UserGrowth" seriesData={userGrowthData} />
-                )}
+
+                <div className="mt-4 border-t border-border pt-4">
+                  {chartTypeUserGrowth === 'bar' ? (
+                    <BarChartOne name="Users" fileName="UserGrowth" seriesData={userGrowthData} />
+                  ) : (
+                    <LineChartOne name="Users" fileName="UserGrowth" seriesData={userGrowthData} />
+                  )}
+                </div>
               </div>
 
-              <div className="flex flex-col gap-3 rounded-xl p-2 shadow-md hover:shadow-lg sm:p-4">
-                <div className="flex flex-wrap items-center justify-between">
-                  <h3 className="p-2 text-2xl font-semibold text-gray-700 dark:text-gray-300">
-                    Content Engagement Growth
-                  </h3>
+              {/* Content Engagement Chart */}
+              <div className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-6">
+                <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                  <div>
+                    <h3 className="text-xl font-bold tracking-tight text-foreground">
+                      Content Engagement
+                    </h3>
+                    <p className="text-sm text-muted-foreground">Overall interactions over time</p>
+                  </div>
 
-                  <div className="flex flex-wrap gap-2 p-3 sm:p-0">
-                    <div
-                      className="bg-blue flex gap-2 rounded-md bg-gray-200 p-1 transition duration-300 dark:bg-gray-800"
-                      style={{
-                        backgroundColor: mode === 'dark' ? '#121212' : '#F4F4F5',
-                      }}
-                    >
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex items-center rounded-md border border-border bg-muted/50 p-1">
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeEngagementGrowthTimeType === 'day' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeEngagementGrowthTimeType === 'day' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setchartTypeEngagementGrowthTimeType('day')}
                       >
                         Day
                       </button>
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeEngagementGrowthTimeType === 'month' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeEngagementGrowthTimeType === 'month' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setchartTypeEngagementGrowthTimeType('month')}
                       >
                         Month
                       </button>
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeEngagementGrowthTimeType === 'year' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeEngagementGrowthTimeType === 'year' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setchartTypeEngagementGrowthTimeType('year')}
                       >
                         Year
                       </button>
                     </div>
 
-                    <div
-                      className="bg-blue flex gap-2 rounded-md bg-gray-200 p-1 transition duration-300 dark:bg-gray-800"
-                      style={{
-                        backgroundColor: mode === 'dark' ? '#121212' : '#F4F4F5',
-                      }}
-                    >
+                    <div className="flex items-center rounded-md border border-border bg-muted/50 p-1">
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeEngagementGrowth === 'bar' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeEngagementGrowth === 'bar' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setchartTypeEngagementGrowth('bar')}
                       >
-                        Bar Chart
+                        Bar
                       </button>
                       <button
-                        className={`rounded px-4 py-2 text-sm font-medium transition ${chartTypeEngagementGrowth === 'line' && 'bg-blue-500 text-white'} `}
+                        className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${chartTypeEngagementGrowth === 'line' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                         onClick={() => setchartTypeEngagementGrowth('line')}
                       >
-                        Line Chart
+                        Line
                       </button>
                     </div>
                   </div>
                 </div>
-                {chartTypeEngagementGrowth === 'bar' ? (
-                  <BarChartOne
-                    name="Impressions"
-                    fileName="ContentEngagementGrowth"
-                    seriesData={engagementGrowthData}
-                  />
-                ) : (
-                  <LineChartOne
-                    name="Impressions"
-                    fileName="ContentEngagementGrowth"
-                    seriesData={engagementGrowthData}
-                  />
-                )}
+
+                <div className="mt-4 border-t border-border pt-4">
+                  {chartTypeEngagementGrowth === 'bar' ? (
+                    <BarChartOne
+                      name="Impressions"
+                      fileName="ContentEngagementGrowth"
+                      seriesData={engagementGrowthData}
+                    />
+                  ) : (
+                    <LineChartOne
+                      name="Impressions"
+                      fileName="ContentEngagementGrowth"
+                      seriesData={engagementGrowthData}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>

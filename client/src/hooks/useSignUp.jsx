@@ -15,8 +15,6 @@ const useSignup = () => {
     if (step == 0) {
       setIsLoading(true);
       try {
-        console.log('Form Value email:', values.email);
-        console.log('Form Value password:', values.password);
         const response = await register({
           email: values.email.toLowerCase(),
         });
@@ -27,7 +25,6 @@ const useSignup = () => {
 
         setError(null);
       } catch (err) {
-        console.log('Error ' + err);
         setError(err?.response?.data?.message || 'Something went wrong, please try again.');
       } finally {
         setIsLoading(false);
@@ -35,8 +32,6 @@ const useSignup = () => {
     } else if (step == 1) {
       setIsLoading(true);
       try {
-        console.log('Form Value otp:', values.otp);
-
         const response = await registerVerifyOtp(values.otp, {
           email: values.email,
           password: values.password,
@@ -49,7 +44,6 @@ const useSignup = () => {
 
         setError(null);
       } catch (err) {
-        console.log('Error ' + err);
         setError(err?.response?.data?.message || 'Something went wrong, please try again.');
       } finally {
         setIsLoading(false);
@@ -57,7 +51,6 @@ const useSignup = () => {
     } else if (step == 2) {
       setIsLoading(true);
       try {
-        console.log('Form Value username:', values.username);
         const response = await checkUsername({ username: values.username });
         if (response.data?.isAvailable) {
           setStep(3);
@@ -70,9 +63,6 @@ const useSignup = () => {
       }
     } else if (step == 3) {
       setIsLoading(true);
-      console.log('Form Values fullname:', values.fullname);
-      console.log('Form Values dob:', values.dob);
-      console.log('Form Values gender:', values.gender);
       try {
         const response = await activateUser(identificationToken, {
           username: values.username,
