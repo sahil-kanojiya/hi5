@@ -1,4 +1,4 @@
-import logo from '../../assets/images/logo/Hi5.svg';
+import logo from '../../assets/images/logo/hi5.svg';
 
 const Preloader = () => {
   console.log('Preloader');

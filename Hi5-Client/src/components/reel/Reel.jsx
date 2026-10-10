@@ -34,9 +34,9 @@ import {
   unlikeEntity,
   unsave,
 } from '../../services/api';
-import CommentModel from '../comment/CommentModel';
+import CommentModal from '../comment/CommentModal';
 import { useSelector } from 'react-redux';
-import ViewLikedUsersModel from '../profile/ViewLikedUsersModel';
+import ViewLikedUsersModal from '../profile/ViewLikedUsersModal';
 
 const Reel = ({
   reel,
@@ -52,12 +52,12 @@ const Reel = ({
   const user = useSelector((state) => state.user.profile);
   const isMyReel = reel.userId === user.id;
 
-  const [isCommentModelOpen, setIsCommentModelOpen] = useState(false);
-  const openCommentModel = () => {
-    setIsCommentModelOpen(true);
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const openCommentModal = () => {
+    setIsCommentModalOpen(true);
   };
-  const closeCommentModel = () => {
-    setIsCommentModelOpen(false);
+  const closeCommentModal = () => {
+    setIsCommentModalOpen(false);
   };
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -233,12 +233,12 @@ const Reel = ({
 
   const [expanded, setExpanded] = useState(false);
 
-  const [isViewLikedUsersModelOpen, setIsViewLikedUsersModelOpen] = useState(false);
+  const [isViewLikedUsersModalOpen, setIsViewLikedUsersModalOpen] = useState(false);
   const viewLikedUsersButtonClickHandler = () => {
-    setIsViewLikedUsersModelOpen(true);
+    setIsViewLikedUsersModalOpen(true);
   };
   const closeViewLikedUsersModal = () => {
-    setIsViewLikedUsersModelOpen(false);
+    setIsViewLikedUsersModalOpen(false);
   };
 
   return (
@@ -391,7 +391,7 @@ const Reel = ({
                 fontSize: { xs: 21, sm: 23, md: 25 },
               }}
               className="h-5 w-5 transition-colors duration-200 hover:text-blue-500 sm:h-6 sm:w-6"
-              onClick={openCommentModel}
+              onClick={openCommentModal}
             />
             <span className="text-xs font-medium sm:text-sm">{commentCount}</span>
           </button>
@@ -540,8 +540,8 @@ const Reel = ({
       />
 
       {isMyProfileReels && (
-        <ViewLikedUsersModel
-          isOpen={isViewLikedUsersModelOpen}
+        <ViewLikedUsersModal
+          isOpen={isViewLikedUsersModalOpen}
           closeModal={closeViewLikedUsersModal}
           relevantId={reel?.id}
           type="REEL"
@@ -549,9 +549,9 @@ const Reel = ({
       )}
 
       {reel?.isCommentsDisabled !== true && (
-        <CommentModel
-          isOpen={isCommentModelOpen}
-          onClose={closeCommentModel}
+        <CommentModal
+          isOpen={isCommentModalOpen}
+          onClose={closeCommentModal}
           type={'REEL'}
           relevantId={reel.id}
           updateCommentCount={setCommentCount}

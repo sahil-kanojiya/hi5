@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import logo from '../assets/images/logo/Hi5.svg';
+import logo from '../assets/images/logo/hi5.svg';
 import googleLogo from '../assets/images/logo/google.svg';
 import githubLogo from '../assets/images/logo/github.svg';
 import useLogin from '../hooks/useLogin';

@@ -1,6 +1,6 @@
 import MobileNavbar from './common/navbar/MobileNavbar';
 import PropTypes from 'prop-types';
-import Sidebar from './common/sidebar/SideBar';
+import Sidebar from './common/sidebar/Sidebar';
 import MobileHeader from './common/header/MobileHeader';
 
 const MainLayout = ({ children }) => {

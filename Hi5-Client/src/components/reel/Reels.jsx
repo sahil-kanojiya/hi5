@@ -1,4 +1,4 @@
-import ReelUploadModal from './ReelUploadModel';
+import ReelUploadModal from './ReelUploadModal';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import axiosInstance from '../../services/axios.config';
 import { useNavigate } from 'react-router-dom';

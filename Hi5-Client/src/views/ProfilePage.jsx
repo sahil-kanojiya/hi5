@@ -28,8 +28,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { setUser } from '../redux/slices/userSlice';
-import RequestsModel from '../components/profile/RequestsModel';
-import ConnectionsModel from '../components/profile/ConnectionsModel';
+import RequestsModal from '../components/profile/RequestsModal';
+import ConnectionsModal from '../components/profile/ConnectionsModal';
 import ProfileTabs from '../components/profile/ProfileTabs';
 
 const ProfilePage = () => {
@@ -257,19 +257,19 @@ const ProfilePage = () => {
     setIsEditable(false);
   };
 
-  const [isSentRequestsModelOpen, setIsSentRequestsModelOpen] = useState(false);
-  const handleSentRequestsModelOpen = () => {
-    setIsSentRequestsModelOpen(true);
+  const [isSentRequestsModalOpen, setIsSentRequestsModalOpen] = useState(false);
+  const handleSentRequestsModalOpen = () => {
+    setIsSentRequestsModalOpen(true);
   };
-  const handleSentRequestsModelClose = () => {
-    setIsSentRequestsModelOpen(false);
+  const handleSentRequestsModalClose = () => {
+    setIsSentRequestsModalOpen(false);
   };
-  const [isReceivedRequestsModelOpen, setIsReceivedRequestsModelOpen] = useState(false);
-  const handleReceivedRequestsModelOpen = () => {
-    setIsReceivedRequestsModelOpen(true);
+  const [isReceivedRequestsModalOpen, setIsReceivedRequestsModalOpen] = useState(false);
+  const handleReceivedRequestsModalOpen = () => {
+    setIsReceivedRequestsModalOpen(true);
   };
-  const handleReceivedRequestsModelClose = () => {
-    setIsReceivedRequestsModelOpen(false);
+  const handleReceivedRequestsModalClose = () => {
+    setIsReceivedRequestsModalOpen(false);
   };
   const [isFollowersModelOpen, setIsFollowersModelOpen] = useState(false);
   const handleFollowersModelOpen = () => {
@@ -287,8 +287,8 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    handleSentRequestsModelClose();
-    handleReceivedRequestsModelClose();
+    handleSentRequestsModalClose();
+    handleReceivedRequestsModalClose();
     handleFollowersModelClose();
     handleFollowingsModelClose();
   }, [userId]);
@@ -341,7 +341,7 @@ const ProfilePage = () => {
                       <div className="group relative">
                         <button
                           className="flex items-center justify-center gap-2 rounded-full p-1 text-sm font-medium text-slate-500 transition"
-                          onClick={handleReceivedRequestsModelOpen}
+                          onClick={handleReceivedRequestsModalOpen}
                         >
                           <Send className="h-2 w-2 rotate-180" />
                         </button>
@@ -353,7 +353,7 @@ const ProfilePage = () => {
                       <div className="group relative">
                         <button
                           className="flex items-center justify-center gap-2 rounded-full p-1 text-sm font-medium text-slate-500 transition"
-                          onClick={handleSentRequestsModelOpen}
+                          onClick={handleSentRequestsModalOpen}
                         >
                           <Send className="h-2 w-2" />
                         </button>
@@ -678,22 +678,22 @@ const ProfilePage = () => {
           )}
         </div>
       </div>
-      <RequestsModel
+      <RequestsModal
         type="SENT"
-        isOpen={isSentRequestsModelOpen}
-        closeModal={handleSentRequestsModelClose}
+        isOpen={isSentRequestsModalOpen}
+        closeModal={handleSentRequestsModalClose}
       />
-      <RequestsModel
+      <RequestsModal
         type="RECEIVED"
-        isOpen={isReceivedRequestsModelOpen}
-        closeModal={handleReceivedRequestsModelClose}
+        isOpen={isReceivedRequestsModalOpen}
+        closeModal={handleReceivedRequestsModalClose}
       />
-      <ConnectionsModel
+      <ConnectionsModal
         type="FOLLOWER"
         isOpen={isFollowersModelOpen}
         closeModal={handleFollowersModelClose}
       />
-      <ConnectionsModel
+      <ConnectionsModal
         type="FOLLOWING"
         isOpen={isFollowingsModelOpen}
         closeModal={handleFollowingsModelClose}

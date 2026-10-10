@@ -4,7 +4,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
 import VideocamRoundedIcon from '@mui/icons-material/VideocamRounded';
 import { useSelector } from 'react-redux';
-import ReelUploadModal from '../reel/ReelUploadModel.jsx';
+import ReelUploadModal from '../reel/ReelUploadModal.jsx';
 import { PostCreatedToast as displayPostCreatedToast } from '../providers/ToastProvider.jsx';
 import { Link } from 'react-router-dom';
 import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';

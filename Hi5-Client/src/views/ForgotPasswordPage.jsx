@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from 'formik';
-import logo from '../assets/images/logo/Hi5.svg';
+import logo from '../assets/images/logo/hi5.svg';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import useForgotPassword from '../hooks/useForgotPassword';

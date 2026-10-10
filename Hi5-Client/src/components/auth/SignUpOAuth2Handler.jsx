@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import logo from '../../assets/images/logo/Hi5.svg';
+import logo from '../../assets/images/logo/hi5.svg';
 import * as Yup from 'yup';
 import { Field, Form, Formik } from 'formik';
 import { activateUser, checkUsername } from '../../services/api';

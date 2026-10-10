@@ -9,7 +9,7 @@ import {
   ReportGmailerrorred,
 } from '@mui/icons-material';
 import { useState } from 'react';
-import ReportDetailsModel from './ReportDetailsModel';
+import ReportDetailsModal from './ReportDetailsModal';
 import DeleteConfirmationModal from '../../modal/DeleteConfirmationModal';
 import { banUserAccount, deleteEntity, unbanUserAccount } from '../../../services/api';
 import UnbanConfirmationModal from '../modal/UnbanConfirmationModal';
@@ -18,8 +18,8 @@ import toast from 'react-hot-toast';
 
 const ReportedComment = ({ comment, removeComment, updateBanUntill }) => {
   const [isReportDetailsOpen, setIsReportDetailsOpen] = useState(false);
-  const openReportDetailsModel = () => setIsReportDetailsOpen(true);
-  const closeReportDetailsModel = () => setIsReportDetailsOpen(false);
+  const openReportDetailsModal = () => setIsReportDetailsOpen(true);
+  const closeReportDetailsModal = () => setIsReportDetailsOpen(false);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -145,7 +145,7 @@ const ReportedComment = ({ comment, removeComment, updateBanUntill }) => {
 
               <button
                 className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110"
-                onClick={openReportDetailsModel}
+                onClick={openReportDetailsModal}
               >
                 <ReportGmailerrorred className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-red-500" />
                 <span className="text-sm font-medium group-hover:text-red-500">
@@ -337,9 +337,9 @@ const ReportedComment = ({ comment, removeComment, updateBanUntill }) => {
           )}
         </div>
         {isReportDetailsOpen && (
-          <ReportDetailsModel
+          <ReportDetailsModal
             isOpen={isReportDetailsOpen}
-            onClose={closeReportDetailsModel}
+            onClose={closeReportDetailsModal}
             type="COMMENT"
             relevantId={comment.id}
           />

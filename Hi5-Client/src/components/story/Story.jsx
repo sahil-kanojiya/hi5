@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import ViewStorysModal from './ViewStorysModal';
+import ViewStoriesModal from './ViewStoriesModal';
 
 const Story = ({ newStoryUser }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +27,7 @@ const Story = ({ newStoryUser }) => {
         <p className="mt-2 w-20 truncate text-sm text-gray-700">{newStoryUser.fullname}</p>
       </div>
       {isModalOpen && (
-        <ViewStorysModal
+        <ViewStoriesModal
           isOpen={isModalOpen}
           closeModal={handleModalClose}
           newStoryUser={newStoryUser}

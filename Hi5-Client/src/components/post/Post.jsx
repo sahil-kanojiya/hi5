@@ -12,7 +12,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import DeleteConfirmationModal from '../modal/DeleteConfirmationModal';
 import ReportConfirmationModal from '../modal/ReportConfirmationModal';
 import TimeAgo from '../common/TimeAgo';
-import CommentModel from '../comment/CommentModel';
+import CommentModal from '../comment/CommentModal';
 import {
   deletePost,
   likeEntity,
@@ -24,19 +24,19 @@ import {
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CommentsDisabled, PersonOutline } from '@mui/icons-material';
-import ViewLikedUsersModel from '../profile/ViewLikedUsersModel';
+import ViewLikedUsersModal from '../profile/ViewLikedUsersModal';
 
 const Post = ({ post, removePost, isMyProfilePosts }) => {
   const user = useSelector((state) => state.user.profile);
   const isMyPost = post.userId === user.id;
   console.log(post.userId + '   ' + user.id);
 
-  const [isCommentModelOpen, setIsCommentModelOpen] = useState(false);
-  const openCommentModel = () => {
-    setIsCommentModelOpen(true);
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const openCommentModal = () => {
+    setIsCommentModalOpen(true);
   };
-  const closeCommentModel = () => {
-    setIsCommentModelOpen(false);
+  const closeCommentModal = () => {
+    setIsCommentModalOpen(false);
   };
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -139,12 +139,12 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
     }
   };
 
-  const [isViewLikedUsersModelOpen, setIsViewLikedUsersModelOpen] = useState(false);
+  const [isViewLikedUsersModalOpen, setIsViewLikedUsersModalOpen] = useState(false);
   const viewLikedUsersButtonClickHandler = () => {
-    setIsViewLikedUsersModelOpen(true);
+    setIsViewLikedUsersModalOpen(true);
   };
   const closeViewLikedUsersModal = () => {
-    setIsViewLikedUsersModelOpen(false);
+    setIsViewLikedUsersModalOpen(false);
   };
 
   return (
@@ -274,7 +274,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
           ) : (
             <button
               className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110"
-              onClick={openCommentModel}
+              onClick={openCommentModal}
             >
               <CommentOutlinedIcon className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-blue-500" />
               <span className="text-sm font-medium group-hover:text-blue-500">{commentCount}</span>
@@ -308,8 +308,8 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
         type="POST"
       />
       {isMyProfilePosts && (
-        <ViewLikedUsersModel
-          isOpen={isViewLikedUsersModelOpen}
+        <ViewLikedUsersModal
+          isOpen={isViewLikedUsersModalOpen}
           closeModal={closeViewLikedUsersModal}
           relevantId={post?.id}
           type="POST"
@@ -317,9 +317,9 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
       )}
 
       {post?.isCommentsDisabled !== true && (
-        <CommentModel
-          isOpen={isCommentModelOpen}
-          onClose={closeCommentModel}
+        <CommentModal
+          isOpen={isCommentModalOpen}
+          onClose={closeCommentModal}
           type={'POST'}
           relevantId={post.id}
           updateCommentCount={setCommentCount}

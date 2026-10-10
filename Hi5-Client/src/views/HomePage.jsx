@@ -1,7 +1,7 @@
 import CreatePost from '../components/post/CreatePost';
 import MainLayout from '../components/layout/MainLayout';
 import RightPanel from '../components/layout/common/panel/RightPanel';
-import Storys from '../components/story/Storys';
+import Stories from '../components/story/Stories';
 import Posts from '../components/post/Posts';
 import { useState } from 'react';
 
@@ -21,7 +21,7 @@ const HomePage = () => {
       <MainLayout>
         <div className="mx-auto mt-[60px] flex w-full items-start justify-center gap-5 bg-gray-100 p-2 dark:bg-gray-900 sm:mt-[50px] sm:p-4 md:mt-[10px] md:pl-[70px] md:pt-[0px] lg:pl-[260px]">
           <div className="flex w-full max-w-2xl flex-col items-center px-2 sm:px-3 lg:max-w-xl xl:px-4">
-            <Storys />
+            <Stories />
 
             <CreatePost />
 

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import logo from '../../../../assets/images/logo/Hi5.svg';
+import logo from '../../../../assets/images/logo/hi5.svg';
 import { Link } from 'react-router-dom';
 import { toggleTheme } from '../../../../redux/slices/themeSlice';
 import { DarkMode, LightMode } from '@mui/icons-material';

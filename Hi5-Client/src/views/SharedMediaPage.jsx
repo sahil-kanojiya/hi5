@@ -36,7 +36,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from '../redux/slices/themeSlice';
 import TimeAgo from '../components/common/TimeAgo';
 import ReportConfirmationModal from '../components/modal/ReportConfirmationModal';
-import CommentModel from '../components/comment/CommentModel';
+import CommentModal from '../components/comment/CommentModal';
 
 const SharedMediaPage = () => {
   const { entity, entityId } = useParams();
@@ -133,16 +133,16 @@ const SharedMediaPage = () => {
   );
 
   const [commentCount, setCommentCount] = useState(entityData?.commentsCount);
-  const [isCommentModelOpen, setIsCommentModelOpen] = useState(false);
-  const openCommentModel = () => {
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const openCommentModal = () => {
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
-    setIsCommentModelOpen(true);
+    setIsCommentModalOpen(true);
   };
-  const closeCommentModel = () => {
-    setIsCommentModelOpen(false);
+  const closeCommentModal = () => {
+    setIsCommentModalOpen(false);
   };
 
   const [isReported, setIsReported] = useState(entityData?.reportStatus === 'REPORTED');
@@ -479,7 +479,7 @@ const SharedMediaPage = () => {
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
                         className="h-5 w-5 transition-colors duration-200 hover:text-blue-500 sm:h-6 sm:w-6"
-                        onClick={openCommentModel}
+                        onClick={openCommentModal}
                       />
                       <span className="text-xs font-medium sm:text-sm">{commentCount}</span>
                     </button>
@@ -504,9 +504,9 @@ const SharedMediaPage = () => {
               />
               {isAuthenticated && entityData?.isCommentsDisabled !== true && (
                 <>
-                  <CommentModel
-                    isOpen={isCommentModelOpen}
-                    onClose={closeCommentModel}
+                  <CommentModal
+                    isOpen={isCommentModalOpen}
+                    onClose={closeCommentModal}
                     type={entity.toUpperCase()}
                     relevantId={entityId}
                     updateCommentCount={setCommentCount}
@@ -597,7 +597,7 @@ const SharedMediaPage = () => {
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
                         className="h-5 w-5 transition-colors duration-200 hover:text-blue-500 sm:h-6 sm:w-6"
-                        onClick={openCommentModel}
+                        onClick={openCommentModal}
                       />
                       <span className="text-xs font-medium sm:text-sm">{commentCount}</span>
                     </button>
@@ -740,9 +740,9 @@ const SharedMediaPage = () => {
 
                 {isAuthenticated && entityData?.isCommentsDisabled !== true && (
                   <>
-                    <CommentModel
-                      isOpen={isCommentModelOpen}
-                      onClose={closeCommentModel}
+                    <CommentModal
+                      isOpen={isCommentModalOpen}
+                      onClose={closeCommentModal}
                       type={entity.toUpperCase()}
                       relevantId={entityId}
                       updateCommentCount={setCommentCount}
