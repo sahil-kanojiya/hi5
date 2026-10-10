@@ -4,12 +4,12 @@ const OAuth2Error = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <div className="max-w-lg rounded-lg bg-white p-6 text-center shadow-md dark:bg-gray-800">
-        <p className="mb-4 text-2xl font-bold text-gray-800 dark:text-gray-100">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background">
+      <div className="max-w-lg rounded-lg bg-card p-6 text-center shadow-md">
+        <p className="mb-4 text-2xl font-bold text-foreground dark:text-gray-100">
           Authentication Error
         </p>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-muted-foreground dark:text-gray-300">
           An error occurred during the OAuth2 authentication process. Please try again or contact
           support.
         </p>

@@ -95,7 +95,7 @@ const Comment = ({ comment, removeComment, isMyProfileEntity }) => {
         </Link>
         <div className="flex flex-col">
           <p className="text-lg font-semibold">{comment.fullname}</p>
-          <p className="flex items-center space-x-1 text-sm text-gray-500">
+          <p className="flex items-center space-x-1 text-sm text-muted-foreground">
             <span>@{comment.username}</span>
             <span className="hidden sm:inline">•</span>
             <TimeAgo date={comment.createdAt} className="text-xs font-medium sm:text-sm" />
@@ -103,7 +103,7 @@ const Comment = ({ comment, removeComment, isMyProfileEntity }) => {
         </div>
       </div>
 
-      <div className="px-3 py-2 leading-relaxed text-gray-800 dark:text-gray-400">
+      <div className="px-3 py-2 leading-relaxed text-foreground dark:text-muted-foreground">
         {comment.content}
       </div>
 
@@ -115,7 +115,7 @@ const Comment = ({ comment, removeComment, isMyProfileEntity }) => {
           {isLiked ? (
             <LikedIcon className="h-5 w-5 text-red-600 transition-colors duration-200" />
           ) : (
-            <UnlikedIcon className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-red-600" />
+            <UnlikedIcon className="h-5 w-5 text-muted-foreground transition-colors duration-200 group-hover:text-red-600" />
           )}
           <span className="text-sm font-medium group-hover:text-red-500">{likesCount}</span>
         </button>
@@ -125,7 +125,7 @@ const Comment = ({ comment, removeComment, isMyProfileEntity }) => {
             className="flex items-center transition duration-200 hover:scale-105 hover:text-red-500"
             onClick={openDeleteModal}
           >
-            <DeleteIcon className="cursor-pointer text-gray-500 hover:text-red-500" />
+            <DeleteIcon className="cursor-pointer text-muted-foreground hover:text-red-500" />
           </button>
         )}
 
@@ -137,7 +137,7 @@ const Comment = ({ comment, removeComment, isMyProfileEntity }) => {
             />
           ) : (
             <ReportIcon
-              className="transform cursor-pointer text-gray-500 transition duration-200 hover:scale-105 hover:text-red-500"
+              className="transform cursor-pointer text-muted-foreground transition duration-200 hover:scale-105 hover:text-red-500"
               onClick={openReportModal}
               title="Report this comment"
             />

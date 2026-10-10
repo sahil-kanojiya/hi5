@@ -112,8 +112,8 @@ const SignUpOAuth2Handler = () => {
   };
 
   return (
-    <section className="mx-auto flex min-h-screen flex-col items-center justify-center bg-gray-100 px-6 py-8 dark:bg-gray-900">
-      <div className="relative w-full max-w-md rounded-lg border-gray-300 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-black sm:p-8">
+    <section className="mx-auto flex min-h-screen flex-col items-center justify-center bg-background px-6 py-8">
+      <div className="relative w-full max-w-md rounded-lg border-gray-300 bg-card p-6 shadow-lg dark:border-gray-700 sm:p-8">
         <div className="my-4 flex items-center justify-center text-center">
           <a href="/">
             <img className="h-16 w-auto" src={logo} alt="Hi5" />
@@ -138,14 +138,11 @@ const SignUpOAuth2Handler = () => {
               {/* Username Form Step */}
               {step === 0 && (
                 <>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-muted-foreground dark:text-muted-foreground">
                     Choose a unique username that will be displayed on your profile.
                   </p>
                   <div>
-                    <label
-                      htmlFor="username"
-                      className="block text-sm font-medium text-gray-900 dark:text-white"
-                    >
+                    <label htmlFor="username" className="block text-sm font-medium text-gray-900">
                       Username
                     </label>
                     <Field
@@ -153,7 +150,7 @@ const SignUpOAuth2Handler = () => {
                       type="text"
                       id="username"
                       placeholder="Choose a username"
-                      className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                      className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600"
                       disabled={isLoading}
                     />
                     {touched.username && errors.username && (
@@ -166,16 +163,13 @@ const SignUpOAuth2Handler = () => {
               {/* Full Name, DOB & Gender Form Step */}
               {step === 1 && (
                 <>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-muted-foreground dark:text-muted-foreground">
                     Please provide your full name, date of birth, and gender to complete your
                     profile. This information will help us personalize your experience.
                   </p>
                   <div className="space-y-4">
                     <div>
-                      <label
-                        htmlFor="fullname"
-                        className="block text-sm font-medium text-gray-900 dark:text-white"
-                      >
+                      <label htmlFor="fullname" className="block text-sm font-medium text-gray-900">
                         Full Name
                       </label>
                       <Field
@@ -183,7 +177,7 @@ const SignUpOAuth2Handler = () => {
                         type="text"
                         id="fullname"
                         placeholder="Enter your full name"
-                        className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                        className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600"
                         disabled={isLoading}
                       />
                       {touched.fullname && errors.fullname && (
@@ -192,17 +186,14 @@ const SignUpOAuth2Handler = () => {
                     </div>
 
                     <div>
-                      <label
-                        htmlFor="dob"
-                        className="block text-sm font-medium text-gray-900 dark:text-white"
-                      >
+                      <label htmlFor="dob" className="block text-sm font-medium text-gray-900">
                         Date of Birth
                       </label>
                       <Field
                         name="dob"
                         type="date"
                         id="dob"
-                        className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                        className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600"
                         disabled={isLoading}
                       />
                       {touched.dob && errors.dob && (
@@ -211,17 +202,14 @@ const SignUpOAuth2Handler = () => {
                     </div>
 
                     <div>
-                      <label
-                        htmlFor="gender"
-                        className="block text-sm font-medium text-gray-900 dark:text-white"
-                      >
+                      <label htmlFor="gender" className="block text-sm font-medium text-gray-900">
                         Gender
                       </label>
                       <Field
                         name="gender"
                         as="select"
                         id="gender"
-                        className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                        className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-gray-600"
                         disabled={isLoading}
                       >
                         <option value="">Select</option>

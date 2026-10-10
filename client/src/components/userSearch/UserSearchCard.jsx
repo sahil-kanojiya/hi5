@@ -37,7 +37,7 @@ const UserSearchCard = ({ user }) => {
     <>
       <div
         key={user?.id}
-        className="flex items-center justify-between gap-5 rounded-lg bg-white p-3 shadow-md transition dark:bg-black dark:shadow-gray-900 sm:gap-0"
+        className="flex items-center justify-between gap-5 rounded-lg bg-card p-3 shadow-md transition dark:shadow-gray-900 sm:gap-0"
       >
         <div className="flex items-center gap-1 transition duration-150 min-[410px]:gap-4">
           <Link to={`/profile/${user?.id}`}>
@@ -53,7 +53,7 @@ const UserSearchCard = ({ user }) => {
             <p className="min-[410px]:text-md whitespace-nowrap break-normal text-sm font-semibold md:text-lg">
               {user?.fullname}
             </p>
-            <p className="whitespace-nowrap break-normal text-sm text-gray-400">
+            <p className="whitespace-nowrap break-normal text-sm text-muted-foreground">
               @{user?.username}
             </p>
           </div>

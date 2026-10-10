@@ -102,6 +102,7 @@ const SharedMediaPage = () => {
     if (!isInitializing) {
       fetchEntity();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entity, entityId, isAuthenticated, isInitializing]);
 
   const theme = useSelector((state) => state.theme.theme);
@@ -152,7 +153,7 @@ const SharedMediaPage = () => {
     }
     setIsReportModal(true);
   };
-  const closeReportModal = () => setIsReportModal(false);
+  const closeReportModal = useCallback(() => setIsReportModal(false), []);
   const confirmReport = useCallback(
     async (reportReason) => {
       if (!isAuthenticated) {

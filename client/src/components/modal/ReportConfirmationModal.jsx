@@ -65,7 +65,7 @@ const ReportConfirmationModal = ({ isOpen, closeModal, report, isReporting, type
           onClick={handleOutsideClick}
         >
           <div
-            className={`w-full max-w-xs transform rounded-lg border border-gray-500 bg-white p-6 shadow-lg transition-transform duration-300 dark:bg-black sm:max-w-sm md:max-w-md lg:max-w-lg ${
+            className={`w-full max-w-xs transform rounded-lg border border-gray-500 bg-card p-6 shadow-lg transition-transform duration-300 sm:max-w-sm md:max-w-md lg:max-w-lg ${
               isOpen ? 'scale-100' : 'scale-95'
             } ${isReporting ? 'opacity-50' : ''}`}
           >
@@ -73,14 +73,14 @@ const ReportConfirmationModal = ({ isOpen, closeModal, report, isReporting, type
               <h3 className="font-semibold text-red-600 dark:text-red-600">Confirm Report</h3>
               <button
                 onClick={closeModal}
-                className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
+                className="text-muted-foreground hover:text-foreground dark:text-gray-300 dark:hover:text-gray-100"
                 disabled={isReporting}
               >
                 <CloseRoundedIcon
                   sx={{
                     fontSize: { xs: 25, sm: 28, md: 30 },
                   }}
-                  className="text-gray-500 transition duration-200 hover:text-red-500"
+                  className="text-muted-foreground transition duration-200 hover:text-red-500"
                 />
               </button>
             </div>
@@ -126,7 +126,7 @@ const ReportConfirmationModal = ({ isOpen, closeModal, report, isReporting, type
             <div className="flex justify-end gap-4">
               <button
                 onClick={closeModal}
-                className={`rounded-lg bg-gray-300 px-4 py-2 text-black transition-all duration-200 ease-in-out hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600`}
+                className={`rounded-lg bg-muted px-4 py-2 text-foreground transition-all duration-200 ease-in-out hover:bg-gray-400 dark:hover:bg-gray-600`}
                 disabled={isReporting}
               >
                 Cancel

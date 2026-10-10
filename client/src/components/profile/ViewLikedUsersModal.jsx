@@ -108,7 +108,7 @@ const ViewLikedUsersModal = ({ isOpen, closeModal, type, relevantId }) => {
         onClick={handleOutsideClick}
       >
         <div
-          className={`w-full max-w-md transform rounded-lg bg-white p-4 shadow-lg transition-transform duration-300 dark:bg-gray-900 sm:w-3/4 md:w-2/3 lg:w-1/2 ${
+          className={`w-full max-w-md transform rounded-lg bg-card p-4 shadow-lg transition-transform duration-300 sm:w-3/4 md:w-2/3 lg:w-1/2 ${
             isOpen ? 'scale-100' : 'scale-95'
           }`}
         >
@@ -116,7 +116,7 @@ const ViewLikedUsersModal = ({ isOpen, closeModal, type, relevantId }) => {
             <h3 className="font-semibold">Liked Users</h3>
             <button
               onClick={closeModal}
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
+              className="text-muted-foreground hover:text-foreground dark:text-gray-300 dark:hover:text-gray-100"
             >
               <CloseRoundedIcon
                 sx={{
@@ -136,7 +136,7 @@ const ViewLikedUsersModal = ({ isOpen, closeModal, type, relevantId }) => {
               {users.map((user) => (
                 <div
                   key={user?.id}
-                  className="flex items-center justify-between gap-5 rounded-lg bg-white p-3 transition dark:bg-black sm:gap-0"
+                  className="flex items-center justify-between gap-5 rounded-lg bg-card p-3 transition sm:gap-0"
                 >
                   <div className="justify- flex items-center gap-1 transition duration-150 min-[410px]:gap-4">
                     <Link to={`/profile/${user?.id}`}>
@@ -152,7 +152,7 @@ const ViewLikedUsersModal = ({ isOpen, closeModal, type, relevantId }) => {
                       <p className="min-[410px]:text-md whitespace-nowrap break-normal text-sm font-semibold md:text-lg">
                         {user?.fullname}
                       </p>
-                      <p className="whitespace-nowrap break-normal text-sm text-gray-400">
+                      <p className="whitespace-nowrap break-normal text-sm text-muted-foreground">
                         @{user?.username}
                       </p>
                     </div>

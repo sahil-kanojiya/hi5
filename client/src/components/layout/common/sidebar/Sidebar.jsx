@@ -40,7 +40,7 @@ const Sidebar = () => {
   return (
     <>
       {user?.role === 'USER' && (
-        <div className="fixed left-0 top-0 z-10 hidden h-full flex-col justify-between bg-white p-4 dark:bg-black md:flex md:w-20 md:items-center lg:w-52 lg:items-start xl:w-64">
+        <div className="fixed left-0 top-0 z-10 hidden h-full flex-col justify-between bg-card p-4 md:flex md:w-20 md:items-center lg:w-52 lg:items-start xl:w-64">
           <Link to="/" className="mx-2 mb-8 mt-3 flex items-center space-x-3">
             <img src={logo} alt="Logo" className="w-10" />
             <p className="font-lobster text-4xl md:hidden lg:block">Hi5</p>
@@ -104,7 +104,7 @@ const Sidebar = () => {
             />
           </div>
 
-          <div className="relative my-4 mt-auto flex w-full items-center justify-between space-x-2 rounded-xl p-2 hover:bg-gray-200 dark:hover:bg-gray-800">
+          <div className="relative my-4 mt-auto flex w-full items-center justify-between space-x-2 rounded-xl p-2 hover:bg-muted dark:hover:bg-gray-800">
             <div className="flex items-center justify-center lg:gap-2">
               <Link to={`/profile/${user.id}`}>
                 <img
@@ -117,7 +117,7 @@ const Sidebar = () => {
                 <span className="hidden w-20 truncate text-xs lg:block xl:w-32">
                   {user.fullname}
                 </span>
-                <span className="hidden w-20 truncate text-sm text-gray-400 lg:block xl:w-32">
+                <span className="hidden w-20 truncate text-sm text-muted-foreground lg:block xl:w-32">
                   @{user.username}
                 </span>
               </div>
@@ -127,16 +127,16 @@ const Sidebar = () => {
             </span>
 
             {isModalOpen && (
-              <div className="absolute bottom-11 z-50 hidden w-40 rounded-md bg-white p-2 shadow-lg dark:bg-black lg:left-36 lg:block xl:left-48">
+              <div className="absolute bottom-11 z-50 hidden w-40 rounded-md bg-card p-2 shadow-lg lg:left-36 lg:block xl:left-48">
                 <div className="flex flex-col">
                   <Link to="/settings">
-                    <div className="cursor-pointer rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800">
+                    <div className="cursor-pointer rounded-md p-2 hover:bg-muted dark:hover:bg-gray-800">
                       Settings
                     </div>
                   </Link>
 
                   <div
-                    className="cursor-pointer rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800"
+                    className="cursor-pointer rounded-md p-2 hover:bg-muted dark:hover:bg-gray-800"
                     onClick={logout}
                   >
                     <p>Logout</p>
@@ -149,7 +149,7 @@ const Sidebar = () => {
       )}
 
       {user?.role === 'MODERATOR' && (
-        <div className="fixed left-0 top-0 z-10 hidden h-full flex-col justify-between bg-white p-4 dark:bg-black md:flex md:w-20 md:items-center lg:w-52 lg:items-start xl:w-64">
+        <div className="fixed left-0 top-0 z-10 hidden h-full flex-col justify-between bg-card p-4 md:flex md:w-20 md:items-center lg:w-52 lg:items-start xl:w-64">
           <Link to="/" className="mx-2 mb-8 mt-3 flex items-center space-x-3">
             <img src={logo} alt="Logo" className="w-10" />
             <p className="font-lobster text-4xl md:hidden lg:block">Hi5</p>
@@ -166,9 +166,9 @@ const Sidebar = () => {
               link="/moderator/moderate/user"
             />
           </div>
-          <div className="relative my-4 mt-auto flex w-full items-center justify-between space-x-2 rounded-xl p-2 hover:bg-gray-200 dark:hover:bg-gray-800">
+          <div className="relative my-4 mt-auto flex w-full items-center justify-between space-x-2 rounded-xl p-2 hover:bg-muted dark:hover:bg-gray-800">
             <div className="hidden flex-col gap-1 pl-2 lg:flex">
-              <span className="hidden w-20 truncate text-sm text-black dark:text-white lg:block xl:w-32">
+              <span className="hidden w-20 truncate text-sm text-foreground lg:block xl:w-32">
                 Moderator
               </span>
             </div>
@@ -177,11 +177,11 @@ const Sidebar = () => {
             </span>
             {isModalOpen && (
               <div
-                className="absolute bottom-11 z-50 hidden w-40 rounded-md bg-white p-2 shadow-lg dark:bg-black md:block lg:left-36 xl:left-48"
+                className="absolute bottom-11 z-50 hidden w-40 rounded-md bg-card p-2 shadow-lg md:block lg:left-36 xl:left-48"
                 onClick={() => setIsModalOpen(false)}
               >
                 <div
-                  className="flex cursor-pointer items-center justify-between gap-2 rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800"
+                  className="flex cursor-pointer items-center justify-between gap-2 rounded-md p-2 hover:bg-muted dark:hover:bg-gray-800"
                   onClick={changeThemeClickHandler}
                   aria-label="Toggle theme"
                 >
@@ -189,11 +189,11 @@ const Sidebar = () => {
                   {theme === 'dark' ? (
                     <LightMode className="block text-gray-200 transition-all duration-300" />
                   ) : (
-                    <DarkMode className="block transition-all duration-300 dark:text-gray-800" />
+                    <DarkMode className="block transition-all duration-300 dark:text-foreground" />
                   )}
                 </div>
                 <div
-                  className="cursor-pointer rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800"
+                  className="cursor-pointer rounded-md p-2 hover:bg-muted dark:hover:bg-gray-800"
                   onClick={logout}
                 >
                   <p>Logout</p>
@@ -205,7 +205,7 @@ const Sidebar = () => {
       )}
 
       {user?.role === 'ADMIN' && (
-        <div className="fixed left-0 top-0 z-10 hidden h-full flex-col justify-between bg-white p-4 dark:bg-black md:flex md:w-20 md:items-center lg:w-52 lg:items-start xl:w-64">
+        <div className="fixed left-0 top-0 z-10 hidden h-full flex-col justify-between bg-card p-4 md:flex md:w-20 md:items-center lg:w-52 lg:items-start xl:w-64">
           <Link to="/" className="mx-2 mb-8 mt-3 flex items-center space-x-3">
             <img src={logo} alt="Logo" className="w-10" />
             <p className="font-lobster text-4xl md:hidden lg:block">Hi5</p>
@@ -234,9 +234,9 @@ const Sidebar = () => {
             />
           </div>
 
-          <div className="relative my-4 mt-auto flex w-full items-center justify-between space-x-2 rounded-xl p-2 hover:bg-gray-200 dark:hover:bg-gray-800">
+          <div className="relative my-4 mt-auto flex w-full items-center justify-between space-x-2 rounded-xl p-2 hover:bg-muted dark:hover:bg-gray-800">
             <div className="hidden flex-col gap-1 pl-2 lg:flex">
-              <span className="hidden w-20 truncate text-sm text-black dark:text-white lg:block xl:w-32">
+              <span className="hidden w-20 truncate text-sm text-foreground lg:block xl:w-32">
                 Admin
               </span>
             </div>
@@ -245,11 +245,11 @@ const Sidebar = () => {
             </span>
             {isModalOpen && (
               <div
-                className="absolute bottom-11 z-50 hidden w-40 rounded-md bg-white p-2 shadow-lg dark:bg-black md:block lg:left-36 xl:left-48"
+                className="absolute bottom-11 z-50 hidden w-40 rounded-md bg-card p-2 shadow-lg md:block lg:left-36 xl:left-48"
                 onClick={() => setIsModalOpen(false)}
               >
                 <div
-                  className="flex cursor-pointer items-center justify-between gap-2 rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800"
+                  className="flex cursor-pointer items-center justify-between gap-2 rounded-md p-2 hover:bg-muted dark:hover:bg-gray-800"
                   onClick={changeThemeClickHandler}
                   aria-label="Toggle theme"
                 >
@@ -257,11 +257,11 @@ const Sidebar = () => {
                   {theme === 'dark' ? (
                     <LightMode className="block text-gray-200 transition-all duration-300" />
                   ) : (
-                    <DarkMode className="block transition-all duration-300 dark:text-gray-800" />
+                    <DarkMode className="block transition-all duration-300 dark:text-foreground" />
                   )}
                 </div>
                 <div
-                  className="cursor-pointer rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800"
+                  className="cursor-pointer rounded-md p-2 hover:bg-muted dark:hover:bg-gray-800"
                   onClick={logout}
                 >
                   <p>Logout</p>

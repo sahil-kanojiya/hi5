@@ -33,7 +33,7 @@ const UnbanConfirmationModal = ({ isOpen, closeModal, confirmUnban, isUnbanning 
           onClick={handleOutsideClick}
         >
           <div
-            className={`w-full max-w-xs transform rounded-lg border border-gray-500 bg-white p-6 shadow-lg transition-transform duration-300 dark:bg-black sm:w-2/3 sm:max-w-sm sm:p-8 md:w-1/2 md:max-w-md lg:w-1/3 lg:max-w-lg xl:w-1/4 xl:max-w-xl ${
+            className={`w-full max-w-xs transform rounded-lg border border-gray-500 bg-card p-6 shadow-lg transition-transform duration-300 sm:w-2/3 sm:max-w-sm sm:p-8 md:w-1/2 md:max-w-md lg:w-1/3 lg:max-w-lg xl:w-1/4 xl:max-w-xl ${
               isUnbanning ? 'pointer-events-none scale-95' : 'scale-100'
             }`}
           >
@@ -43,7 +43,7 @@ const UnbanConfirmationModal = ({ isOpen, closeModal, confirmUnban, isUnbanning 
               </h3>
               <button
                 onClick={closeModal}
-                className="text-gray-600 hover:text-gray-800 dark:text-gray-200 dark:hover:text-gray-400"
+                className="text-muted-foreground hover:text-foreground dark:hover:text-muted-foreground"
                 disabled={isUnbanning}
               >
                 <CloseRoundedIcon
@@ -61,11 +61,11 @@ const UnbanConfirmationModal = ({ isOpen, closeModal, confirmUnban, isUnbanning 
             <div className="flex justify-end gap-4">
               <button
                 onClick={closeModal}
-                className={`bg-gray-300 dark:bg-gray-600 ${
+                className={`bg-muted dark:bg-gray-600 ${
                   isUnbanning
                     ? 'cursor-not-allowed opacity-50'
                     : 'hover:bg-gray-400 dark:hover:bg-gray-500'
-                } rounded-lg px-4 py-2 text-black transition-all duration-200 ease-in-out dark:text-white`}
+                } rounded-lg px-4 py-2 text-foreground transition-all duration-200 ease-in-out`}
                 disabled={isUnbanning}
               >
                 Cancel

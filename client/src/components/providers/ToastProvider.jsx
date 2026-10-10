@@ -91,7 +91,7 @@ export const GeneralToast = (data) => {
     <div
       className={`${
         t.visible ? 'animate-toast-enter' : 'animate-toast-leave'
-      } pointer-events-auto flex w-max rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-black dark:ring-white`}
+      } pointer-events-auto flex w-max rounded-lg bg-card shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white`}
     >
       <div className="w- flex-1 p-4">
         <p className="text-center text-sm font-medium text-gray-900 dark:text-gray-100">{data}</p>
@@ -105,7 +105,7 @@ export const PostCreatedToast = () => {
     <div
       className={`${
         t.visible ? 'animate-toast-enter' : 'animate-toast-leave'
-      } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-black dark:ring-white`}
+      } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-card p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white`}
     >
       <CheckCircle className="text-green-500 dark:text-green-400" />
       <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -120,7 +120,7 @@ export const ReelCreatedToast = () => {
     <div
       className={`${
         t.visible ? 'animate-toast-enter' : 'animate-toast-leave'
-      } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-black dark:ring-white`}
+      } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-card p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white`}
     >
       <CheckCircle className="text-blue-500 dark:text-blue-400" />
       <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -135,7 +135,7 @@ export const StoryCreatedToast = () => {
     <div
       className={`${
         t.visible ? 'animate-toast-enter' : 'animate-toast-leave'
-      } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-black dark:ring-white`}
+      } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-card p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white`}
     >
       <CheckCircle className="text-purple-500 dark:text-purple-400" />
       <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -151,7 +151,7 @@ export const MessageToast = (messageData) => {
       <div
         className={`${
           t.visible ? 'animate-toast-enter' : 'animate-toast-leave'
-        } pointer-events-auto flex w-[320px] max-w-xs flex-col rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-black dark:ring-white`}
+        } pointer-events-auto flex w-[320px] max-w-xs flex-col rounded-lg bg-card p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white`}
       >
         <div className="flex items-center space-x-2 sm:hidden">
           <ChatBubble fontSize="small" className="text-blue-500" />
@@ -171,7 +171,7 @@ export const MessageToast = (messageData) => {
               <p className="font-semibold text-gray-900 dark:text-gray-100">
                 {messageData?.senderFullname}
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-muted-foreground dark:text-muted-foreground">
                 @{messageData?.senderUsername}
               </p>
             </div>
@@ -191,13 +191,17 @@ export const MessageToast = (messageData) => {
                 {messageData?.imageUrl && (
                   <div className="flex items-center space-x-1 text-blue-500">
                     <Image fontSize="small" />
-                    <span className="text-xs text-gray-600 dark:text-gray-400">Image</span>
+                    <span className="text-xs text-muted-foreground dark:text-muted-foreground">
+                      Image
+                    </span>
                   </div>
                 )}
                 {messageData?.videoUrl && (
                   <div className="flex items-center space-x-1 text-red-500">
                     <PlayCircle fontSize="small" />
-                    <span className="text-xs text-gray-600 dark:text-gray-400">Video</span>
+                    <span className="text-xs text-muted-foreground dark:text-muted-foreground">
+                      Video
+                    </span>
                   </div>
                 )}
               </div>
@@ -215,7 +219,7 @@ export const LikeNotification = (type, username) => {
       <div
         className={`${
           t.visible ? 'animate-toast-enter' : 'animate-toast-leave'
-        } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-black dark:ring-white`}
+        } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-card p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white`}
       >
         <Favorite className="text-red-500 dark:text-red-400" />
         <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -247,7 +251,7 @@ export const CommentNotification = (type, username) => {
       <div
         className={`${
           t.visible ? 'animate-toast-enter' : 'animate-toast-leave'
-        } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-black dark:ring-white`}
+        } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-card p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white`}
       >
         <ChatBubble className="text-blue-500 dark:text-blue-400" />
         <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -275,7 +279,7 @@ export const FollowNotification = (type, username) => {
       <div
         className={`${
           t.visible ? 'animate-toast-enter' : 'animate-toast-leave'
-        } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-black dark:ring-white`}
+        } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-card p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white`}
       >
         <PersonAdd className="text-green-500 dark:text-green-400" />
         <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -305,7 +309,7 @@ export const NewContentNotification = (type, username) => {
       <div
         className={`${
           t.visible ? 'animate-toast-enter' : 'animate-toast-leave'
-        } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-black dark:ring-white`}
+        } pointer-events-auto flex w-max items-center gap-3 rounded-lg bg-card p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white`}
       >
         {getIcon(type)}
         <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -319,7 +323,7 @@ export const NewContentNotification = (type, username) => {
 const getIcon = (type) => {
   switch (type) {
     case 'NETWORK_NEW_POST':
-      return <PostAdd className="text-gray-500 dark:text-gray-400" />;
+      return <PostAdd className="text-muted-foreground dark:text-muted-foreground" />;
     case 'NETWORK_NEW_REEL':
       return <PlayCircle className="text-teal-500 dark:text-teal-400" />;
     case 'NETWORK_NEW_STORY':

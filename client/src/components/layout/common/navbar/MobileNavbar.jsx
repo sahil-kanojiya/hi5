@@ -18,7 +18,7 @@ const MobileNavbar = () => {
   return (
     <>
       {user?.role === 'USER' && (
-        <div className="fixed bottom-0 left-0 z-10 flex w-full justify-between bg-white p-3 shadow-inner dark:bg-black md:hidden">
+        <div className="fixed bottom-0 left-0 z-10 flex w-full justify-between bg-card p-3 shadow-inner md:hidden">
           <div className="flex w-full items-center justify-around">
             <MobileNavItem
               icon={<HomeRounded sx={{ fontSize: { xs: 25, sm: 30 } }} />}
@@ -45,7 +45,7 @@ const MobileNavbar = () => {
       )}
 
       {(user?.role === 'MODERATOR' || user?.role === 'ADMIN') && (
-        <div className="fixed bottom-0 left-0 z-10 flex w-full justify-between bg-white p-3 shadow-inner dark:bg-black md:hidden">
+        <div className="fixed bottom-0 left-0 z-10 flex w-full justify-between bg-card p-3 shadow-inner md:hidden">
           <div className="flex w-full items-center justify-around">
             <MobileNavItem
               icon={<Report sx={{ fontSize: { xs: 25, sm: 30 } }} />}
@@ -60,7 +60,7 @@ const MobileNavbar = () => {
       )}
 
       {user?.role === 'ADMIN' && (
-        <div className="fixed bottom-0 left-0 z-10 flex w-full justify-between bg-white p-3 shadow-inner dark:bg-black md:hidden">
+        <div className="fixed bottom-0 left-0 z-10 flex w-full justify-between bg-card p-3 shadow-inner md:hidden">
           <div className="flex w-full items-center justify-around">
             <MobileNavItem
               icon={<DashboardRounded sx={{ fontSize: { xs: 25, sm: 30 } }} />}

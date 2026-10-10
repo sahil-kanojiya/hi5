@@ -13,7 +13,7 @@ class WebSocketService {
     this.userId = userId;
     this.client.connect(
       { userId },
-      (frame) => {
+      () => {
         callback();
         this.startHeartbeat();
       },

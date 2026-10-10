@@ -148,7 +148,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
   };
 
   return (
-    <div className="mx-auto mb-6 w-full max-w-xl rounded-lg bg-white p-3 shadow-md dark:bg-black sm:p-4">
+    <div className="mx-auto mb-6 w-full max-w-xl rounded-lg bg-card p-3 shadow-md sm:p-4">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <Link to={`/profile/${post.userId}`}>
@@ -160,7 +160,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
           </Link>
           <div className="flex flex-col">
             <p className="text-md font-semibold sm:text-lg">{post.fullname}</p>
-            <p className="flex flex-col items-start space-x-1 whitespace-nowrap text-sm text-gray-500 sm:flex-row sm:items-center">
+            <p className="flex flex-col items-start space-x-1 whitespace-nowrap text-sm text-muted-foreground sm:flex-row sm:items-center">
               <span>@{post.username}</span>
               <span className="hidden sm:block">•</span>
               <TimeAgo
@@ -176,7 +176,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
               className="flex transform items-center space-x-1 transition duration-200 hover:scale-110 hover:text-red-500"
               onClick={openDeleteModal}
             >
-              <DeleteOutlineOutlinedIcon className="cursor-pointer text-gray-600 hover:text-red-500" />
+              <DeleteOutlineOutlinedIcon className="cursor-pointer text-muted-foreground hover:text-red-500" />
             </button>
           )}
 
@@ -188,7 +188,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
               />
             ) : (
               <ReportGmailerrorredIcon
-                className="transform cursor-pointer text-gray-600 transition duration-200 hover:scale-110 hover:text-red-500"
+                className="transform cursor-pointer text-muted-foreground transition duration-200 hover:scale-110 hover:text-red-500"
                 onClick={openReportModal}
                 title="Report this post"
               />
@@ -202,7 +202,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
             />
           ) : (
             <BookmarkBorderOutlinedIcon
-              className="transform cursor-pointer text-gray-600 transition duration-200 hover:scale-110 hover:text-yellow-600"
+              className="transform cursor-pointer text-muted-foreground transition duration-200 hover:scale-110 hover:text-yellow-600"
               onClick={saveClickHandler}
               title="Save this post"
             />
@@ -211,7 +211,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
       </div>
 
       <div className="mb-4 w-full">
-        <p className="w-full whitespace-pre-wrap break-words px-2 text-sm text-gray-800 dark:text-gray-200 sm:text-base">
+        <p className="w-full whitespace-pre-wrap break-words px-2 text-sm text-foreground sm:text-base">
           {post.content}
         </p>
       </div>
@@ -235,7 +235,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
         </div>
       )}
 
-      <div className="flex items-center justify-between text-gray-500">
+      <div className="flex items-center justify-between text-muted-foreground">
         <div className="ml-2 flex w-full items-center space-x-5">
           <button
             className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110"
@@ -244,7 +244,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
             {isLiked ? (
               <FavoriteSharpIcon className="h-5 w-5 text-red-600 transition-colors duration-200" />
             ) : (
-              <FavoriteBorderSharpIcon className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-red-600" />
+              <FavoriteBorderSharpIcon className="h-5 w-5 text-muted-foreground transition-colors duration-200 group-hover:text-red-600" />
             )}
             <span className="text-sm font-medium group-hover:text-red-500">{likesCount}</span>
           </button>
@@ -276,7 +276,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
               className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110"
               onClick={openCommentModal}
             >
-              <CommentOutlinedIcon className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-blue-500" />
+              <CommentOutlinedIcon className="h-5 w-5 text-muted-foreground transition-colors duration-200 group-hover:text-blue-500" />
               <span className="text-sm font-medium group-hover:text-blue-500">{commentCount}</span>
             </button>
           )}
@@ -286,7 +286,7 @@ const Post = ({ post, removePost, isMyProfilePosts }) => {
               className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110"
               onClick={shareClickHandler}
             >
-              <ShareSharpIcon className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-green-500" />
+              <ShareSharpIcon className="h-5 w-5 text-muted-foreground transition-colors duration-200 group-hover:text-green-500" />
               <span className="text-xs group-hover:text-green-500">Share</span>
             </button>
           )}

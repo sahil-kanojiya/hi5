@@ -26,21 +26,23 @@ const ModeratorSearchCard = ({ index, user, removeModerator }) => {
   return (
     <div
       key={user?.id}
-      className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white p-3 shadow-md transition dark:bg-black sm:gap-0"
+      className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-card p-3 shadow-md transition sm:gap-0"
     >
       <div className="flex items-center gap-3 transition duration-150 min-[410px]:gap-4">
         <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-4 border-gray-300 bg-blue-500 dark:border-gray-700 min-[410px]:h-12 min-[410px]:w-12">
           {index + 1}
         </div>
         <div>
-          <p className="text-md break-words font-semibold text-slate-900 dark:text-white md:text-lg">
+          <p className="text-md break-words font-semibold text-slate-900 md:text-lg">
             {user?.email}
           </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">@{user?.username}</p>
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">
+            @{user?.username}
+          </p>
         </div>
       </div>
 
-      <p className="whitespace-nowrap text-xs text-gray-400 dark:text-gray-500">
+      <p className="whitespace-nowrap text-xs text-muted-foreground dark:text-muted-foreground">
         Created At: {new Date(user?.createdAt).toLocaleDateString()}
       </p>
 

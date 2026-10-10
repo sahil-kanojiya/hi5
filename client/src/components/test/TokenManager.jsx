@@ -39,8 +39,8 @@ const TokenManager = () => {
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-xl rounded-lg border border-gray-200 bg-white p-6 shadow-md">
-      <h1 className="mb-6 text-center text-2xl font-bold text-gray-800">Token Manager</h1>
+    <div className="mx-auto mt-10 max-w-xl rounded-lg border border-gray-200 bg-card p-6 shadow-md">
+      <h1 className="mb-6 text-center text-2xl font-bold text-foreground">Token Manager</h1>
       <div className="mb-6">
         <h2 className="mb-4 text-lg font-semibold text-gray-700">Access Token</h2>
         <div className="mb-4 flex gap-4">
@@ -68,7 +68,8 @@ const TokenManager = () => {
         </div>
       </div>
       <p className="text-sm text-gray-700">
-        Current Access Token: <span className="font-semibold text-gray-800">{token || 'None'}</span>
+        Current Access Token:{' '}
+        <span className="font-semibold text-foreground">{token || 'None'}</span>
       </p>
     </div>
   );

@@ -243,7 +243,7 @@ const Reel = ({
 
   return (
     <div className="relative flex h-full w-full snap-start">
-      {/* <div className="top-0 left-1/2 z-10 absolute flex justify-between items-center bg-white/15 dark:bg-black/20 mt-6 sm:mt-4 md:mt-2 lg:mt-4 mb-3 p-2 px-4 sm:px-5 md:px-6 lg:px-7 rounded-lg w-full text-black dark:text-white text-xs -translate-x-1/2 transform">
+      {/* <div className="top-0 left-1/2 z-10 absolute flex justify-between items-center bg-card/15 /20 mt-6 sm:mt-4 md:mt-2 lg:mt-4 mb-3 p-2 px-4 sm:px-5 md:px-6 lg:px-7 rounded-lg w-full text-foreground  text-xs -translate-x-1/2 transform">
       
         {showBackButton && (
           <span onClick={handleBackClick} className="mx-2 p-2 cursor-pointer">
@@ -259,7 +259,7 @@ const Reel = ({
 
         {showCreateReelButton && (
           <span
-            className="mx-2 p-2 text-black dark:text-white cursor-pointer"
+            className="mx-2 p-2 text-foreground  cursor-pointer"
             onClick={createReelModelOpenHandler}
           >
             <AddCircleOutlineOutlined
@@ -271,7 +271,7 @@ const Reel = ({
         )}
         {isMyProfileReels && (
           <button
-            className="flex items-center space-x-1 text-black hover:text-red-500 dark:text-white hover:scale-110 transition duration-200 cursor-pointer transform"
+            className="flex items-center space-x-1 text-foreground hover:text-red-500  hover:scale-110 transition duration-200 cursor-pointer transform"
             onClick={openDeleteModal}
           >
             <DeleteOutlineOutlined />
@@ -279,7 +279,7 @@ const Reel = ({
         )}
       </div> */}
 
-      <div className="absolute left-1/2 top-0 z-10 mb-3 mt-6 flex w-full -translate-x-1/2 transform items-center justify-between rounded-lg bg-white/15 p-2 px-4 text-xs text-black dark:bg-black/20 dark:text-white sm:mt-4 sm:px-5 md:mt-2 md:px-6 lg:mt-4 lg:px-7">
+      <div className="/20 absolute left-1/2 top-0 z-10 mb-3 mt-6 flex w-full -translate-x-1/2 transform items-center justify-between rounded-lg bg-card/15 p-2 px-4 text-xs text-foreground sm:mt-4 sm:px-5 md:mt-2 md:px-6 lg:mt-4 lg:px-7">
         <div className="flex w-1/3 items-center">
           {showBackButton && (
             <span onClick={handleBackClick} className="mx-2 cursor-pointer p-2">
@@ -295,7 +295,7 @@ const Reel = ({
         <div className="flex w-1/3 justify-end space-x-2">
           {showCreateReelButton && (
             <span
-              className="mx-2 cursor-pointer p-2 text-black dark:text-white"
+              className="mx-2 cursor-pointer p-2 text-foreground"
               onClick={createReelModelOpenHandler}
             >
               <AddCircleOutlineOutlined sx={{ fontSize: { xs: 23, sm: 25, md: 27 } }} />
@@ -303,7 +303,7 @@ const Reel = ({
           )}
           {isMyProfileReels && (
             <button
-              className="flex transform cursor-pointer items-center space-x-1 text-black transition duration-200 hover:scale-110 hover:text-red-500 dark:text-white"
+              className="flex transform cursor-pointer items-center space-x-1 text-foreground transition duration-200 hover:scale-110 hover:text-red-500"
               onClick={openDeleteModal}
             >
               <DeleteOutlineOutlined />
@@ -322,7 +322,7 @@ const Reel = ({
         onClick={handleClick}
       />
       <div
-        className="textfrom-white absolute bottom-40 right-14 flex cursor-pointer flex-col items-center justify-center rounded-full bg-black bg-opacity-20 p-2 text-white dark:bg-white dark:bg-opacity-20"
+        className="textfrom-white absolute bottom-40 right-14 flex cursor-pointer flex-col items-center justify-center rounded-full bg-black bg-opacity-20 p-2 text-white dark:bg-card dark:bg-opacity-20"
         onClick={toggleMute}
       >
         {isMuted ? (
@@ -451,7 +451,7 @@ const Reel = ({
             />
           ))}
       </div>
-      <div className="absolute bottom-8 left-1/2 z-10 flex w-full -translate-x-1/2 transform flex-col items-center justify-between rounded-lg bg-white/15 p-2 px-3 text-xs text-white dark:bg-black/20 dark:text-black sm:px-5 md:px-6 lg:px-7">
+      <div className="/20 absolute bottom-8 left-1/2 z-10 flex w-full -translate-x-1/2 transform flex-col items-center justify-between rounded-lg bg-card/15 p-2 px-3 text-xs text-white dark:text-foreground sm:px-5 md:px-6 lg:px-7">
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center gap-x-1 sm:gap-x-2 md:gap-x-3">
             <Link
@@ -464,11 +464,11 @@ const Reel = ({
                 className="h-full w-full rounded-full object-cover"
               />
             </Link>
-            <div className="flex flex-col text-black dark:text-white">
+            <div className="flex flex-col text-foreground">
               <span className="truncate text-sm font-semibold sm:text-lg md:text-lg">
                 {reel.fullname}
               </span>
-              <span className="flex flex-col flex-wrap gap-1 truncate text-xs text-gray-600 dark:text-gray-400 sm:flex-row sm:text-sm">
+              <span className="flex flex-col flex-wrap gap-1 truncate text-xs text-muted-foreground dark:text-muted-foreground sm:flex-row sm:text-sm">
                 <span>@{reel.username}</span>
                 <TimeAgo date={reel.createdAt} />
               </span>
@@ -510,7 +510,7 @@ const Reel = ({
         {/* Description Section */}
         <div className="w-full pt-2">
           <p
-            className={`w-full text-xs text-black dark:text-white sm:text-sm ${
+            className={`w-full text-xs text-foreground sm:text-sm ${
               expanded ? '' : 'line-clamp-1'
             }`}
           >

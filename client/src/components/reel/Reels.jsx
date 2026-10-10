@@ -80,11 +80,12 @@ const Reels = ({
       },
       { threshold: 0 }
     );
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
+    const currentLoader = loaderRef.current;
+    if (currentLoader) {
+      observer.observe(currentLoader);
     }
     return () => {
-      if (loaderRef.current) observer.unobserve(loaderRef.current);
+      if (currentLoader) observer.unobserve(currentLoader);
     };
   }, [loadMoreReels]);
 
@@ -123,12 +124,12 @@ const Reels = ({
     <>
       <div
         id="video-container"
-        className="hide-scrollbar mt-14 h-[87dvh] w-full max-w-md snap-y snap-mandatory overflow-scroll bg-white dark:bg-black md:mt-0 md:h-screen"
+        className="hide-scrollbar mt-14 h-[87dvh] w-full max-w-md snap-y snap-mandatory overflow-scroll bg-card md:mt-0 md:h-screen"
       >
         {!hasMore && !isLoading && reels.length === 0 && (
           <div className="p flex !h-full !w-full items-center justify-center px-20 sm:px-40">
-            <div className="rounded-lg bg-white px-4 py-2 text-center shadow-md">
-              <p className="text-lg font-semibold text-gray-500">No Reels</p>
+            <div className="rounded-lg bg-card px-4 py-2 text-center shadow-md">
+              <p className="text-lg font-semibold text-muted-foreground">No Reels</p>
             </div>
           </div>
         )}

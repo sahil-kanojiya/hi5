@@ -119,7 +119,7 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
       className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50"
       onClick={handleOutsideClick}
     >
-      <div className="w-full max-w-md rounded-lg border border-gray-500 bg-white p-4 px-5 shadow-lg dark:bg-black sm:max-w-lg lg:max-w-xl">
+      <div className="w-full max-w-md rounded-lg border border-gray-500 bg-card p-4 px-5 shadow-lg sm:max-w-lg lg:max-w-xl">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Upload Reel</h2>
           <button
@@ -127,7 +127,7 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
               clearAll();
               onClose();
             }}
-            className="text-gray-500 transition duration-200 hover:text-red-500"
+            className="text-muted-foreground transition duration-200 hover:text-red-500"
           >
             <CloseRoundedIcon
               sx={{
@@ -150,7 +150,7 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
                     sx={{
                       fontSize: { xs: 25, sm: 28, md: 30 },
                     }}
-                    className="absolute right-1 top-1 cursor-pointer rounded-full bg-gray-300 p-1 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600"
+                    className="absolute right-1 top-1 cursor-pointer rounded-full bg-muted p-1 hover:bg-gray-400 dark:hover:bg-gray-600"
                   />
                 </button>
                 <video
@@ -161,14 +161,14 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
                 />
               </div>
             ) : (
-              <span className="pl-2 text-gray-600">No video selected</span>
+              <span className="pl-2 text-muted-foreground">No video selected</span>
             )}
           </div>
 
           <div className="mt-2 flex flex-col gap-4">
             <div className="flex flex-wrap gap-2 sm:gap-4">
               <div
-                className="flex flex-grow cursor-pointer items-center justify-center rounded-md border p-3 shadow-sm transition duration-200 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-800"
+                className="flex flex-grow cursor-pointer items-center justify-center rounded-md border p-3 shadow-sm transition duration-200 hover:bg-background dark:border-gray-800 dark:hover:bg-gray-800"
                 onClick={() => videoInputRef.current.click()}
               >
                 <span className="font-semibold">Select Video</span>
@@ -184,7 +184,7 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-300 bg-gray-100 p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:border-gray-700 dark:bg-gray-900">
+            <div className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-300 bg-background p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:border-gray-700">
               <div
                 className="flex cursor-pointer items-center gap-2 text-sm font-medium transition-all duration-300"
                 onClick={() => setIsPrivate(!isPrivate)}
@@ -195,7 +195,7 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
                     className={`${
                       isPrivate
                         ? 'text-blue-600 dark:text-blue-400'
-                        : 'text-gray-500 dark:text-gray-400'
+                        : 'text-muted-foreground dark:text-muted-foreground'
                     }`}
                   />
                 ) : (
@@ -204,7 +204,7 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
                     className={`${
                       isPrivate
                         ? 'text-blue-600 dark:text-blue-400'
-                        : 'text-gray-500 dark:text-gray-400'
+                        : 'text-muted-foreground dark:text-muted-foreground'
                     }`}
                   />
                 )}
@@ -221,7 +221,7 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
                     className={`${
                       disableComments
                         ? 'text-blue-600 dark:text-blue-400'
-                        : 'text-gray-500 dark:text-gray-400'
+                        : 'text-muted-foreground dark:text-muted-foreground'
                     }`}
                   />
                 ) : (
@@ -230,7 +230,7 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
                     className={`${
                       disableComments
                         ? 'text-blue-600 dark:text-blue-400'
-                        : 'text-gray-500 dark:text-gray-400'
+                        : 'text-muted-foreground dark:text-muted-foreground'
                     }`}
                   />
                 )}
@@ -240,14 +240,14 @@ const ReelUploadModal = ({ isOpen, onClose }) => {
 
             <textarea
               disabled={isLoading}
-              className="min-h-[85px] w-full resize-none rounded-lg border border-gray-300 bg-gray-100 p-3 text-sm focus:outline-none dark:border-gray-700 dark:bg-gray-900"
+              className="min-h-[85px] w-full resize-none rounded-lg border border-gray-300 bg-background p-3 text-sm focus:outline-none dark:border-gray-700"
               placeholder="Enter description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
 
             {uploadProgress > 0 && uploadProgress < 100 && (
-              <div className="mb-4 h-2.5 w-full rounded-full bg-gray-200">
+              <div className="mb-4 h-2.5 w-full rounded-full bg-muted">
                 <div
                   className="h-2.5 rounded-full bg-blue-600"
                   style={{ width: `${uploadProgress}%` }}

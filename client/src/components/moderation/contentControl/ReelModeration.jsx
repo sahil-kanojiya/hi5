@@ -58,11 +58,12 @@ const ReelModeration = () => {
       },
       { threshold: 0.1 }
     );
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
+    const currentLoader = loaderRef.current;
+    if (currentLoader) {
+      observer.observe(currentLoader);
     }
     return () => {
-      if (loaderRef.current) observer.unobserve(loaderRef.current);
+      if (currentLoader) observer.unobserve(currentLoader);
     };
   }, [loadMoreReels]);
 
@@ -102,13 +103,13 @@ const ReelModeration = () => {
 
             {isLoading && error === null && (
               <div ref={loaderRef} className="flex h-11 items-center justify-center">
-                <span className="text-gray-500">Loading more reels...</span>
+                <span className="text-muted-foreground">Loading more reels...</span>
               </div>
             )}
 
             {!isLoading && error === null && (
               <div ref={loaderRef} className="flex h-11 items-center justify-center">
-                <span className="text-gray-500">No more reels available.</span>
+                <span className="text-muted-foreground">No more reels available.</span>
               </div>
             )}
 

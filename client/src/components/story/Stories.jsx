@@ -34,7 +34,7 @@ const Stories = () => {
 
   return (
     <>
-      <div className="hide-scrollbar flex w-full max-w-xl gap-4 overflow-x-auto rounded-md bg-white p-4 shadow-md">
+      <div className="hide-scrollbar flex w-full max-w-xl gap-4 overflow-x-auto rounded-md bg-card p-4 shadow-md">
         <div className="flex flex-col items-center text-center">
           <div
             className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-blue-500"

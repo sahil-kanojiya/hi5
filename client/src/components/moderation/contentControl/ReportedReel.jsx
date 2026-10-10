@@ -98,7 +98,7 @@ const ReportedReel = ({ reel, removeReel, updateBanUntill }) => {
   };
 
   return (
-    <div className="mx-auto mb-6 w-full max-w-xl rounded-lg bg-gray-100 p-3 shadow-md dark:bg-gray-900 sm:p-4">
+    <div className="mx-auto mb-6 w-full max-w-xl rounded-lg bg-background p-3 shadow-md sm:p-4">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <img
@@ -108,7 +108,7 @@ const ReportedReel = ({ reel, removeReel, updateBanUntill }) => {
           />
           <div className="flex flex-col">
             <p className="text-md font-semibold sm:text-lg">{reel.fullname}</p>
-            <p className="flex flex-col items-start space-x-1 whitespace-nowrap text-sm text-gray-500 sm:flex-row sm:items-center">
+            <p className="flex flex-col items-start space-x-1 whitespace-nowrap text-sm text-muted-foreground sm:flex-row sm:items-center">
               <span>@{reel.username}</span>
               <span className="hidden sm:block">•</span>
               <TimeAgo
@@ -122,7 +122,7 @@ const ReportedReel = ({ reel, removeReel, updateBanUntill }) => {
           className="flex transform items-center space-x-1 transition duration-200 hover:scale-110 hover:text-red-500"
           onClick={openDeleteModal}
         >
-          <DeleteOutlineOutlined className="cursor-pointer text-gray-600 hover:text-red-500" />
+          <DeleteOutlineOutlined className="cursor-pointer text-muted-foreground hover:text-red-500" />
         </button>
       </div>
 
@@ -137,15 +137,15 @@ const ReportedReel = ({ reel, removeReel, updateBanUntill }) => {
       )}
 
       <div className="mb-4 w-full">
-        <p className="w-full whitespace-pre-wrap break-words px-2 text-sm text-gray-800 dark:text-gray-200 sm:text-base">
+        <p className="w-full whitespace-pre-wrap break-words px-2 text-sm text-foreground sm:text-base">
           {reel.description}
         </p>
       </div>
 
-      <div className="flex flex-col items-center justify-between gap-2 text-gray-500">
+      <div className="flex flex-col items-center justify-between gap-2 text-muted-foreground">
         <div className="ml-2 flex w-full items-center space-x-5">
           <button className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110">
-            <FavoriteBorderSharp className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-red-600" />
+            <FavoriteBorderSharp className="h-5 w-5 text-muted-foreground transition-colors duration-200 group-hover:text-red-600" />
 
             <span className="text-sm font-medium group-hover:text-red-500">{reel.likesCount}</span>
           </button>
@@ -161,7 +161,7 @@ const ReportedReel = ({ reel, removeReel, updateBanUntill }) => {
             </button>
           ) : (
             <button className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110">
-              <CommentOutlined className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-blue-500" />
+              <CommentOutlined className="h-5 w-5 text-muted-foreground transition-colors duration-200 group-hover:text-blue-500" />
               <span className="text-sm font-medium group-hover:text-blue-500">
                 {reel.commentsCount}
               </span>
@@ -172,7 +172,7 @@ const ReportedReel = ({ reel, removeReel, updateBanUntill }) => {
             className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110"
             onClick={openReportDetailsModal}
           >
-            <ReportGmailerrorred className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-red-500" />
+            <ReportGmailerrorred className="h-5 w-5 text-muted-foreground transition-colors duration-200 group-hover:text-red-500" />
             <span className="text-sm font-medium group-hover:text-red-500">
               {reel.totalReportsCount}
             </span>
@@ -191,7 +191,7 @@ const ReportedReel = ({ reel, removeReel, updateBanUntill }) => {
           </div>
         ) : (
           <div className="flex w-full items-center justify-between">
-            <p className="mt-1 whitespace-nowrap text-sm text-gray-500">
+            <p className="mt-1 whitespace-nowrap text-sm text-muted-foreground">
               {getRemainingBanDays()} days remaining.
             </p>
             <button

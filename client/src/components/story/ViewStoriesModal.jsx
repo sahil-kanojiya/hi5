@@ -121,13 +121,13 @@ const ViewStoriesModal = ({ isOpen, closeModal, newStoryUser }) => {
         <Close className="text-2xl" />
       </button>
 
-      <div className="relative flex h-screen w-full max-w-md flex-col items-center justify-center rounded-md bg-white shadow-lg">
+      <div className="relative flex h-screen w-full max-w-md flex-col items-center justify-center rounded-md bg-card shadow-lg">
         <div className="absolute left-0 top-7 flex w-full gap-1 px-4 pt-2 sm:top-0">
           {Array.from({ length: newStoryUser.totalStorys }).map((_, index) => (
             <div
               key={index}
               className={`h-1 flex-1 rounded-md transition-all ${
-                index <= currentIndex ? 'bg-blue-500' : 'bg-gray-300'
+                index <= currentIndex ? 'bg-blue-500' : 'bg-muted'
               }`}
             ></div>
           ))}

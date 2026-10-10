@@ -87,7 +87,7 @@ const UserModerationSearchCard = ({ user, changeUserBanUntill }) => {
   return (
     <div
       key={user?.id}
-      className="flex flex-wrap items-start justify-between gap-5 rounded-lg bg-white p-3 shadow-md transition dark:bg-black sm:items-center sm:gap-0"
+      className="flex flex-wrap items-start justify-between gap-5 rounded-lg bg-card p-3 shadow-md transition sm:items-center sm:gap-0"
     >
       <div className="flex items-center gap-1 transition duration-150 min-[410px]:gap-4">
         <div className="h-10 w-10 overflow-hidden rounded-full min-[410px]:h-12 min-[410px]:w-12">
@@ -101,7 +101,9 @@ const UserModerationSearchCard = ({ user, changeUserBanUntill }) => {
           <p className="min-[410px]:text-md whitespace-nowrap break-normal text-sm font-semibold md:text-lg">
             {user?.fullname}
           </p>
-          <p className="whitespace-nowrap break-normal text-sm text-gray-400">@{user?.username}</p>
+          <p className="whitespace-nowrap break-normal text-sm text-muted-foreground">
+            @{user?.username}
+          </p>
         </div>
       </div>
 
@@ -113,7 +115,7 @@ const UserModerationSearchCard = ({ user, changeUserBanUntill }) => {
         )}
 
         {isBanned && (
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             {getRemainingBanDays()} days remaining for unban.
           </p>
         )}

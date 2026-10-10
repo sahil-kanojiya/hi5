@@ -207,9 +207,11 @@ const ChatBox = ({ chatId, receiverId }) => {
 
   return (
     <>
-      <div className="hide-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto rounded-lg bg-gray-300 p-4 dark:bg-gray-800">
-        {!chatId && <p className="text-center text-gray-400">Select a user to start chatting.</p>}
-        {isMessagesLoading && <p className="text-center text-gray-400">Loading...</p>}
+      <div className="hide-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto rounded-lg bg-muted p-4">
+        {!chatId && (
+          <p className="text-center text-muted-foreground">Select a user to start chatting.</p>
+        )}
+        {isMessagesLoading && <p className="text-center text-muted-foreground">Loading...</p>}
         {error && <p className="text-center text-red-400">{error}</p>}
 
         {chatId && !isMessagesLoading && !error && messages.length > 0 ? (
@@ -271,23 +273,23 @@ const ChatBox = ({ chatId, receiverId }) => {
             );
           })
         ) : (
-          <p className="text-center text-gray-400">No messages yet. Say hi!</p>
+          <p className="text-center text-muted-foreground">No messages yet. Say hi!</p>
         )}
         <div ref={messagesEndRef} />
       </div>
 
       <div className="pt-2">
-        <div className="flex flex-col items-center rounded-xl bg-gray-200 p-1 dark:bg-gray-800">
+        <div className="flex flex-col items-center rounded-xl bg-muted p-1">
           {file && fileURL && (
-            <div className="flex h-48 w-full p-1 text-gray-500">{renderFilePreview()}</div>
+            <div className="flex h-48 w-full p-1 text-muted-foreground">{renderFilePreview()}</div>
           )}
 
           {fileError && (
-            <div className="w-full rounded-full bg-gray-200 p-1 text-red-400">{fileError}</div>
+            <div className="w-full rounded-full bg-muted p-1 text-red-400">{fileError}</div>
           )}
 
           {isPending && (
-            <div className="w-full rounded-full bg-gray-200 p-1">
+            <div className="w-full rounded-full bg-muted p-1">
               <div
                 className="h-2 rounded-full bg-blue-600 transition-all duration-300"
                 style={{ width: `${uploadProgress}%` }}
@@ -295,8 +297,8 @@ const ChatBox = ({ chatId, receiverId }) => {
             </div>
           )}
 
-          <div className="flex w-full items-center gap-3 rounded-xl bg-gray-200 p-1 dark:bg-gray-800">
-            <div className="flex flex-1 items-center rounded-lg border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500 dark:border-gray-600 dark:bg-gray-700">
+          <div className="flex w-full items-center gap-3 rounded-xl bg-muted p-1">
+            <div className="flex flex-1 items-center rounded-lg border border-gray-300 bg-card focus-within:ring-2 focus-within:ring-blue-500 dark:border-gray-600">
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -314,7 +316,7 @@ const ChatBox = ({ chatId, receiverId }) => {
               {/* Action Buttons (Image & Video) */}
               <div className="flex items-center gap-2 pr-2">
                 <button
-                  className="flex h-10 w-10 items-center justify-center rounded-full p-2 transition hover:bg-gray-300 dark:hover:bg-gray-700"
+                  className="flex h-10 w-10 items-center justify-center rounded-full p-2 transition hover:bg-muted dark:hover:bg-gray-700"
                   disabled={chatId === undefined}
                   onClick={() => {
                     fileRef.current.accept = 'image/*';
@@ -323,12 +325,12 @@ const ChatBox = ({ chatId, receiverId }) => {
                 >
                   <ImageRounded
                     sx={{ fontSize: 24 }}
-                    className="text-gray-600 dark:text-gray-400"
+                    className="text-muted-foreground dark:text-muted-foreground"
                   />
                 </button>
 
                 <button
-                  className="flex h-10 w-10 items-center justify-center rounded-full p-2 transition hover:bg-gray-300 dark:hover:bg-gray-700"
+                  className="flex h-10 w-10 items-center justify-center rounded-full p-2 transition hover:bg-muted dark:hover:bg-gray-700"
                   disabled={chatId === undefined}
                   onClick={() => {
                     fileRef.current.accept = 'video/*';
@@ -337,7 +339,7 @@ const ChatBox = ({ chatId, receiverId }) => {
                 >
                   <VideocamRounded
                     sx={{ fontSize: 28 }}
-                    className="text-gray-600 dark:text-gray-400"
+                    className="text-muted-foreground dark:text-muted-foreground"
                   />
                 </button>
 

@@ -33,7 +33,7 @@ const DeleteConfirmationModal = ({ isOpen, closeModal, confirmDelete, isDeleting
           onClick={handleOutsideClick}
         >
           <div
-            className={`w-full max-w-xs transform rounded-lg border border-gray-500 bg-white p-6 shadow-lg transition-transform duration-300 dark:bg-black sm:max-w-sm md:max-w-md lg:max-w-lg ${
+            className={`w-full max-w-xs transform rounded-lg border border-gray-500 bg-card p-6 shadow-lg transition-transform duration-300 sm:max-w-sm md:max-w-md lg:max-w-lg ${
               isDeleting ? 'pointer-events-none scale-95' : 'scale-100'
             }`}
           >
@@ -43,14 +43,14 @@ const DeleteConfirmationModal = ({ isOpen, closeModal, confirmDelete, isDeleting
               </h3>
               <button
                 onClick={closeModal}
-                className="text-gray-600 hover:text-gray-800 dark:text-gray-200 dark:hover:text-gray-400"
+                className="text-muted-foreground hover:text-foreground dark:hover:text-muted-foreground"
                 disabled={isDeleting}
               >
                 <CloseRoundedIcon
                   sx={{
                     fontSize: { xs: 25, sm: 28, md: 30 },
                   }}
-                  className="text-gray-500 transition duration-200 hover:text-red-500"
+                  className="text-muted-foreground transition duration-200 hover:text-red-500"
                 />
               </button>
             </div>
@@ -97,11 +97,11 @@ const DeleteConfirmationModal = ({ isOpen, closeModal, confirmDelete, isDeleting
             <div className="flex justify-end gap-4">
               <button
                 onClick={closeModal}
-                className={`bg-gray-300 dark:bg-gray-600 ${
+                className={`bg-muted dark:bg-gray-600 ${
                   isDeleting
                     ? 'cursor-not-allowed opacity-50'
                     : 'hover:bg-gray-400 dark:hover:bg-gray-500'
-                } rounded-lg px-4 py-2 text-black transition-all duration-200 ease-in-out dark:text-white`}
+                } rounded-lg px-4 py-2 text-foreground transition-all duration-200 ease-in-out`}
                 disabled={isDeleting}
               >
                 Cancel

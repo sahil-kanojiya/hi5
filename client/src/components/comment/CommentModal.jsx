@@ -1,6 +1,6 @@
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import axiosInstance from '../../services/axios.config';
 import { makeComment } from '../../services/api';
 import Comment from './Comment';
@@ -94,14 +94,15 @@ const CommentModal = ({
 
   useEffect(() => {
     fetchComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, type, relevantId, commentCount]);
 
-  const loadMoreComments = () => {
+  const loadMoreComments = useCallback(() => {
     console.log('load more posts');
     if (!isLoading && hasMore) {
       setPage((prevPage) => prevPage + 1);
     }
-  };
+  }, [isLoading, hasMore]);
 
   const removeComment = (commentId) => {
     updateCommentCount((prev) => prev - 1);
@@ -123,11 +124,12 @@ const CommentModal = ({
       },
       { threshold: 0.1 }
     );
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
+    const currentLoader = loaderRef.current;
+    if (currentLoader) {
+      observer.observe(currentLoader);
     }
     return () => {
-      if (loaderRef.current) observer.unobserve(loaderRef.current);
+      if (currentLoader) observer.unobserve(currentLoader);
     };
   }, [loadMoreComments]);
 
@@ -138,12 +140,12 @@ const CommentModal = ({
       className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50"
       onClick={handleOutsideClick}
     >
-      <div className="w-full max-w-md rounded-lg border border-gray-500 bg-white p-4 shadow-lg dark:bg-black sm:max-w-lg lg:max-w-xl">
+      <div className="w-full max-w-md rounded-lg border border-gray-500 bg-card p-4 shadow-lg sm:max-w-lg lg:max-w-xl">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Comments</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 transition duration-200 hover:text-red-500"
+            className="text-muted-foreground transition duration-200 hover:text-red-500"
           >
             <CloseRoundedIcon
               sx={{
@@ -170,7 +172,7 @@ const CommentModal = ({
               {!isLoading && error !== null && (
                 <div
                   ref={loaderRef}
-                  className="flex h-16 items-center justify-center text-white dark:text-black"
+                  className="flex h-16 items-center justify-center text-white dark:text-foreground"
                 >
                   Something error occured.
                 </div>
@@ -186,7 +188,7 @@ const CommentModal = ({
             value={newComment}
             onChange={handleCommentChange}
             placeholder="Write a comment..."
-            className="w-full rounded-lg border bg-white p-2 outline-none dark:border-gray-500 dark:bg-black"
+            className="w-full rounded-lg border bg-card p-2 outline-none dark:border-gray-500"
             disabled={isPosting}
           />
           <button

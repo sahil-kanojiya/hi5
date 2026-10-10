@@ -45,7 +45,7 @@ const MyStory = ({
         {myStorys.map((_, index) => (
           <div
             key={index}
-            className={`h-1 flex-1 rounded-md transition-all ${index <= currentIndex ? 'bg-blue-500' : 'bg-gray-300'}`}
+            className={`h-1 flex-1 rounded-md transition-all ${index <= currentIndex ? 'bg-blue-500' : 'bg-muted'}`}
           ></div>
         ))}
       </div>
@@ -57,7 +57,7 @@ const MyStory = ({
         >
           <DeleteOutline
             sx={{ fontSize: { xs: 25, sm: 28, md: 30 } }}
-            className="cursor-pointer text-gray-600 hover:text-red-500"
+            className="cursor-pointer text-muted-foreground hover:text-red-500"
           />
         </button>
       )}
@@ -88,7 +88,7 @@ const MyStory = ({
         <div className="flex flex-col items-center justify-center rounded-xl bg-gray-800 bg-opacity-50 py-2 shadow-lg">
           {isPending && (
             <div className="w-full px-2 pb-3">
-              <div className="h-2 w-full rounded-full bg-gray-200">
+              <div className="h-2 w-full rounded-full bg-muted">
                 <div
                   className="h-2 rounded-full bg-blue-600 transition-all duration-300"
                   style={{ width: `${uploadProgress}%` }}

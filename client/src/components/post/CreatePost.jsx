@@ -133,7 +133,7 @@ const CreatePost = () => {
 
     if (file.type.startsWith('image/')) {
       return (
-        <div className="w-full text-lg text-gray-500">
+        <div className="w-full text-lg text-muted-foreground">
           <div className="relative mx-auto w-full">
             <CloseRoundedIcon
               className="absolute right-0 top-0 z-10 h-6 w-6 cursor-pointer rounded-full"
@@ -155,7 +155,7 @@ const CreatePost = () => {
 
     if (file.type.startsWith('video/')) {
       return (
-        <div className="w-full text-lg text-gray-500">
+        <div className="w-full text-lg text-muted-foreground">
           <div className="relative mx-auto w-full">
             <CloseRoundedIcon
               sx={{
@@ -184,7 +184,7 @@ const CreatePost = () => {
   const user = useSelector((state) => state.user.profile);
 
   return (
-    <div className="mb-3 mt-4 flex w-full max-w-xl items-start gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-black">
+    <div className="mb-3 mt-4 flex w-full max-w-xl items-start gap-3 rounded-xl border border-gray-200 bg-card p-4 shadow-lg dark:border-gray-700">
       <Link
         to={`/profile/${user?.id}`}
         className="mt-2 h-10 w-10 flex-shrink-0 cursor-pointer overflow-hidden rounded-full shadow-md"
@@ -199,7 +199,7 @@ const CreatePost = () => {
 
       <form className="flex w-full flex-col gap-3" onSubmit={handleSubmit}>
         <textarea
-          className="min-h-[85px] w-full resize-none rounded-lg border border-gray-300 bg-gray-100 p-3 text-sm focus:outline-none dark:border-gray-700 dark:bg-gray-900"
+          className="min-h-[85px] w-full resize-none rounded-lg border border-gray-300 bg-background p-3 text-sm focus:outline-none dark:border-gray-700"
           placeholder="What's on your mind?"
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -208,7 +208,7 @@ const CreatePost = () => {
 
         {renderFilePreview()}
 
-        <div className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-300 bg-gray-100 p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:border-gray-700 dark:bg-gray-900">
+        <div className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-300 bg-background p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:border-gray-700">
           <div
             className="flex cursor-pointer items-center gap-2 text-sm font-medium transition-all duration-300"
             onClick={() => setIsPrivate(!isPrivate)}
@@ -219,7 +219,7 @@ const CreatePost = () => {
                 className={`${
                   isPrivate
                     ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-gray-500 dark:text-gray-400'
+                    : 'text-muted-foreground dark:text-muted-foreground'
                 }`}
               />
             ) : (
@@ -228,7 +228,7 @@ const CreatePost = () => {
                 className={`${
                   isPrivate
                     ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-gray-500 dark:text-gray-400'
+                    : 'text-muted-foreground dark:text-muted-foreground'
                 }`}
               />
             )}
@@ -245,7 +245,7 @@ const CreatePost = () => {
                 className={`${
                   disableComments
                     ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-gray-500 dark:text-gray-400'
+                    : 'text-muted-foreground dark:text-muted-foreground'
                 }`}
               />
             ) : (
@@ -254,7 +254,7 @@ const CreatePost = () => {
                 className={`${
                   disableComments
                     ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-gray-500 dark:text-gray-400'
+                    : 'text-muted-foreground dark:text-muted-foreground'
                 }`}
               />
             )}
@@ -263,7 +263,7 @@ const CreatePost = () => {
         </div>
 
         {isPending && (
-          <div className="relative h-2 w-full rounded-full bg-gray-300">
+          <div className="relative h-2 w-full rounded-full bg-muted">
             <div
               className="absolute left-0 top-0 h-2 rounded-full bg-blue-600 transition-all duration-300"
               style={{ width: `${uploadProgress}%` }}
@@ -275,7 +275,7 @@ const CreatePost = () => {
           <div className="flex items-center gap-1 sm:gap-3">
             <ImageRoundedIcon
               sx={{ fontSize: 30 }}
-              className="cursor-pointer text-gray-600 transition-colors hover:text-blue-500"
+              className="cursor-pointer text-muted-foreground transition-colors hover:text-blue-500"
               onClick={() => {
                 fileRef.current.accept = 'image/*';
                 fileRef.current.click();
@@ -283,7 +283,7 @@ const CreatePost = () => {
             />
             <VideocamRoundedIcon
               sx={{ fontSize: 35 }}
-              className="cursor-pointer text-gray-600 transition-colors hover:text-blue-500"
+              className="cursor-pointer text-muted-foreground transition-colors hover:text-blue-500"
               onClick={() => {
                 fileRef.current.accept = 'video/*';
                 fileRef.current.click();

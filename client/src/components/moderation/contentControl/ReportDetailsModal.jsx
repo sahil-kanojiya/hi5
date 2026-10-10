@@ -73,12 +73,12 @@ const ReportDetailsModal = ({ isOpen, onClose, type, relevantId, removeEntity })
       className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50"
       onClick={handleOutsideClick}
     >
-      <div className="w-full max-w-md rounded-lg border border-gray-500 bg-white p-4 shadow-lg dark:bg-black">
+      <div className="w-full max-w-md rounded-lg border border-gray-500 bg-card p-4 shadow-lg">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Report Details</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 transition duration-200 hover:text-red-500"
+            className="text-muted-foreground transition duration-200 hover:text-red-500"
           >
             <CloseRoundedIcon
               sx={{
@@ -88,7 +88,7 @@ const ReportDetailsModal = ({ isOpen, onClose, type, relevantId, removeEntity })
           </button>
         </div>
 
-        <div className="hide-scrollbar max-h-60 overflow-y-auto rounded-md bg-gray-100 shadow-sm dark:bg-gray-800">
+        <div className="hide-scrollbar max-h-60 overflow-y-auto rounded-md bg-background shadow-sm">
           {!isLoading && reportDetails.length > 0 && (
             <>
               {reportDetails.map((reportDetail, index) => (
@@ -103,7 +103,7 @@ const ReportDetailsModal = ({ isOpen, onClose, type, relevantId, removeEntity })
           )}
         </div>
         {isLoading && (
-          <div className="flex w-full items-center justify-between px-3 py-2 transition-all duration-300 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-700">
+          <div className="flex w-full items-center justify-between px-3 py-2 transition-all duration-300 ease-in-out hover:bg-muted dark:hover:bg-gray-700">
             <p className="text-center font-medium text-gray-700 dark:text-gray-300">loading</p>
           </div>
         )}

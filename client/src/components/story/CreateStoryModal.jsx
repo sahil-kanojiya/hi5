@@ -169,7 +169,7 @@ const CreateStoryModal = ({ isOpen, closeModal }) => {
           <Close className="text-2xl" />
         </button>
 
-        <div className="relative flex h-screen w-full max-w-md flex-col items-center justify-center rounded-md bg-white shadow-lg">
+        <div className="relative flex h-screen w-full max-w-md flex-col items-center justify-center rounded-md bg-card shadow-lg">
           {isLoading && (
             <div className="flex h-full w-full items-center justify-center">
               <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>

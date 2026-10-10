@@ -49,7 +49,7 @@ const NewModeratorCreateModal = ({
           onClick={handleOutsideClick}
         >
           <div
-            className={`w-full max-w-md transform rounded-lg border border-gray-500 bg-white p-4 shadow-lg transition-transform duration-300 dark:bg-black sm:w-3/4 sm:p-6 md:w-2/3 md:p-8 lg:w-1/2 ${isOpen ? 'scale-100' : 'scale-95'} ${isCreatingAccount ? 'opacity-50' : ''}`}
+            className={`w-full max-w-md transform rounded-lg border border-gray-500 bg-card p-4 shadow-lg transition-transform duration-300 sm:w-3/4 sm:p-6 md:w-2/3 md:p-8 lg:w-1/2 ${isOpen ? 'scale-100' : 'scale-95'} ${isCreatingAccount ? 'opacity-50' : ''}`}
           >
             <div className="mb-4 flex items-center justify-between text-xl">
               <h3 className="font-semibold text-blue-600 dark:text-blue-400">
@@ -57,7 +57,7 @@ const NewModeratorCreateModal = ({
               </h3>
               <button
                 onClick={closeModal}
-                className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
+                className="text-muted-foreground hover:text-foreground dark:text-gray-300 dark:hover:text-gray-100"
                 disabled={isCreatingAccount}
               >
                 <CloseRoundedIcon
@@ -74,7 +74,7 @@ const NewModeratorCreateModal = ({
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 bg-white p-2 text-black dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                className="w-full rounded-lg border border-gray-300 bg-card p-2 text-foreground dark:border-gray-600"
                 disabled={isCreatingAccount}
               />
               <input
@@ -82,7 +82,7 @@ const NewModeratorCreateModal = ({
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 bg-white p-2 text-black dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                className="w-full rounded-lg border border-gray-300 bg-card p-2 text-foreground dark:border-gray-600"
                 disabled={isCreatingAccount}
               />
               <input
@@ -90,7 +90,7 @@ const NewModeratorCreateModal = ({
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 bg-white p-2 text-black dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                className="w-full rounded-lg border border-gray-300 bg-card p-2 text-foreground dark:border-gray-600"
                 disabled={isCreatingAccount}
               />
               {accountCreationError && (
@@ -101,7 +101,7 @@ const NewModeratorCreateModal = ({
             <div className="flex justify-end gap-4">
               <button
                 onClick={closeModal}
-                className={`rounded-lg bg-gray-300 px-4 py-2 text-black transition-all duration-200 ease-in-out hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600`}
+                className={`rounded-lg bg-muted px-4 py-2 text-foreground transition-all duration-200 ease-in-out hover:bg-gray-400 dark:hover:bg-gray-600`}
                 disabled={isCreatingAccount}
               >
                 Cancel

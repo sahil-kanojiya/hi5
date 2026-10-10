@@ -160,7 +160,7 @@ const RequestsModal = ({ isOpen, closeModal, type }) => {
         onClick={handleOutsideClick}
       >
         <div
-          className={`w-full max-w-md transform rounded-lg border border-gray-500 bg-white p-4 shadow-lg transition-transform duration-300 dark:bg-black sm:w-3/4 md:w-2/3 lg:w-1/2 ${
+          className={`w-full max-w-md transform rounded-lg border border-gray-500 bg-card p-4 shadow-lg transition-transform duration-300 sm:w-3/4 md:w-2/3 lg:w-1/2 ${
             isOpen ? 'scale-100' : 'scale-95'
           }`}
         >
@@ -170,13 +170,13 @@ const RequestsModal = ({ isOpen, closeModal, type }) => {
 
             <button
               onClick={closeModal}
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
+              className="text-muted-foreground hover:text-foreground dark:text-gray-300 dark:hover:text-gray-100"
             >
               <CloseRoundedIcon
                 sx={{
                   fontSize: { xs: 25, sm: 28, md: 30 },
                 }}
-                className="text-gray-500 transition duration-200 hover:text-red-500"
+                className="text-muted-foreground transition duration-200 hover:text-red-500"
               />
             </button>
           </div>
@@ -191,7 +191,7 @@ const RequestsModal = ({ isOpen, closeModal, type }) => {
               {requests.map((user) => (
                 <div
                   key={user?.id}
-                  className="flex items-center justify-between gap-5 rounded-lg bg-white p-3 transition dark:bg-black sm:gap-0"
+                  className="flex items-center justify-between gap-5 rounded-lg bg-card p-3 transition sm:gap-0"
                 >
                   <div className="flex items-center gap-1 transition duration-150 min-[410px]:gap-4">
                     <Link to={`/profile/${user?.id}`}>
@@ -207,7 +207,7 @@ const RequestsModal = ({ isOpen, closeModal, type }) => {
                       <p className="min-[410px]:text-md whitespace-nowrap break-normal text-sm font-semibold md:text-lg">
                         {user?.fullname}
                       </p>
-                      <p className="whitespace-nowrap break-normal text-sm text-gray-400">
+                      <p className="whitespace-nowrap break-normal text-sm text-muted-foreground">
                         @{user?.username}
                       </p>
                     </div>

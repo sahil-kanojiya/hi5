@@ -14,7 +14,7 @@ const ReportDetail = ({ reportDetail, type, relevantId }) => {
   return (
     <>
       <div
-        className="flex w-full cursor-pointer items-center justify-between px-3 py-2 transition-all duration-300 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-700"
+        className="flex w-full cursor-pointer items-center justify-between px-3 py-2 transition-all duration-300 ease-in-out hover:bg-muted dark:hover:bg-gray-700"
         onClick={openReportedUsersModal}
       >
         <p className="font-medium text-gray-700 dark:text-gray-300">{reportDetail.reason}</p>

@@ -18,7 +18,7 @@ const MobileHeader = () => {
 
   return (
     <>
-      <div className="fixed left-0 top-0 z-10 w-full bg-white shadow-md dark:bg-black md:hidden">
+      <div className="fixed left-0 top-0 z-10 w-full bg-card shadow-md md:hidden">
         <header className="flex items-center justify-between p-3">
           <div className="flex items-center space-x-3">
             <img src={logo} alt="Hi5 Logo" className="h-10 w-10" />
@@ -34,14 +34,14 @@ const MobileHeader = () => {
           {(user?.role === 'MODERATOR' || user?.role === 'ADMIN') && (
             <div className="flex gap-2">
               <button
-                className="flex cursor-pointer items-center justify-center rounded-md bg-gray-200 p-2 transition-all duration-300 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700"
+                className="flex cursor-pointer items-center justify-center rounded-md bg-muted p-2 transition-all duration-300 hover:bg-muted dark:hover:bg-gray-700"
                 onClick={changeThemeClickHandler}
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (
                   <LightMode className="text-gray-200 transition-all duration-300" />
                 ) : (
-                  <DarkMode className="text-gray-800 transition-all duration-300 dark:text-gray-200" />
+                  <DarkMode className="text-foreground transition-all duration-300" />
                 )}
               </button>
 

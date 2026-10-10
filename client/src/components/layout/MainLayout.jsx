@@ -5,7 +5,7 @@ import MobileHeader from './common/header/MobileHeader';
 
 const MainLayout = ({ children }) => {
   return (
-    <div className="flex h-screen w-full flex-col items-center bg-gray-100 dark:bg-gray-900">
+    <div className="flex h-screen w-full flex-col items-center bg-background">
       <MobileHeader />
       <Sidebar />
       {children}

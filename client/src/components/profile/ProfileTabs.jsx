@@ -17,19 +17,19 @@ export default function ProfileTabs({ userId, isMyProfile, profileType }) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="m-4 flex w-full max-w-xl flex-col items-center gap-4 rounded-md bg-gray-100 p-3 dark:bg-gray-900">
+      <div className="m-4 flex w-full max-w-xl flex-col items-center gap-4 rounded-md bg-background p-3">
         {(isMyProfile || profileType !== 'PRIVATE') && (
           <>
-            <div className="hide-scrollbar flex w-full overflow-x-auto whitespace-nowrap rounded-lg bg-white shadow-md dark:bg-black">
+            <div className="hide-scrollbar flex w-full overflow-x-auto whitespace-nowrap rounded-lg bg-card shadow-md">
               {filteredTabs.map((tab) => (
                 <div
                   key={tab.value}
                   onClick={() => setActiveTab(tab.value)}
-                  className={`relative flex flex-1 cursor-pointer justify-center rounded-lg p-3 font-semibold text-black transition-all duration-300 ease-in-out hover:bg-gray-200 dark:text-white hover:dark:bg-gray-800`}
+                  className={`hover: relative flex flex-1 cursor-pointer justify-center rounded-lg p-3 font-semibold text-foreground transition-all duration-300 ease-in-out hover:bg-muted`}
                 >
                   {tab.label}
                   {activeTab === tab.value && (
-                    <div className="absolute bottom-0 h-1 w-10 rounded-full bg-gray-800 transition-all duration-300 dark:bg-gray-200"></div>
+                    <div className="absolute bottom-0 h-1 w-10 rounded-full bg-gray-800 transition-all duration-300 dark:bg-muted"></div>
                   )}
                 </div>
               ))}
