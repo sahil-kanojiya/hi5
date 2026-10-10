@@ -34,10 +34,9 @@ public class ChatService {
         if (userId.equals(otherUserId)) {
             throw new ValidationException("Other user id is same as user id");
         }
-        User user =
-                userRepository
-                        .findById(new ObjectId(otherUserId))
-                        .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        if (!userRepository.existsById(new ObjectId(otherUserId))) {
+            throw new EntityNotFoundException("User not found");
+        }
         Optional<Chat> chat = chatRepository.findByChatUserIdsContaining(userId, otherUserId);
         if (chat.isEmpty()) {
             chatRepository.save(Chat.builder().chatUserIds(List.of(userId, otherUserId)).build());

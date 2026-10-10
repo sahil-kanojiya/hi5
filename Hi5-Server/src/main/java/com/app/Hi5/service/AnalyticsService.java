@@ -28,7 +28,6 @@ public class AnalyticsService {
     private final PostRepository postRepository;
     private final ReelRepository reelRepository;
     private final UserActivityRepository userActivityRepository;
-    private final UserService userService;
 
     @Scheduled(fixedRate = 5000)
     public void sendAnalyticsReport() {

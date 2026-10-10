@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 public class UserActivityService {
 
     private final UserActivityRepository userActivityRepository;
-    private final SimpMessagingTemplate messagingTemplate;
 
     public void updateUserActivity(String userId, ActivityStatus status) {
         Optional<UserActivity> userActivityOpt = userActivityRepository.findByUserId(userId);

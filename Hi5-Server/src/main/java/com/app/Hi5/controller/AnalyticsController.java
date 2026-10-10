@@ -8,7 +8,6 @@ import com.app.Hi5.repository.ReelRepository;
 import com.app.Hi5.repository.UserActivityRepository;
 import com.app.Hi5.repository.UserRepository;
 import com.app.Hi5.service.AnalyticsService;
-import com.app.Hi5.service.UserService;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +27,6 @@ public class AnalyticsController {
     private final PostRepository postRepository;
     private final ReelRepository reelRepository;
     private final UserActivityRepository userActivityRepository;
-    private final UserService userService;
     private final AnalyticsService analyticsSchedulerService;
 
     @GetMapping

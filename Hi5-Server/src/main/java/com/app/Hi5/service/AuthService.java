@@ -11,7 +11,6 @@ import com.app.Hi5.security.AuthTokenService;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,7 +27,6 @@ public class AuthService {
     private final AuthTokenService authTokenService;
     private final OtpService otpService;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
     private final IdentificationTokenService identificationTokenService;
     private final UserDetailsService userDetailsService;
 

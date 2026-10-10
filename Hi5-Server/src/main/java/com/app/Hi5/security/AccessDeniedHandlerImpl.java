@@ -39,7 +39,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
             response.setContentType("application/json");
 
             if (!userDetails.isAccountNonLocked()) {
-                Date banUntil = userDetails.getUser().getBanUntil();
+                Date banUntil = user.getBanUntil();
                 System.out.println("User is banned until: " + banUntil);
 
                 SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");

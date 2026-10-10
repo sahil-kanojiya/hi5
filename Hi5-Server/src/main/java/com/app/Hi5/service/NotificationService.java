@@ -218,6 +218,9 @@ public class NotificationService {
         switch (followStatus) {
             case FOLLOWED -> notification.setType(NotificationType.FOLLOW);
             case REQUEST_SENT -> notification.setType(NotificationType.FOLLOW_REQUEST);
+            case NOT_FOLLOWED -> {
+                return;
+            }
         }
         notification.setRelevantId(user.getId().toHexString());
         notification.setUserId(user.getId().toHexString());

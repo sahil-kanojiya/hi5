@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSendException;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,7 +29,6 @@ public class OtpService {
     private final OtpRepository otpRepository;
     private final MailerService mailerService;
     private final UserRepository userRepository;
-    private final AuthenticationManager authenticationManager;
     private final IdentificationTokenService identificationTokenService;
     private final long otpExpirationTime;
     private final UserDetailsService userDetailsService;
@@ -42,7 +40,6 @@ public class OtpService {
             OtpRepository otpRepository,
             MailerService mailerService,
             UserRepository userRepository,
-            AuthenticationManager authenticationManager,
             IdentificationTokenService identificationTokenService,
             @Value("${otp.expiration-time}") String otpExpirationTimeStr,
             UserDetailsService userDetailsService,
@@ -51,7 +48,6 @@ public class OtpService {
         this.otpRepository = otpRepository;
         this.mailerService = mailerService;
         this.userRepository = userRepository;
-        this.authenticationManager = authenticationManager;
         this.identificationTokenService = identificationTokenService;
         this.otpExpirationTime = Conversion.convertToMilliseconds(otpExpirationTimeStr);
         this.userDetailsService = userDetailsService;

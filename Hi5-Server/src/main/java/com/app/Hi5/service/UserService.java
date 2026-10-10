@@ -39,16 +39,10 @@ public class UserService {
     private final FileStorage fileStorage;
     private final NotificationService notificationService;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final ChatRepository chatRepository;
-    private final CommentRepository commentRepository;
-    private final LikeRepository likeRepository;
-    private final MessageRepository messageRepository;
     private final NotificationRepository notificationRepository;
     private final OtpRepository optRepository;
     private final PostRepository postRepository;
     private final ReelRepository reelRepository;
-    private final ReportRepository reportRepository;
-    private final SaveRepository saveRepository;
     private final StoryRepository storyRepository;
     private final UserActivityRepository userActivityRepository;
 
