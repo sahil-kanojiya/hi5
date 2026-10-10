@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class HeartbeatPayload {
 
     private String userId;
-
 }

@@ -12,5 +12,4 @@ public class CheckUsernameAvailabilityRequest {
 
     @NotBlank(message = "Username cannot be null or blank")
     private String username;
-
 }

@@ -1,15 +1,15 @@
 package com.app.Hi5.model;
 
 import com.app.Hi5.model.Enum.CommentType;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -18,8 +18,7 @@ import java.util.Set;
 @Document(collection = "comment")
 public class Comment {
 
-    @Id
-    private ObjectId id;
+    @Id private ObjectId id;
 
     @Field("relevant")
     private String relevantId;
@@ -44,5 +43,4 @@ public class Comment {
     @Field("reports")
     @Builder.Default
     private Set<String> reportedUsersIds = new LinkedHashSet<>();
-
 }

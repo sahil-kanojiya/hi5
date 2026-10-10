@@ -19,5 +19,4 @@ public enum FileType {
     FileType(String directory) {
         this.directory = directory;
     }
-
 }

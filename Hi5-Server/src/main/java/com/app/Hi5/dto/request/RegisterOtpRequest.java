@@ -14,5 +14,4 @@ public class RegisterOtpRequest {
     @NotBlank(message = "Email cannot be null or blank")
     @Pattern(regexp = "^[\\w-.]+@[\\w-]+(?:\\.[a-zA-Z]{2,})+$", message = "Invalid email format")
     private String email;
-
 }

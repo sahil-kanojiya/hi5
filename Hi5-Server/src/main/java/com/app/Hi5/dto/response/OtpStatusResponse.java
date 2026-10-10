@@ -16,6 +16,7 @@ public class OtpStatusResponse {
 
     @JsonProperty("isSent")
     private boolean isSent;
+
     private HttpStatus status;
     private int statusCode;
     private String message;
@@ -23,5 +24,4 @@ public class OtpStatusResponse {
     public ResponseEntity<OtpStatusResponse> toResponseEntity() {
         return new ResponseEntity<>(this, this.status);
     }
-
 }

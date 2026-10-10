@@ -2,19 +2,13 @@ package com.app.Hi5.dto.response;
 
 import com.app.Hi5.dto.enums.LikeStatus;
 import com.app.Hi5.dto.enums.ReportStatus;
-import com.app.Hi5.dto.enums.SaveStatus;
 import com.app.Hi5.model.Enum.CommentType;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -47,5 +41,4 @@ public class CommentResponse {
 
     @JsonProperty("reportStatus")
     private ReportStatus reportStatus;
-
 }

@@ -1,13 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getMessagesByChatId, uploadMedia } from "../../services/api";
-import { useWebSocket } from "../../socket/WebSocketProvider";
-import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
-import {
-  CloseRounded,
-  ImageRounded,
-  VideocamRounded,
-} from "@mui/icons-material";
+import React, { useState, useEffect, useRef } from 'react';
+import { getMessagesByChatId, uploadMedia } from '../../services/api';
+import { useWebSocket } from '../../socket/WebSocketProvider';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { CloseRounded, ImageRounded, VideocamRounded } from '@mui/icons-material';
 
 const ChatBox = ({ chatId, receiverId }) => {
   const { publish } = useWebSocket();
@@ -15,14 +11,14 @@ const ChatBox = ({ chatId, receiverId }) => {
   const [error, setError] = useState(null);
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   const myId = useSelector((state) => state?.user?.profile?.id);
 
   const { subscribeTopic, unsubscribeTopic, isConnected } = useWebSocket();
 
   useEffect(() => {
-    setMessage("");
+    setMessage('');
     setError(null);
     setFile(null);
     setFileError(null);
@@ -44,18 +40,15 @@ const ChatBox = ({ chatId, receiverId }) => {
 
       if (isConnected) {
         try {
-          subscription = subscribeTopic(
-            `/message/${myId + receiverId}`,
-            (message) => {
-              const msg = JSON.parse(message);
-              if (msg?.senderUserId == receiverId) {
-                console.log(receiverId, msg?.senderUserId);
-                setMessages((prev) => [...prev, msg]);
-              }
+          subscription = subscribeTopic(`/message/${myId + receiverId}`, (message) => {
+            const msg = JSON.parse(message);
+            if (msg?.senderUserId == receiverId) {
+              console.log(receiverId, msg?.senderUserId);
+              setMessages((prev) => [...prev, msg]);
             }
-          );
+          });
         } catch (e) {
-          console.log("Subscription error:", e);
+          console.log('Subscription error:', e);
         }
       }
     };
@@ -64,7 +57,7 @@ const ChatBox = ({ chatId, receiverId }) => {
 
     return () => {
       if (subscription) {
-        console.log("Unsubscribing from:", `/message/${myId + receiverId}`);
+        console.log('Unsubscribing from:', `/message/${myId + receiverId}`);
         unsubscribeTopic(subscription);
       }
     };
@@ -89,12 +82,12 @@ const ChatBox = ({ chatId, receiverId }) => {
   useEffect(() => {
     const uploadFile = async () => {
       if (file) {
-        if (file?.type.startsWith("image/")) {
+        if (file?.type.startsWith('image/')) {
           setIsImage(true);
-        } else if (file?.type.startsWith("video/")) {
+        } else if (file?.type.startsWith('video/')) {
           setIsVideo(true);
         } else {
-          setFileError("this file is not supported");
+          setFileError('this file is not supported');
           return;
         }
 
@@ -105,21 +98,16 @@ const ChatBox = ({ chatId, receiverId }) => {
             setUploadProgress(0);
 
             const formData = new FormData();
-            formData.append(
-              isImage ? "image" : isVideo ? "video" : "file",
-              file
-            );
+            formData.append(isImage ? 'image' : isVideo ? 'video' : 'file', file);
 
             const response = await uploadMedia(formData, (progressEvent) => {
-              setUploadProgress(
-                Math.round((progressEvent.loaded * 100) / progressEvent.total)
-              );
+              setUploadProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total));
             });
 
             setFileURL(response?.data);
           } catch (error) {
             setFileError(error);
-            console.error("Upload error:", error);
+            console.error('Upload error:', error);
           } finally {
             setIsPending(false);
           }
@@ -132,7 +120,7 @@ const ChatBox = ({ chatId, receiverId }) => {
   const handleSendMessage = async () => {
     if (!message.trim() && !file && !(isImage || isVideo) && !fileURL) return;
 
-    publish("/app/message", {
+    publish('/app/message', {
       chatId,
       message,
       senderUserId: myId,
@@ -157,7 +145,7 @@ const ChatBox = ({ chatId, receiverId }) => {
     if (fileRef.current) fileRef.current.value = null;
     setFile(null);
     setFileURL(null);
-    setMessage("");
+    setMessage('');
     setIsImage(false);
     setIsVideo(false);
     setIsPending(false);
@@ -166,7 +154,7 @@ const ChatBox = ({ chatId, receiverId }) => {
   };
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   const renderFilePreview = () => {
@@ -175,18 +163,14 @@ const ChatBox = ({ chatId, receiverId }) => {
       return (
         <div className="relative h-full">
           <CloseRounded
-            className="top-0 right-0 z-10 absolute rounded-full w-6 h-6 cursor-pointer"
+            className="absolute right-0 top-0 z-10 h-6 w-6 cursor-pointer rounded-full"
             onClick={() => {
               setFile(null);
               setFileURL(null);
               fileRef.current.value = null;
             }}
           />
-          <img
-            src={fileURL}
-            className="mx-auto rounded-lg h-full object-contain"
-            alt="Preview"
-          />
+          <img src={fileURL} className="mx-auto h-full rounded-lg object-contain" alt="Preview" />
         </div>
       );
     }
@@ -197,7 +181,7 @@ const ChatBox = ({ chatId, receiverId }) => {
             sx={{
               fontSize: { xs: 25, sm: 28, md: 30 },
             }}
-            className="top-0 right-0 z-10 absolute rounded-full cursor-pointer"
+            className="absolute right-0 top-0 z-10 cursor-pointer rounded-full"
             onClick={() => {
               setFile(null);
               setFileURL(null);
@@ -212,7 +196,7 @@ const ChatBox = ({ chatId, receiverId }) => {
           <video
             src={fileURL}
             controls
-            className="mx-auto rounded-lg h-full object-contain"
+            className="mx-auto h-full rounded-lg object-contain"
             controlsList="nodownload"
           />
         </div>
@@ -223,16 +207,10 @@ const ChatBox = ({ chatId, receiverId }) => {
 
   return (
     <>
-      <div className="flex flex-col flex-1 gap-1 bg-gray-300 dark:bg-gray-800 p-4 rounded-lg overflow-y-auto hide-scrollbar">
-        {!chatId && (
-          <p className="text-gray-400 text-center">
-            Select a user to start chatting.
-          </p>
-        )}
-        {isMessagesLoading && (
-          <p className="text-gray-400 text-center">Loading...</p>
-        )}
-        {error && <p className="text-red-400 text-center">{error}</p>}
+      <div className="hide-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto rounded-lg bg-gray-300 p-4 dark:bg-gray-800">
+        {!chatId && <p className="text-center text-gray-400">Select a user to start chatting.</p>}
+        {isMessagesLoading && <p className="text-center text-gray-400">Loading...</p>}
+        {error && <p className="text-center text-red-400">{error}</p>}
 
         {chatId && !isMessagesLoading && !error && messages.length > 0 ? (
           messages.map((msg, index) => {
@@ -244,30 +222,30 @@ const ChatBox = ({ chatId, receiverId }) => {
             return (
               <div key={msg.id}>
                 {showDateHeader && (
-                  <div className="flex justify-center my-2">
-                    <div className="bg-gray-400 dark:bg-gray-600 bg-opacity-10 px-3 py-1 rounded-lg max-w-xs text-sm">
+                  <div className="my-2 flex justify-center">
+                    <div className="max-w-xs rounded-lg bg-gray-400 bg-opacity-10 px-3 py-1 text-sm dark:bg-gray-600">
                       <p className="font-medium">{currentMessageDate}</p>
                     </div>
                   </div>
                 )}
                 <div
                   className={`flex gap-1 ${
-                    msg?.senderUserId === myId ? "justify-end" : "justify-start"
+                    msg?.senderUserId === myId ? 'justify-end' : 'justify-start'
                   }`}
                 >
                   <div
-                    className={`p-2 rounded-lg text-sm ${
+                    className={`rounded-lg p-2 text-sm ${
                       msg?.senderUserId === myId
-                        ? "bg-blue-400 dark:bg-blue-600"
-                        : "bg-gray-400 dark:bg-gray-600"
+                        ? 'bg-blue-400 dark:bg-blue-600'
+                        : 'bg-gray-400 dark:bg-gray-600'
                     } max-w-xs`}
                   >
                     {(msg?.imageUrl || msg?.videoUrl) && (
-                      <div className="flex w-full h-48 text-gray-50">
+                      <div className="flex h-48 w-full text-gray-50">
                         {msg?.imageUrl && (
                           <img
                             src={msg?.imageUrl}
-                            className="mx-auto rounded-lg h-full"
+                            className="mx-auto h-full rounded-lg"
                             alt="image"
                           />
                         )}
@@ -275,18 +253,16 @@ const ChatBox = ({ chatId, receiverId }) => {
                           <video
                             src={msg?.videoUrl}
                             controls
-                            className="mx-auto rounded-lg h-full"
+                            className="mx-auto h-full rounded-lg"
                             controlsList="nodownload"
                           />
                         )}
                       </div>
                     )}
                     {msg?.message && (
-                      <p className="font-medium break-words whitespace-pre-wrap">
-                        {msg?.message}
-                      </p>
+                      <p className="whitespace-pre-wrap break-words font-medium">{msg?.message}</p>
                     )}
-                    <span className="block mt-1 text-gray-300 text-xs">
+                    <span className="mt-1 block text-xs text-gray-300">
                       {extractTime(msg.createdAt)}
                     </span>
                   </div>
@@ -295,59 +271,53 @@ const ChatBox = ({ chatId, receiverId }) => {
             );
           })
         ) : (
-          <p className="text-gray-400 text-center">No messages yet. Say hi!</p>
+          <p className="text-center text-gray-400">No messages yet. Say hi!</p>
         )}
         <div ref={messagesEndRef} />
       </div>
 
       <div className="pt-2">
-        <div className="flex flex-col items-center bg-gray-200 dark:bg-gray-800 p-1 rounded-xl">
+        <div className="flex flex-col items-center rounded-xl bg-gray-200 p-1 dark:bg-gray-800">
           {file && fileURL && (
-            <div className="flex p-1 w-full h-48 text-gray-500">
-              {renderFilePreview()}
-            </div>
+            <div className="flex h-48 w-full p-1 text-gray-500">{renderFilePreview()}</div>
           )}
 
           {fileError && (
-            <div className="bg-gray-200 p-1 rounded-full w-full text-red-400">
-              {fileError}
-            </div>
+            <div className="w-full rounded-full bg-gray-200 p-1 text-red-400">{fileError}</div>
           )}
 
           {isPending && (
-            <div className="bg-gray-200 p-1 rounded-full w-full">
+            <div className="w-full rounded-full bg-gray-200 p-1">
               <div
-                className="bg-blue-600 rounded-full h-2 transition-all duration-300"
+                className="h-2 rounded-full bg-blue-600 transition-all duration-300"
                 style={{ width: `${uploadProgress}%` }}
               ></div>
             </div>
           )}
 
-          <div className="flex items-center gap-3 bg-gray-200 dark:bg-gray-800 p-1 rounded-xl w-full">
-            <div className="flex flex-1 items-center bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus-within:ring-2 focus-within:ring-blue-500">
+          <div className="flex w-full items-center gap-3 rounded-xl bg-gray-200 p-1 dark:bg-gray-800">
+            <div className="flex flex-1 items-center rounded-lg border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500 dark:border-gray-600 dark:bg-gray-700">
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
+                  if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
                     handleSendMessage();
                   }
                 }}
-                placeholder={
-                  chatId ? "Type a message..." : "Select a user to chat"
-                }
-                className="flex-1 bg-transparent disabled:opacity-50 p-3 focus:outline-none min-h-[40px] max-h-[50px] overflow-y-auto text-gray-900 dark:text-gray-100 resize-none"
+                placeholder={chatId ? 'Type a message...' : 'Select a user to chat'}
+                className="max-h-[50px] min-h-[40px] flex-1 resize-none overflow-y-auto bg-transparent p-3 text-gray-900 focus:outline-none disabled:opacity-50 dark:text-gray-100"
                 disabled={!chatId || isMessagesLoading}
               />
 
               {/* Action Buttons (Image & Video) */}
               <div className="flex items-center gap-2 pr-2">
                 <button
-                  className="flex justify-center items-center hover:bg-gray-300 dark:hover:bg-gray-700 p-2 rounded-full w-10 h-10 transition"
+                  className="flex h-10 w-10 items-center justify-center rounded-full p-2 transition hover:bg-gray-300 dark:hover:bg-gray-700"
                   disabled={chatId === undefined}
                   onClick={() => {
-                    fileRef.current.accept = "image/*";
+                    fileRef.current.accept = 'image/*';
                     fileRef.current.click();
                   }}
                 >
@@ -358,10 +328,10 @@ const ChatBox = ({ chatId, receiverId }) => {
                 </button>
 
                 <button
-                  className="flex justify-center items-center hover:bg-gray-300 dark:hover:bg-gray-700 p-2 rounded-full w-10 h-10 transition"
+                  className="flex h-10 w-10 items-center justify-center rounded-full p-2 transition hover:bg-gray-300 dark:hover:bg-gray-700"
                   disabled={chatId === undefined}
                   onClick={() => {
-                    fileRef.current.accept = "video/*";
+                    fileRef.current.accept = 'video/*';
                     fileRef.current.click();
                   }}
                 >
@@ -384,10 +354,10 @@ const ChatBox = ({ chatId, receiverId }) => {
             {/* Send Button */}
             <button
               onClick={handleSendMessage}
-              className={`px-6 py-3 rounded-lg text-white transition-all hover:scale-105 ${
+              className={`rounded-lg px-6 py-3 text-white transition-all hover:scale-105 ${
                 chatId
-                  ? "bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
-                  : "bg-gray-500 cursor-not-allowed opacity-50"
+                  ? 'bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
+                  : 'cursor-not-allowed bg-gray-500 opacity-50'
               }`}
               disabled={!chatId || isMessagesLoading}
             >
@@ -406,15 +376,15 @@ ChatBox.propTypes = {
 };
 
 const formatDate = (isoString) => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(isoString).toLocaleDateString(undefined, options);
 };
 
 const extractTime = (isoString) => {
-  return new Date(isoString).toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
+  return new Date(isoString).toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
     hour12: true,
   });
 };

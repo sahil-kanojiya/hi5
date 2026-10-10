@@ -4,8 +4,8 @@
 
 /* Lobster font */
 @font-face {
-  font-family: "Lobster";
-  src: url("/fonts/Lobster-Regular.ttf") format("truetype");
+  font-family: 'Lobster';
+  src: url('/fonts/Lobster-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,40 +14,40 @@
 
 /* Regular (400) */
 @font-face {
-  font-family: "Roboto";
-  src: url("/fonts/Roboto-Regular.ttf") format("truetype");
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
 /* Bold (700) */
 @font-face {
-  font-family: "Roboto";
-  src: url("/fonts/Roboto-Bold.ttf") format("truetype");
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
 
 /* Light (300) */
 @font-face {
-  font-family: "Roboto";
-  src: url("/fonts/Roboto-Light.ttf") format("truetype");
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
 }
 
 /* Medium (500) */
 @font-face {
-  font-family: "Roboto";
-  src: url("/fonts/Roboto-Medium.ttf") format("truetype");
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 
 /* Thin (100) */
 @font-face {
-  font-family: "Roboto";
-  src: url("/fonts/Roboto-Thin.ttf") format("truetype");
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-Thin.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
 }
@@ -61,14 +61,12 @@
   display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
 }
 
-input[type="password"]::-ms-reveal,
-input[type="password"]::-ms-clear,
-input[type="password"]::-webkit-credentials-auto-fill-button,
-input[type="password"]::-webkit-clear-button {
+input[type='password']::-ms-reveal,
+input[type='password']::-ms-clear,
+input[type='password']::-webkit-credentials-auto-fill-button,
+input[type='password']::-webkit-clear-button {
   display: none !important;
 }
-
-
 
 /* .invert {
   filter: invert(1);

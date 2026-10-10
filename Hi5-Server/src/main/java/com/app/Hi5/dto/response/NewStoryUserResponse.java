@@ -1,12 +1,9 @@
 package com.app.Hi5.dto.response;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,5 +16,4 @@ public class NewStoryUserResponse {
     private String profilePictureUrl;
     private Long totalStorys;
     private Long totalSeenStorys;
-
 }

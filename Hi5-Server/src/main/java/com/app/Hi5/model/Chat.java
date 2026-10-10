@@ -1,6 +1,6 @@
 package com.app.Hi5.model;
 
-
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +10,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.List;
-
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,10 +17,8 @@ import java.util.List;
 @Document(collection = "chat")
 public class Chat {
 
-    @Id
-    private ObjectId id;
+    @Id private ObjectId id;
 
     @Field("chat_users")
     private List<String> chatUserIds;
-
 }

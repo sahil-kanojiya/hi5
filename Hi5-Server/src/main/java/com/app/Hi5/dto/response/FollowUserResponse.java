@@ -22,5 +22,4 @@ public class FollowUserResponse {
     public ResponseEntity<FollowUserResponse> toResponseEntity() {
         return new ResponseEntity<>(this, this.status);
     }
-
 }

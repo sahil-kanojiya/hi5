@@ -17,5 +17,4 @@ public class UserSearchResponse {
     private String fullname;
     private String profilePictureUrl;
     private FollowStatus followStatus;
-
 }

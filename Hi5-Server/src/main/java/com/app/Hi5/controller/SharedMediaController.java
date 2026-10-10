@@ -2,13 +2,10 @@ package com.app.Hi5.controller;
 
 import com.app.Hi5.dto.response.PostResponse;
 import com.app.Hi5.dto.response.ReelResponse;
-import com.app.Hi5.security.UserDetailsImpl;
 import com.app.Hi5.service.PostService;
 import com.app.Hi5.service.ReelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,5 +29,4 @@ public class SharedMediaController {
     public ReelResponse getSharedReel(@RequestParam("reelId") String reelId) {
         return reelService.findReel(reelId);
     }
-
 }

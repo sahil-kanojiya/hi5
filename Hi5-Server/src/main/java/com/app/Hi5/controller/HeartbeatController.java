@@ -9,6 +9,11 @@ import com.app.Hi5.repository.ChatRepository;
 import com.app.Hi5.repository.UserActivityRepository;
 import com.app.Hi5.repository.UserRepository;
 import com.app.Hi5.service.UserActivityService;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -16,13 +21,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.*;
-import java.util.stream.Collectors;
-
 
 @Slf4j
 @Controller
@@ -48,13 +46,22 @@ public class HeartbeatController {
             if (activeUsers.containsKey(userId)) {
                 activeUsers.get(userId).cancel(false);
             }
-            ScheduledFuture<?> task = scheduler.schedule(() -> {
-                virtualExecutor.submit(() -> {
-                    System.out.println("No heartbeat from " + userId + ", disconnecting...");
-                    activeUsers.remove(userId);
-                    userActivityService.updateUserActivity(userId, ActivityStatus.OFFLINE);
-                });
-            }, 12, TimeUnit.SECONDS);
+            ScheduledFuture<?> task =
+                    scheduler.schedule(
+                            () -> {
+                                virtualExecutor.submit(
+                                        () -> {
+                                            System.out.println(
+                                                    "No heartbeat from "
+                                                            + userId
+                                                            + ", disconnecting...");
+                                            activeUsers.remove(userId);
+                                            userActivityService.updateUserActivity(
+                                                    userId, ActivityStatus.OFFLINE);
+                                        });
+                            },
+                            12,
+                            TimeUnit.SECONDS);
             activeUsers.put(userId, task);
         }
     }
@@ -70,17 +77,30 @@ public class HeartbeatController {
     }
 
     private void sendPresenceUpdate(String userId) {
-        Map<String, ActivityStatus> activityStatusMap = chatRepository.findByChatUserIdsContaining(userId).stream().map((chat -> {
-            List<String> chatUserIds = chat.getChatUserIds();
-            if (chatUserIds.getFirst().equals(userId)) {
-                chatUserIds.removeFirst();
-            }
-            String receiverId = chatUserIds.getFirst();
-            UserActivity userActivity = userActivityRepository.findByUserId(receiverId).orElse(null);
-            ActivityStatus receiverStatus = userActivity != null ? userActivity.getActivityStatus() : ActivityStatus.OFFLINE;
-            return Map.entry(receiverId, receiverStatus);
-        })).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (existing, replacement) -> replacement));
+        Map<String, ActivityStatus> activityStatusMap =
+                chatRepository.findByChatUserIdsContaining(userId).stream()
+                        .map(
+                                (chat -> {
+                                    List<String> chatUserIds = chat.getChatUserIds();
+                                    if (chatUserIds.getFirst().equals(userId)) {
+                                        chatUserIds.removeFirst();
+                                    }
+                                    String receiverId = chatUserIds.getFirst();
+                                    UserActivity userActivity =
+                                            userActivityRepository
+                                                    .findByUserId(receiverId)
+                                                    .orElse(null);
+                                    ActivityStatus receiverStatus =
+                                            userActivity != null
+                                                    ? userActivity.getActivityStatus()
+                                                    : ActivityStatus.OFFLINE;
+                                    return Map.entry(receiverId, receiverStatus);
+                                }))
+                        .collect(
+                                Collectors.toMap(
+                                        Map.Entry::getKey,
+                                        Map.Entry::getValue,
+                                        (existing, replacement) -> replacement));
         simpMessagingTemplate.convertAndSend("/presence/" + userId, activityStatusMap);
     }
-
 }

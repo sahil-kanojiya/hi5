@@ -1,15 +1,15 @@
-import axiosInstance from "./axios.config";
+import axiosInstance from './axios.config';
 
 const checkEmail = async (body) => {
-  return axiosInstance.post("/auth/check-email", body);
+  return axiosInstance.post('/auth/check-email', body);
 };
 
 const checkUsername = async (body) => {
-  return axiosInstance.post("/auth/check-username", body);
+  return axiosInstance.post('/auth/check-username', body);
 };
 
 const register = async (body) => {
-  return axiosInstance.post("/auth/register", body);
+  return axiosInstance.post('/auth/register', body);
 };
 
 const registerVerifyOtp = async (otp, body) => {
@@ -17,7 +17,7 @@ const registerVerifyOtp = async (otp, body) => {
 };
 
 const activateUser = async (token, body) => {
-  return axiosInstance.post("/auth/activate", body, {
+  return axiosInstance.post('/auth/activate', body, {
     headers: {
       IdentificationToken: token,
     },
@@ -25,11 +25,11 @@ const activateUser = async (token, body) => {
 };
 
 const getMe = async () => {
-  return axiosInstance.get("/user/get-me");
+  return axiosInstance.get('/user/get-me');
 };
 
 const login = async (body) => {
-  return axiosInstance.post("/auth/login", body);
+  return axiosInstance.post('/auth/login', body);
 };
 
 const loginVerifyOTP = async (otp, token) => {
@@ -41,14 +41,11 @@ const loginVerifyOTP = async (otp, token) => {
 };
 
 const forgotPassword = async (body) => {
-  return axiosInstance.post("/auth/forget-password", body);
+  return axiosInstance.post('/auth/forget-password', body);
 };
 
 const forgotPasswordVerifyOTP = async (otp, body) => {
-  return axiosInstance.post(
-    `/auth/forget-password/${encodeURIComponent(otp)}`,
-    body
-  );
+  return axiosInstance.post(`/auth/forget-password/${encodeURIComponent(otp)}`, body);
 };
 
 const deletePost = async (postId) => {
@@ -64,11 +61,11 @@ const deleteComment = async (commentId) => {
 };
 
 const save = async (body) => {
-  return axiosInstance.post("/save", body);
+  return axiosInstance.post('/save', body);
 };
 
 const unsave = async (body) => {
-  return axiosInstance.delete("/save", {
+  return axiosInstance.delete('/save', {
     params: body,
   });
 };
@@ -94,21 +91,21 @@ const getUserProfile = async (userId) => {
 };
 
 const makeComment = async (body) => {
-  return axiosInstance.post("/comment", body);
+  return axiosInstance.post('/comment', body);
 };
 
 const likeEntity = async (body) => {
-  return axiosInstance.post("/like", body);
+  return axiosInstance.post('/like', body);
 };
 
 const unlikeEntity = async (body) => {
-  return axiosInstance.delete("/like", {
+  return axiosInstance.delete('/like', {
     params: body,
   });
 };
 
 const reportEntity = async (body) => {
-  return axiosInstance.post("/report", body);
+  return axiosInstance.post('/report', body);
 };
 
 const searchUsersByKeyword = async (keyword, body) => {
@@ -118,16 +115,13 @@ const searchUsersByKeyword = async (keyword, body) => {
 };
 
 const searchUsersByKeywordForModeration = async (keyword, body) => {
-  return axiosInstance.get(
-    `/moderate/user/search/${encodeURIComponent(keyword)}`,
-    {
-      params: body,
-    }
-  );
+  return axiosInstance.get(`/moderate/user/search/${encodeURIComponent(keyword)}`, {
+    params: body,
+  });
 };
 
 const getModerators = async () => {
-  return axiosInstance.get("/moderate/moderator");
+  return axiosInstance.get('/moderate/moderator');
 };
 
 const createChat = async (userId) => {
@@ -135,7 +129,7 @@ const createChat = async (userId) => {
 };
 
 const getMyChats = async () => {
-  return axiosInstance.get("/chat");
+  return axiosInstance.get('/chat');
 };
 
 const getMessagesByChatId = async (chatId) => {
@@ -147,24 +141,24 @@ const deleteMessagesByChatId = async (chatId) => {
 };
 
 const uploadMedia = async (formData, onUploadProgressHandler) => {
-  return axiosInstance.post("/message/upload/media", formData, {
+  return axiosInstance.post('/message/upload/media', formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      'Content-Type': 'multipart/form-data',
     },
     onUploadProgress: onUploadProgressHandler,
   });
 };
 
 const updateProfileAndCoverImage = async (formData) => {
-  return axiosInstance.patch("/user/update-images", formData, {
+  return axiosInstance.patch('/user/update-images', formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      'Content-Type': 'multipart/form-data',
     },
   });
 };
 
 const updateProfileInfo = async (body) => {
-  return axiosInstance.put("/user", body);
+  return axiosInstance.put('/user', body);
 };
 
 const follow = async (userId) => {
@@ -176,11 +170,11 @@ const unfollow = async (userId) => {
 };
 
 const getMyStorys = async () => {
-  return axiosInstance.get("/story/my");
+  return axiosInstance.get('/story/my');
 };
 
 const getNewStoryUsers = async () => {
-  return axiosInstance.get("/story");
+  return axiosInstance.get('/story');
 };
 
 const getStory = async (userId, index) => {

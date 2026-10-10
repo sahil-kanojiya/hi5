@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,5 +26,4 @@ public class GetMeResponse {
     public ResponseEntity<GetMeResponse> toResponseEntity() {
         return new ResponseEntity<>(this, this.status);
     }
-
 }

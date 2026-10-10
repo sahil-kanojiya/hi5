@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { setToken } from "../../utils/localStorage";
-import { useDispatch } from "react-redux";
-import { setAuth } from "../../redux/slices/authSlice";
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { setToken } from '../../utils/localStorage';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../../redux/slices/authSlice';
 
 const LoginOAuth2Handler = () => {
   const location = useLocation();
@@ -11,8 +11,8 @@ const LoginOAuth2Handler = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const token = params.get("token");
-    console.log("AuthToken: " + token);
+    const token = params.get('token');
+    console.log('AuthToken: ' + token);
     if (token) {
       setToken(token);
       dispatch(
@@ -23,7 +23,7 @@ const LoginOAuth2Handler = () => {
         })
       );
     } else {
-      navigate("/login");
+      navigate('/login');
     }
   });
 

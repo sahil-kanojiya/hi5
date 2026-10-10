@@ -4,6 +4,11 @@ import com.app.Hi5.model.Enum.Gender;
 import com.app.Hi5.model.Enum.IdentityProvider;
 import com.app.Hi5.model.Enum.ProfileType;
 import com.app.Hi5.model.Enum.Role;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,12 +16,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -26,8 +25,7 @@ import java.util.Set;
 public class User {
 
     //  Primary Details
-    @Id
-    private ObjectId id;
+    @Id private ObjectId id;
 
     @Field("email")
     @Indexed(unique = true)
@@ -104,7 +102,6 @@ public class User {
     @Field("follow_request_behaviour_auto")
     private Boolean followRequestBehaviourAuto = false;
 
-
     @Builder.Default
     @Field("is_allowed_network_post_notification")
     private Boolean isAllowedNetworkPostNotification = true;
@@ -116,7 +113,6 @@ public class User {
     @Builder.Default
     @Field("is_allowed_network_story_notification")
     private Boolean isAllowedNetworkStoryNotification = true;
-
 
     @Builder.Default
     @Field("is_allowed_posts_like_notification")
@@ -134,7 +130,6 @@ public class User {
     @Field("is_allowed_comments_like_notification")
     private Boolean isAllowedCommentsLikeNotification = true;
 
-
     @Builder.Default
     @Field("is_allowed_posts_comment_notification")
     private Boolean isAllowedPostsCommentNotification = true;
@@ -143,7 +138,6 @@ public class User {
     @Field("is_allowed_reels_comment_notification")
     private Boolean isAllowedReelsCommentNotification = true;
 
-
     @Builder.Default
     @Field("is_allowed_users_follow_notification")
     private Boolean isAllowedUsersFollowNotification = true;
@@ -151,7 +145,6 @@ public class User {
     @Builder.Default
     @Field("is_allowed_users_follow_request_notification")
     private Boolean isAllowedUsersFollowRequestNotification = true;
-
 
     //    User Activity Data
     @Field("follow_requests_sent")
@@ -185,5 +178,4 @@ public class User {
     @Field("saved_reels")
     @Builder.Default
     private Set<String> savedReelsIds = new LinkedHashSet<>();
-
 }

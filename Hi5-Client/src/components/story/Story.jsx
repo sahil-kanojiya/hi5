@@ -1,9 +1,8 @@
-import PropTypes from "prop-types";
-import { useState } from "react";
-import ViewStorysModal from "./ViewStorysModal";
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import ViewStorysModal from './ViewStorysModal';
 
 const Story = ({ newStoryUser }) => {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleStoryClick = () => {
     setIsModalOpen(true);
@@ -15,19 +14,17 @@ const Story = ({ newStoryUser }) => {
   return (
     <>
       <div
-        className="flex flex-col items-center text-center cursor-pointer"
+        className="flex cursor-pointer flex-col items-center text-center"
         onClick={handleStoryClick}
       >
-        <div className="border-2 border-blue-500 rounded-full w-16 h-16 overflow-hidden">
+        <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-blue-500">
           <img
             src={newStoryUser.profilePictureUrl}
             alt={`${newStoryUser.fullname}'s profile`}
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
           />
         </div>
-        <p className="mt-2 w-20 text-gray-700 text-sm truncate">
-          {newStoryUser.fullname}
-        </p>
+        <p className="mt-2 w-20 truncate text-sm text-gray-700">{newStoryUser.fullname}</p>
       </div>
       {isModalOpen && (
         <ViewStorysModal

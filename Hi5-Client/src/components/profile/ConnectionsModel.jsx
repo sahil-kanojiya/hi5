@@ -1,26 +1,26 @@
-import { useCallback, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import axiosInstance from "../../services/axios.config";
-import { Link } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useCallback, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import axiosInstance from '../../services/axios.config';
+import { Link } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const ConnectionsModel = ({ isOpen, closeModal, type }) => {
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         closeModal();
       }
     };
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     }
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'auto';
     };
   }, [isOpen, closeModal]);
 
@@ -39,8 +39,8 @@ const ConnectionsModel = ({ isOpen, closeModal, type }) => {
   const fetchRequests = useCallback(async () => {
     try {
       setIsLoading(true);
-      if (type === "FOLLOWER") {
-        const response = await axiosInstance.get("/user/followers", {
+      if (type === 'FOLLOWER') {
+        const response = await axiosInstance.get('/user/followers', {
           params: {
             page,
             size: 10,
@@ -52,8 +52,8 @@ const ConnectionsModel = ({ isOpen, closeModal, type }) => {
         } else {
           setUsers((prevUsers) => [...prevUsers, ...response.data]);
         }
-      } else if (type === "FOLLOWING") {
-        const response = await axiosInstance.get("/user/followings", {
+      } else if (type === 'FOLLOWING') {
+        const response = await axiosInstance.get('/user/followings', {
           params: {
             page,
             size: 10,
@@ -66,7 +66,7 @@ const ConnectionsModel = ({ isOpen, closeModal, type }) => {
           setUsers((prevUsers) => [...prevUsers, ...response.data]);
         }
       } else {
-        throw Error("Not Valid Type.");
+        throw Error('Not Valid Type.');
       }
     } catch (err) {
       setError(err.message);
@@ -92,7 +92,7 @@ const ConnectionsModel = ({ isOpen, closeModal, type }) => {
   }, [isOpen, page, fetchRequests, type]);
 
   const loadMoreUsers = useCallback(() => {
-    console.log("load more requests");
+    console.log('load more requests');
     if (!isLoading && hasMore) {
       setPage((prevPage) => prevPage + 1);
     }
@@ -103,35 +103,31 @@ const ConnectionsModel = ({ isOpen, closeModal, type }) => {
   return (
     <>
       <div
-        className="z-20 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 transition-opacity duration-300"
+        className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300"
         onClick={handleOutsideClick}
       >
         <div
-          className={`bg-white dark:bg-black border border-gray-500 shadow-lg rounded-lg p-4  w-full sm:w-3/4 md:w-2/3 lg:w-1/2 max-w-md transition-transform duration-300 transform ${
-            isOpen ? "scale-100" : "scale-95"
+          className={`w-full max-w-md transform rounded-lg border border-gray-500 bg-white p-4 shadow-lg transition-transform duration-300 dark:bg-black sm:w-3/4 md:w-2/3 lg:w-1/2 ${
+            isOpen ? 'scale-100' : 'scale-95'
           }`}
         >
-          <div className="flex justify-between items-center mb-4 text-xl">
-            {type === "FOLLOWER" && (
-              <h3 className="font-semibold">Followers</h3>
-            )}
-            {type === "FOLLOWING" && (
-              <h3 className="font-semibold">Followings</h3>
-            )}
+          <div className="mb-4 flex items-center justify-between text-xl">
+            {type === 'FOLLOWER' && <h3 className="font-semibold">Followers</h3>}
+            {type === 'FOLLOWING' && <h3 className="font-semibold">Followings</h3>}
 
             <button
               onClick={closeModal}
-              className="text-gray-600 hover:text-gray-800 dark:hover:text-gray-100 dark:text-gray-300"
+              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
             >
               <CloseRoundedIcon
                 sx={{
                   fontSize: { xs: 25, sm: 28, md: 30 },
                 }}
-                className="text-gray-500 hover:text-red-500 transition duration-200"
+                className="text-gray-500 transition duration-200 hover:text-red-500"
               />
             </button>
           </div>
-          <div className="mb-4 px-2 py-1 rounded-lg max-h-60 overflow-y-auto hide-scrollbar">
+          <div className="hide-scrollbar mb-4 max-h-60 overflow-y-auto rounded-lg px-2 py-1">
             <InfiniteScroll
               dataLength={users.length}
               next={loadMoreUsers}
@@ -142,23 +138,23 @@ const ConnectionsModel = ({ isOpen, closeModal, type }) => {
               {users.map((user) => (
                 <div
                   key={user?.id}
-                  className="flex justify-between items-center gap-5 sm:gap-0 bg-white dark:bg-black p-3 rounded-lg transition"
+                  className="flex items-center justify-between gap-5 rounded-lg bg-white p-3 transition dark:bg-black sm:gap-0"
                 >
-                  <div className="flex items-center gap-1 min-[410px]:gap-4 transition duration-150">
+                  <div className="flex items-center gap-1 transition duration-150 min-[410px]:gap-4">
                     <Link to={`/profile/${user?.id}`}>
-                      <div className="rounded-full w-10 min-[410px]:w-12 h-10 min-[410px]:h-12 overflow-hidden">
+                      <div className="h-10 w-10 overflow-hidden rounded-full min-[410px]:h-12 min-[410px]:w-12">
                         <img
                           src={user?.profilePictureUrl}
                           alt={`${user?.fullname}'s profile`}
-                          className="w-full h-full object-cover"
+                          className="h-full w-full object-cover"
                         />
                       </div>
                     </Link>
                     <div>
-                      <p className="font-semibold min-[410px]:text-md text-sm md:text-lg break-normal whitespace-nowrap">
+                      <p className="min-[410px]:text-md whitespace-nowrap break-normal text-sm font-semibold md:text-lg">
                         {user?.fullname}
                       </p>
-                      <p className="text-gray-400 text-sm break-normal whitespace-nowrap">
+                      <p className="whitespace-nowrap break-normal text-sm text-gray-400">
                         @{user?.username}
                       </p>
                     </div>
@@ -166,9 +162,7 @@ const ConnectionsModel = ({ isOpen, closeModal, type }) => {
                 </div>
               ))}
             </InfiniteScroll>
-            {!isLoading && error && (
-              <p className="text-red-500 text-center">{error}</p>
-            )}
+            {!isLoading && error && <p className="text-center text-red-500">{error}</p>}
           </div>
         </div>
       </div>

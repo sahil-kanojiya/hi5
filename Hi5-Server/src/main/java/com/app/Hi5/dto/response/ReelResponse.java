@@ -5,13 +5,11 @@ import com.app.Hi5.dto.enums.LikeStatus;
 import com.app.Hi5.dto.enums.ReportStatus;
 import com.app.Hi5.dto.enums.SaveStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +25,7 @@ public class ReelResponse {
 
     @JsonProperty("likeStatus")
     private LikeStatus likeStatus;
+
     private Integer likesCount;
 
     private Integer commentsCount;
@@ -46,10 +45,8 @@ public class ReelResponse {
     @JsonProperty("isCommentsDisabled")
     private Boolean isCommentsDisabled;
 
-
     private String userId;
     private String username;
     private String fullname;
     private String profilePictureUrl;
-
 }

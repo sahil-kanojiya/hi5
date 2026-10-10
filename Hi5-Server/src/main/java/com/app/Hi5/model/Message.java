@@ -1,5 +1,6 @@
 package com.app.Hi5.model;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +11,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
-
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,8 +18,7 @@ import java.util.Date;
 @Document(collection = "message")
 public class Message {
 
-    @Id
-    private ObjectId id;
+    @Id private ObjectId id;
 
     @Field("chat")
     private String chatId;
@@ -52,5 +49,4 @@ public class Message {
     @Field("is_deleted_by_receiver_user")
     @Builder.Default
     private Boolean isDeletedByReceiver = false;
-
 }

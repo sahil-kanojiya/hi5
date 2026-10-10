@@ -1,15 +1,14 @@
 package com.app.Hi5.security;
 
 import com.app.Hi5.model.User;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @Data
@@ -21,11 +20,11 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         log.info("Fetching authorities for user: {}", user.getEmail());
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
+        List<GrantedAuthority> authorities =
+                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
         log.info("Authorities for user {}: {}", user.getEmail(), authorities);
         return authorities;
     }
-
 
     @Override
     public String getUsername() {
@@ -48,8 +47,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        boolean isAccountNonLocked = user.getBanUntil() == null || user.getBanUntil().before(new Date());
-        log.info("Checking if account for user {} is non-locked: {}", user.getEmail(), isAccountNonLocked);
+        boolean isAccountNonLocked =
+                user.getBanUntil() == null || user.getBanUntil().before(new Date());
+        log.info(
+                "Checking if account for user {} is non-locked: {}",
+                user.getEmail(),
+                isAccountNonLocked);
         return isAccountNonLocked;
     }
 
@@ -63,5 +66,4 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
 }

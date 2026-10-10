@@ -7,16 +7,20 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class Validator {
 
-    private Validator() {
-    }
+    private Validator() {}
 
-    public static void validateEitherEmailOrUsernameExsistsAndValidateFormate(String email, String username) throws ValidationException {
-        log.info("Starting validation for email or username: email = {}, username = {}", email, username);
+    public static void validateEitherEmailOrUsernameExsistsAndValidateFormate(
+            String email, String username) throws ValidationException {
+        log.info(
+                "Starting validation for email or username: email = {}, username = {}",
+                email,
+                username);
 
         // Check if both email and username are provided
         if (username != null && email != null) {
             log.warn("Both email and username are provided. Only one is allowed.");
-            throw new ValidationException("Either username or email must be provided, Both not accepted.");
+            throw new ValidationException(
+                    "Either username or email must be provided, Both not accepted.");
         }
 
         // If username is null, email should be validated
@@ -46,7 +50,8 @@ public class Validator {
         log.info("Validation passed successfully for email = {}, username = {}", email, username);
     }
 
-    public static void validateReelMultipartFilesExsists(MultipartFile file) throws ValidationException {
+    public static void validateReelMultipartFilesExsists(MultipartFile file)
+            throws ValidationException {
         log.info("Starting validation for multiparts for reel");
 
         // Check if video file exists and is not empty
@@ -57,5 +62,4 @@ public class Validator {
 
         log.info("Both thumbnail image and video file are provided and valid.");
     }
-
 }

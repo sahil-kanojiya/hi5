@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { forgotPassword, forgotPasswordVerifyOTP } from "../services/api";
+import { useState } from 'react';
+import { forgotPassword, forgotPasswordVerifyOTP } from '../services/api';
 
 const useForgotPassword = () => {
   const [step, setStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedTab, setSelectedTab] = useState("email");
+  const [selectedTab, setSelectedTab] = useState('email');
 
   const submitStepData = async (values) => {
     if (step === 0) {
       setIsLoading(true);
       try {
-        console.log("Form Value email:", values.email);
-        console.log("Form Value username:", values.username);
-        if (selectedTab === "email") {
+        console.log('Form Value email:', values.email);
+        console.log('Form Value username:', values.username);
+        if (selectedTab === 'email') {
           const response = await forgotPassword({
             email: values.email.toLowerCase(),
           });
@@ -23,7 +23,7 @@ const useForgotPassword = () => {
           }
 
           setError(null);
-        } else if (selectedTab === "username") {
+        } else if (selectedTab === 'username') {
           const response = await forgotPassword({
             username: values.username,
           });
@@ -35,20 +35,17 @@ const useForgotPassword = () => {
           setError(null);
         }
       } catch (err) {
-        console.log("Error " + err);
-        setError(
-          err?.response?.data?.message ||
-            "Something went wrong, please try again."
-        );
+        console.log('Error ' + err);
+        setError(err?.response?.data?.message || 'Something went wrong, please try again.');
       } finally {
         setIsLoading(false);
       }
     } else if (step === 1) {
       setIsLoading(true);
       try {
-        console.log("Form Value OTP:", values.otp);
-        console.log("Form Value username:", values.password);
-        if (selectedTab === "email") {
+        console.log('Form Value OTP:', values.otp);
+        console.log('Form Value username:', values.password);
+        if (selectedTab === 'email') {
           const response = await forgotPasswordVerifyOTP(values.otp, {
             email: values.email.toLowerCase(),
             password: values.password,
@@ -59,7 +56,7 @@ const useForgotPassword = () => {
           }
 
           setError(null);
-        } else if (selectedTab === "username") {
+        } else if (selectedTab === 'username') {
           const response = await forgotPasswordVerifyOTP(values.otp, {
             username: values.username,
             password: values.password,
@@ -72,11 +69,8 @@ const useForgotPassword = () => {
           setError(null);
         }
       } catch (err) {
-        console.log("Error " + err);
-        setError(
-          err?.response?.data?.message ||
-            "Something went wrong, please try again."
-        );
+        console.log('Error ' + err);
+        setError(err?.response?.data?.message || 'Something went wrong, please try again.');
       } finally {
         setIsLoading(false);
       }

@@ -1,47 +1,41 @@
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 const reportReasonsEnum = {
-  HARASSMENT_BULLYING: "Harassment or Bullying",
-  HATE_SPEECH: "Hate Speech",
-  SPAM: "Spam",
-  NUDITY: "Nudity or Sexual Content",
-  VIOLENCE_THREATS: "Violence or Threats",
-  SELF_HARM_SUICIDE: "Self-Harm or Suicide",
-  MISINFORMATION: "Misinformation",
-  IMPERSONATION: "Impersonation",
-  INTELLECTUAL_PROPERTY: "Intellectual Property Violations",
-  INAPPROPRIATE_CONTENT: "Inappropriate Content",
-  SCAMS_FRAUD: "Scams or Fraud",
-  ILLEGAL_ACTIVITIES: "Illegal Activities",
+  HARASSMENT_BULLYING: 'Harassment or Bullying',
+  HATE_SPEECH: 'Hate Speech',
+  SPAM: 'Spam',
+  NUDITY: 'Nudity or Sexual Content',
+  VIOLENCE_THREATS: 'Violence or Threats',
+  SELF_HARM_SUICIDE: 'Self-Harm or Suicide',
+  MISINFORMATION: 'Misinformation',
+  IMPERSONATION: 'Impersonation',
+  INTELLECTUAL_PROPERTY: 'Intellectual Property Violations',
+  INAPPROPRIATE_CONTENT: 'Inappropriate Content',
+  SCAMS_FRAUD: 'Scams or Fraud',
+  ILLEGAL_ACTIVITIES: 'Illegal Activities',
 };
 
-const ReportConfirmationModal = ({
-  isOpen,
-  closeModal,
-  report,
-  isReporting,
-  type,
-}) => {
-  const [selectedReason, setSelectedReason] = useState("");
+const ReportConfirmationModal = ({ isOpen, closeModal, report, isReporting, type }) => {
+  const [selectedReason, setSelectedReason] = useState('');
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         closeModal();
       }
     };
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     }
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'auto';
     };
   }, [isOpen, closeModal]);
 
@@ -57,7 +51,7 @@ const ReportConfirmationModal = ({
       report(selectedReason);
       closeModal();
     } else {
-      setError("Please select a reason before submitting.");
+      setError('Please select a reason before submitting.');
     }
   };
 
@@ -65,49 +59,49 @@ const ReportConfirmationModal = ({
     <>
       {isOpen && (
         <div
-          className={`z-20 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 transition-opacity duration-300 ${isReporting ? "opacity-50 pointer-events-none" : ""
-            }`}
+          className={`fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${
+            isReporting ? 'pointer-events-none opacity-50' : ''
+          }`}
           onClick={handleOutsideClick}
         >
           <div
-            className={`bg-white dark:bg-black border border-gray-500 shadow-lg rounded-lg w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg p-6 transition-transform duration-300 transform ${isOpen ? "scale-100" : "scale-95"
-              } ${isReporting ? "opacity-50" : ""}`}
+            className={`w-full max-w-xs transform rounded-lg border border-gray-500 bg-white p-6 shadow-lg transition-transform duration-300 dark:bg-black sm:max-w-sm md:max-w-md lg:max-w-lg ${
+              isOpen ? 'scale-100' : 'scale-95'
+            } ${isReporting ? 'opacity-50' : ''}`}
           >
-            <div className="flex justify-between items-center mb-4 text-xl">
-              <h3 className="font-semibold text-red-600 dark:text-red-600">
-                Confirm Report
-              </h3>
+            <div className="mb-4 flex items-center justify-between text-xl">
+              <h3 className="font-semibold text-red-600 dark:text-red-600">Confirm Report</h3>
               <button
                 onClick={closeModal}
-                className="text-gray-600 hover:text-gray-800 dark:hover:text-gray-100 dark:text-gray-300"
+                className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
                 disabled={isReporting}
               >
                 <CloseRoundedIcon
                   sx={{
                     fontSize: { xs: 25, sm: 28, md: 30 },
                   }}
-                  className="text-gray-500 hover:text-red-500 transition duration-200"
+                  className="text-gray-500 transition duration-200 hover:text-red-500"
                 />
               </button>
             </div>
-            {type === "POST" && (
+            {type === 'POST' && (
               <p className="mb-6 text-gray-700 dark:text-gray-300">
                 Please select a reason for reporting this post:
               </p>
             )}
-            {type === "REEL" && (
+            {type === 'REEL' && (
               <p className="mb-6 text-gray-700 dark:text-gray-300">
                 Please select a reason for reporting this reel:
               </p>
             )}
-            {type === "COMMENT" && (
+            {type === 'COMMENT' && (
               <p className="mb-6 text-gray-700 dark:text-gray-300">
                 Please select a reason for reporting this comment:
               </p>
             )}
-            <div className="mb-4 px-4 py-3 border dark:border-gray-500 rounded-lg max-h-60 overflow-y-auto hide-scrollbar">
+            <div className="hide-scrollbar mb-4 max-h-60 overflow-y-auto rounded-lg border px-4 py-3 dark:border-gray-500">
               {Object.keys(reportReasonsEnum).map((key) => (
-                <div key={key} className="flex items-center mb-3">
+                <div key={key} className="mb-3 flex items-center">
                   <input
                     type="radio"
                     id={key}
@@ -122,26 +116,24 @@ const ReportConfirmationModal = ({
                     disabled={isReporting}
                   />
                   <label className="text-gray-700 dark:text-gray-300">
-                    {reportReasonsEnum[key]}{" "}
+                    {reportReasonsEnum[key]}{' '}
                   </label>
                 </div>
               ))}
             </div>
 
-            <div className="mb-3 text-red-700 dark:text-red-400 text-xs">
-              {error}
-            </div>
+            <div className="mb-3 text-xs text-red-700 dark:text-red-400">{error}</div>
             <div className="flex justify-end gap-4">
               <button
                 onClick={closeModal}
-                className={`bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 px-4 py-2 rounded-lg text-black dark:text-gray-200 transition-all duration-200 ease-in-out`}
+                className={`rounded-lg bg-gray-300 px-4 py-2 text-black transition-all duration-200 ease-in-out hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600`}
                 disabled={isReporting}
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
-                className={`bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 px-4 py-2 rounded-lg text-white transition-all duration-200 ease-in-out`}
+                className={`rounded-lg bg-red-500 px-4 py-2 text-white transition-all duration-200 ease-in-out hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700`}
                 disabled={isReporting}
               >
                 Report

@@ -6,15 +6,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
@@ -23,17 +22,28 @@ public class IdentificationTokenService {
     private final String secretKey;
     private final long accessTokenExpirationTime;
 
-    public IdentificationTokenService(@Value("${identification.token.secret}") String secretKey, @Value("${identification.token.expiration}") String accessTokenExpirationTimeStr) {
+    public IdentificationTokenService(
+            @Value("${identification.token.secret}") String secretKey,
+            @Value("${identification.token.expiration}") String accessTokenExpirationTimeStr) {
         this.secretKey = secretKey;
-        this.accessTokenExpirationTime = Conversion.convertToMilliseconds(accessTokenExpirationTimeStr);
-        log.info("IdentificationTokenService initialized with expiration time: {}", accessTokenExpirationTimeStr);
+        this.accessTokenExpirationTime =
+                Conversion.convertToMilliseconds(accessTokenExpirationTimeStr);
+        log.info(
+                "IdentificationTokenService initialized with expiration time: {}",
+                accessTokenExpirationTimeStr);
     }
 
     public String generateToken(String email) {
         log.info("Generating token for email: {}", email);
         Map<String, Object> claims = new HashMap<>();
         log.info("Token generated successfully for email: {}", email);
-        return Jwts.builder().setClaims(claims).setSubject(email).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationTime)).signWith(getKey(), SignatureAlgorithm.HS256).compact();
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationTime))
+                .signWith(getKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public String extractSub(String token) {
@@ -71,5 +81,4 @@ public class IdentificationTokenService {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
 }

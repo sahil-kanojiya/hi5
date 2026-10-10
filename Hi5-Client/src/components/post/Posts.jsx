@@ -1,12 +1,12 @@
-import PostSkeleton from "../skeletons/PostSkeleton";
-import { useCallback, useEffect, useState } from "react";
-import Post from "./Post";
-import PropTypes from "prop-types";
-import axiosInstance from "../../services/axios.config";
-import { useSelector } from "react-redux";
-import InfiniteScroll from "react-infinite-scroll-component";
+import PostSkeleton from '../skeletons/PostSkeleton';
+import { useCallback, useEffect, useState } from 'react';
+import Post from './Post';
+import PropTypes from 'prop-types';
+import axiosInstance from '../../services/axios.config';
+import { useSelector } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-const Posts = ({ feedType, userId = "", isMyProfilePosts = false }) => {
+const Posts = ({ feedType, userId = '', isMyProfilePosts = false }) => {
   const user = useSelector((state) => state.user.profile);
 
   const [posts, setPosts] = useState([]);
@@ -18,18 +18,18 @@ const Posts = ({ feedType, userId = "", isMyProfilePosts = false }) => {
   const size = 10;
   const getPostEndpoint = useCallback(() => {
     switch (feedType) {
-      case "FOR_YOU":
+      case 'FOR_YOU':
         return `/post?size=${size}`;
-      case "FOLLOWINGS":
+      case 'FOLLOWINGS':
         return `/post/following?page=${page}&size=${size}`;
-      case "POSTS":
+      case 'POSTS':
         return `/post/user/${userId}?page=${page}&size=${size}`;
-      case "SAVED":
+      case 'SAVED':
         return `/post/saved?page=${page}&size=${size}`;
       default:
         return `/post?size=${size}`;
     }
-  }, [size, page, userId, feedType])
+  }, [size, page, userId, feedType]);
 
   const fetchPosts = useCallback(async () => {
     try {
@@ -46,7 +46,7 @@ const Posts = ({ feedType, userId = "", isMyProfilePosts = false }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [getPostEndpoint])
+  }, [getPostEndpoint]);
 
   useEffect(() => {
     setPosts([]);
@@ -87,12 +87,12 @@ const Posts = ({ feedType, userId = "", isMyProfilePosts = false }) => {
           </div>
         )}
 
-        {error && <p className="my-4 text-red-500 text-center">{error}</p>}
+        {error && <p className="my-4 text-center text-red-500">{error}</p>}
 
         {!isLoading && posts.length === 0 && (
-          <div className="flex justify-center items-center px-20 sm:px-40 !w-full !h-full">
-            <div className="bg-white shadow-md px-4 py-2 rounded-lg text-center">
-              <p className="font-semibold text-gray-500 text-lg">No Posts</p>
+          <div className="flex !h-full !w-full items-center justify-center px-20 sm:px-40">
+            <div className="rounded-lg bg-white px-4 py-2 text-center shadow-md">
+              <p className="text-lg font-semibold text-gray-500">No Posts</p>
             </div>
           </div>
         )}

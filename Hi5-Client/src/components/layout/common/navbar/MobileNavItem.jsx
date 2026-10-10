@@ -1,11 +1,9 @@
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const MobileNavItem = ({ icon, link }) => (
   <Link to={link}>
-    <div className="flex items-center hover:text-gray-400 text-2xl cursor-pointer">
-      {icon}
-    </div>
+    <div className="flex cursor-pointer items-center text-2xl hover:text-gray-400">{icon}</div>
   </Link>
 );
 

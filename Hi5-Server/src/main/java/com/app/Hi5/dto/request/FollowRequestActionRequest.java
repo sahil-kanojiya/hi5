@@ -11,5 +11,4 @@ public class FollowRequestActionRequest {
 
     private String notificationId;
     private String userId;
-
 }

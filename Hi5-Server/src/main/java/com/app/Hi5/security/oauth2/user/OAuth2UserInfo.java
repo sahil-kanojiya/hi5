@@ -1,8 +1,7 @@
 package com.app.Hi5.security.oauth2.user;
 
-import lombok.Getter;
-
 import java.util.Map;
+import lombok.Getter;
 
 @Getter
 public abstract class OAuth2UserInfo {
@@ -20,5 +19,4 @@ public abstract class OAuth2UserInfo {
     public abstract String getEmail();
 
     public abstract String getImageUrl();
-
 }

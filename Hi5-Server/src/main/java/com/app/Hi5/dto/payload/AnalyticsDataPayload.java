@@ -24,5 +24,4 @@ public class AnalyticsDataPayload {
     private StatsResponse contentEngagementGrowthDayStatsResponse;
     private StatsResponse contentEngagementGrowthMonthStatsResponse;
     private StatsResponse contentEngagementGrowthYearStatsResponse;
-
 }

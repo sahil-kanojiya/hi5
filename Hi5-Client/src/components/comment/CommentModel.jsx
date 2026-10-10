@@ -1,10 +1,9 @@
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
-import axiosInstance from "../../services/axios.config";
-import { makeComment } from "../../services/api";
-import Comment from "./Comment";
-
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from 'react';
+import axiosInstance from '../../services/axios.config';
+import { makeComment } from '../../services/api';
+import Comment from './Comment';
 
 const CommentModel = ({
   isOpen,
@@ -16,9 +15,9 @@ const CommentModel = ({
   isMyProfileEntity = false,
 }) => {
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     };
   }, [isOpen]);
 
@@ -28,7 +27,7 @@ const CommentModel = ({
     }
   };
 
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState('');
   const [isPosting, setIsPosting] = useState(false);
 
   const handleCommentChange = (e) => {
@@ -51,7 +50,7 @@ const CommentModel = ({
     } catch (error) {
       console.log(error);
     } finally {
-      setNewComment("");
+      setNewComment('');
       setIsPosting(false);
     }
   };
@@ -64,7 +63,7 @@ const CommentModel = ({
 
   const fetchComments = async () => {
     try {
-      const response = await axiosInstance.get("/comment", {
+      const response = await axiosInstance.get('/comment', {
         params: {
           type,
           relevantId,
@@ -98,7 +97,7 @@ const CommentModel = ({
   }, [page, type, relevantId, commentCount]);
 
   const loadMoreComments = () => {
-    console.log("load more posts");
+    console.log('load more posts');
     if (!isLoading && hasMore) {
       setPage((prevPage) => prevPage + 1);
     }
@@ -136,15 +135,15 @@ const CommentModel = ({
 
   return (
     <div
-      className="z-20 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50"
+      className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50"
       onClick={handleOutsideClick}
     >
-      <div className="bg-white dark:bg-black shadow-lg p-4 border border-gray-500 rounded-lg w-full max-w-md sm:max-w-lg lg:max-w-xl">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="font-semibold text-lg">Comments</h2>
+      <div className="w-full max-w-md rounded-lg border border-gray-500 bg-white p-4 shadow-lg dark:bg-black sm:max-w-lg lg:max-w-xl">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Comments</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-red-500 transition duration-200"
+            className="text-gray-500 transition duration-200 hover:text-red-500"
           >
             <CloseRoundedIcon
               sx={{
@@ -154,7 +153,7 @@ const CommentModel = ({
           </button>
         </div>
 
-        <div className="max-h-60 overflow-y-auto hide-scrollbar">
+        <div className="hide-scrollbar max-h-60 overflow-y-auto">
           {!isLoading && comments.length > 0 && (
             <>
               {comments.map((comment) => (
@@ -166,15 +165,12 @@ const CommentModel = ({
                 />
               ))}
               {!isLoading && error === null && (
-                <div
-                  ref={loaderRef}
-                  className="flex justify-center items-center h-11"
-                ></div>
+                <div ref={loaderRef} className="flex h-11 items-center justify-center"></div>
               )}
               {!isLoading && error !== null && (
                 <div
                   ref={loaderRef}
-                  className="flex justify-center items-center h-16 text-white dark:text-black"
+                  className="flex h-16 items-center justify-center text-white dark:text-black"
                 >
                   Something error occured.
                 </div>
@@ -183,22 +179,22 @@ const CommentModel = ({
           )}
         </div>
 
-        {error && <p className="font-semibold text-red-500 text-sm">{error}</p>}
-        <div className="flex items-center space-x-2 pt-4 border-gray-200 dark:border-gray-700 border-t">
+        {error && <p className="text-sm font-semibold text-red-500">{error}</p>}
+        <div className="flex items-center space-x-2 border-t border-gray-200 pt-4 dark:border-gray-700">
           <input
             type="text"
             value={newComment}
             onChange={handleCommentChange}
             placeholder="Write a comment..."
-            className="bg-white dark:bg-black p-2 border dark:border-gray-500 rounded-lg outline-none w-full"
+            className="w-full rounded-lg border bg-white p-2 outline-none dark:border-gray-500 dark:bg-black"
             disabled={isPosting}
           />
           <button
             onClick={handlePostComment}
-            className="bg-blue-500 px-4 py-2 rounded-lg text-white"
+            className="rounded-lg bg-blue-500 px-4 py-2 text-white"
             disabled={isPosting}
           >
-            {isPosting ? "Posting.." : "Post"}
+            {isPosting ? 'Posting..' : 'Post'}
           </button>
         </div>
       </div>

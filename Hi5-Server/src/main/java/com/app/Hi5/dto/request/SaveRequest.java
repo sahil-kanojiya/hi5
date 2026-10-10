@@ -12,5 +12,4 @@ public class SaveRequest {
 
     private String relevantId;
     private SaveType type;
-
 }

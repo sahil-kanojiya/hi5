@@ -11,5 +11,4 @@ public class CommentRequest {
     private String relevantId;
     private String content;
     private CommentType type;
-
 }

@@ -8,7 +8,10 @@ import com.app.Hi5.model.Enum.CommentType;
 import com.app.Hi5.model.Enum.LikeType;
 import com.app.Hi5.model.Enum.NotificationType;
 import com.app.Hi5.repository.*;
-//import com.app.Hi5.repository.NotificationRepository;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -18,11 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -40,59 +38,80 @@ public class NotificationService {
 
     @Async
     public void makeNewPostSharedNotificationAndSend(User user, Post newPost) {
-        user.getFollowerUserIds().forEach(userId -> {
-            Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
-            if (optionalUser.isPresent()) {
-                User u = optionalUser.get();
-                Notification notification = new Notification();
-                notification.setNotificationUserId(userId);
-                notification.setType(NotificationType.NETWORK_NEW_POST);
-                notification.setRelevantId(newPost.getId().toHexString());
-                notification.setUserId(user.getId().toHexString());
-                if (u.getIsAllowedNetworkPostNotification()) {
-                    Notification savedNotification = notificationRepository.save(notification);
-                    sendNotification(notification.getNotificationUserId(), NotificationPayload.convertToPayload(savedNotification, u));
-                }
-            }
-        });
+        user.getFollowerUserIds()
+                .forEach(
+                        userId -> {
+                            Optional<User> optionalUser =
+                                    userRepository.findById(new ObjectId(userId));
+                            if (optionalUser.isPresent()) {
+                                User u = optionalUser.get();
+                                Notification notification = new Notification();
+                                notification.setNotificationUserId(userId);
+                                notification.setType(NotificationType.NETWORK_NEW_POST);
+                                notification.setRelevantId(newPost.getId().toHexString());
+                                notification.setUserId(user.getId().toHexString());
+                                if (u.getIsAllowedNetworkPostNotification()) {
+                                    Notification savedNotification =
+                                            notificationRepository.save(notification);
+                                    sendNotification(
+                                            notification.getNotificationUserId(),
+                                            NotificationPayload.convertToPayload(
+                                                    savedNotification, u));
+                                }
+                            }
+                        });
     }
 
     @Async
     public void makeNewReelSharedNotificationAndSend(User user, Reel newReel) {
-        user.getFollowerUserIds().forEach(userId -> {
-            Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
-            if (optionalUser.isPresent()) {
-                User u = optionalUser.get();
-                Notification notification = new Notification();
-                notification.setNotificationUserId(userId);
-                notification.setType(NotificationType.NETWORK_NEW_REEL);
-                notification.setRelevantId(newReel.getId().toHexString());
-                notification.setUserId(user.getId().toHexString());
-                if (u.getIsAllowedNetworkReelNotification()) {
-                    Notification savedNotification = notificationRepository.save(notification);
-                    sendNotification(notification.getNotificationUserId(), NotificationPayload.convertToPayload(savedNotification, u));
-                }
-            }
-        });
+        user.getFollowerUserIds()
+                .forEach(
+                        userId -> {
+                            Optional<User> optionalUser =
+                                    userRepository.findById(new ObjectId(userId));
+                            if (optionalUser.isPresent()) {
+                                User u = optionalUser.get();
+                                Notification notification = new Notification();
+                                notification.setNotificationUserId(userId);
+                                notification.setType(NotificationType.NETWORK_NEW_REEL);
+                                notification.setRelevantId(newReel.getId().toHexString());
+                                notification.setUserId(user.getId().toHexString());
+                                if (u.getIsAllowedNetworkReelNotification()) {
+                                    Notification savedNotification =
+                                            notificationRepository.save(notification);
+                                    sendNotification(
+                                            notification.getNotificationUserId(),
+                                            NotificationPayload.convertToPayload(
+                                                    savedNotification, u));
+                                }
+                            }
+                        });
     }
 
     @Async
     public void makeNewStorySharedNotificationAndSend(User user, Story newStory) {
-        user.getFollowerUserIds().forEach(userId -> {
-            Optional<User> optionalUser = userRepository.findById(new ObjectId(userId));
-            if (optionalUser.isPresent()) {
-                User u = optionalUser.get();
-                Notification notification = new Notification();
-                notification.setNotificationUserId(userId);
-                notification.setType(NotificationType.NETWORK_NEW_STORY);
-                notification.setRelevantId(newStory.getId().toHexString());
-                notification.setUserId(user.getId().toHexString());
-                if (u.getIsAllowedNetworkStoryNotification()) {
-                    Notification savedNotification = notificationRepository.save(notification);
-                    sendNotification(notification.getNotificationUserId(), NotificationPayload.convertToPayload(savedNotification, u));
-                }
-            }
-        });
+        user.getFollowerUserIds()
+                .forEach(
+                        userId -> {
+                            Optional<User> optionalUser =
+                                    userRepository.findById(new ObjectId(userId));
+                            if (optionalUser.isPresent()) {
+                                User u = optionalUser.get();
+                                Notification notification = new Notification();
+                                notification.setNotificationUserId(userId);
+                                notification.setType(NotificationType.NETWORK_NEW_STORY);
+                                notification.setRelevantId(newStory.getId().toHexString());
+                                notification.setUserId(user.getId().toHexString());
+                                if (u.getIsAllowedNetworkStoryNotification()) {
+                                    Notification savedNotification =
+                                            notificationRepository.save(notification);
+                                    sendNotification(
+                                            notification.getNotificationUserId(),
+                                            NotificationPayload.convertToPayload(
+                                                    savedNotification, u));
+                                }
+                            }
+                        });
     }
 
     @Async
@@ -128,12 +147,22 @@ public class NotificationService {
         if (notification.getNotificationUserId().equals(notification.getUserId())) {
             return;
         }
-        Optional<User> optionalUser = userRepository.findById(new ObjectId(notification.getNotificationUserId()));
+        Optional<User> optionalUser =
+                userRepository.findById(new ObjectId(notification.getNotificationUserId()));
         if (optionalUser.isPresent()) {
             User notificationUser = optionalUser.get();
-            if ((notification.getType().equals(NotificationType.LIKE_POST) && notificationUser.getIsAllowedPostsLikeNotification()) || (notification.getType().equals(NotificationType.LIKE_REEL) && notificationUser.getIsAllowedReelsLikeNotification()) || (notification.getType().equals(NotificationType.LIKE_STORY) && notificationUser.getIsAllowedStorysLikeNotification()) || (notification.getType().equals(NotificationType.LIKE_COMMENT) && notificationUser.getIsAllowedCommentsLikeNotification())) {
+            if ((notification.getType().equals(NotificationType.LIKE_POST)
+                            && notificationUser.getIsAllowedPostsLikeNotification())
+                    || (notification.getType().equals(NotificationType.LIKE_REEL)
+                            && notificationUser.getIsAllowedReelsLikeNotification())
+                    || (notification.getType().equals(NotificationType.LIKE_STORY)
+                            && notificationUser.getIsAllowedStorysLikeNotification())
+                    || (notification.getType().equals(NotificationType.LIKE_COMMENT)
+                            && notificationUser.getIsAllowedCommentsLikeNotification())) {
                 Notification savedNotification = notificationRepository.save(notification);
-                sendNotification(notification.getNotificationUserId(), NotificationPayload.convertToPayload(savedNotification, user));
+                sendNotification(
+                        notification.getNotificationUserId(),
+                        NotificationPayload.convertToPayload(savedNotification, user));
             }
         }
     }
@@ -159,20 +188,31 @@ public class NotificationService {
         if (notification.getNotificationUserId().equals(notification.getUserId())) {
             return;
         }
-        Optional<User> optionalUser = userRepository.findById(new ObjectId(notification.getNotificationUserId()));
+        Optional<User> optionalUser =
+                userRepository.findById(new ObjectId(notification.getNotificationUserId()));
         if (optionalUser.isPresent()) {
             User notificationUser = optionalUser.get();
-            if (!notificationRepository.existsByNotificationUserIdAndUserIdAndRelevantIdAndType(notification.getNotificationUserId(), notification.getUserId(), notification.getRelevantId(), notification.getType())) {
-                if ((notification.getType().equals(NotificationType.COMMENT_POST) && notificationUser.getIsAllowedPostsCommentNotification()) || (notification.getType().equals(NotificationType.COMMENT_REEL) && notificationUser.getIsAllowedReelsCommentNotification())) {
+            if (!notificationRepository.existsByNotificationUserIdAndUserIdAndRelevantIdAndType(
+                    notification.getNotificationUserId(),
+                    notification.getUserId(),
+                    notification.getRelevantId(),
+                    notification.getType())) {
+                if ((notification.getType().equals(NotificationType.COMMENT_POST)
+                                && notificationUser.getIsAllowedPostsCommentNotification())
+                        || (notification.getType().equals(NotificationType.COMMENT_REEL)
+                                && notificationUser.getIsAllowedReelsCommentNotification())) {
                     Notification savedNotification = notificationRepository.save(notification);
-                    sendNotification(notification.getNotificationUserId(), NotificationPayload.convertToPayload(savedNotification, user));
+                    sendNotification(
+                            notification.getNotificationUserId(),
+                            NotificationPayload.convertToPayload(savedNotification, user));
                 }
             }
         }
     }
 
     @Async
-    public void makeFollowNotificationAndSend(User user, User userToFollow, FollowStatus followStatus) {
+    public void makeFollowNotificationAndSend(
+            User user, User userToFollow, FollowStatus followStatus) {
         Notification notification = new Notification();
         notification.setNotificationUserId(userToFollow.getId().toHexString());
         switch (followStatus) {
@@ -182,10 +222,19 @@ public class NotificationService {
         notification.setRelevantId(user.getId().toHexString());
         notification.setUserId(user.getId().toHexString());
 
-        if (!notificationRepository.existsByNotificationUserIdAndUserIdAndRelevantIdAndType(notification.getNotificationUserId(), notification.getUserId(), notification.getRelevantId(), notification.getType())) {
-            if ((followStatus.equals(FollowStatus.FOLLOWED) && userToFollow.getIsAllowedUsersFollowNotification()) || (followStatus.equals(FollowStatus.REQUEST_SENT) && userToFollow.getIsAllowedUsersFollowRequestNotification())) {
+        if (!notificationRepository.existsByNotificationUserIdAndUserIdAndRelevantIdAndType(
+                notification.getNotificationUserId(),
+                notification.getUserId(),
+                notification.getRelevantId(),
+                notification.getType())) {
+            if ((followStatus.equals(FollowStatus.FOLLOWED)
+                            && userToFollow.getIsAllowedUsersFollowNotification())
+                    || (followStatus.equals(FollowStatus.REQUEST_SENT)
+                            && userToFollow.getIsAllowedUsersFollowRequestNotification())) {
                 Notification savedNotification = notificationRepository.save(notification);
-                sendNotification(notification.getNotificationUserId(), NotificationPayload.convertToPayload(savedNotification, user));
+                sendNotification(
+                        notification.getNotificationUserId(),
+                        NotificationPayload.convertToPayload(savedNotification, user));
             }
         }
     }
@@ -197,14 +246,19 @@ public class NotificationService {
         notification.setType(NotificationType.FOLLOW_REQUEST_ACCEPT);
         notification.setRelevantId(followedUser.getId().toHexString());
         notification.setUserId(followedUser.getId().toHexString());
-        if (!notificationRepository.existsByNotificationUserIdAndUserIdAndRelevantIdAndType(notification.getNotificationUserId(), notification.getUserId(), notification.getRelevantId(), notification.getType())) {
+        if (!notificationRepository.existsByNotificationUserIdAndUserIdAndRelevantIdAndType(
+                notification.getNotificationUserId(),
+                notification.getUserId(),
+                notification.getRelevantId(),
+                notification.getType())) {
             if (requestedUser.getIsAllowedUsersFollowNotification()) {
                 Notification savedNotification = notificationRepository.save(notification);
-                sendNotification(notification.getNotificationUserId(), NotificationPayload.convertToPayload(savedNotification, followedUser));
+                sendNotification(
+                        notification.getNotificationUserId(),
+                        NotificationPayload.convertToPayload(savedNotification, followedUser));
             }
         }
     }
-
 
     void sendNotification(String userId, NotificationPayload notification) {
         log.info("Sending notification to userId: {}, message: {}", userId, notification);
@@ -213,18 +267,36 @@ public class NotificationService {
 
     public List<NotificationResponse> getNotificationList(Integer page, Integer size, User user) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Notification> notificationPage = notificationRepository.findByNotificationUserIdOrderByCreatedAtDesc(user.getId().toHexString(), pageable);
-        return notificationPage.stream().map(notification -> {
-            User u = userRepository.findById(new ObjectId(notification.getUserId())).orElse(null);
-            if (u != null) {
-                return NotificationResponse.builder().id(notification.getId().toHexString()).notificationUserId(notification.getNotificationUserId()).userId(notification.getUserId()).type(notification.getType()).relevantId(notification.getRelevantId()).createdAt(notification.getCreatedAt()).username(u.getUsername()).fullname(u.getFullname()).profilePictureUrl(u.getProfileImageUrl()).build();
-            }
-            return null;
-        }).filter(Objects::nonNull).collect(Collectors.toList());
+        Page<Notification> notificationPage =
+                notificationRepository.findByNotificationUserIdOrderByCreatedAtDesc(
+                        user.getId().toHexString(), pageable);
+        return notificationPage.stream()
+                .map(
+                        notification -> {
+                            User u =
+                                    userRepository
+                                            .findById(new ObjectId(notification.getUserId()))
+                                            .orElse(null);
+                            if (u != null) {
+                                return NotificationResponse.builder()
+                                        .id(notification.getId().toHexString())
+                                        .notificationUserId(notification.getNotificationUserId())
+                                        .userId(notification.getUserId())
+                                        .type(notification.getType())
+                                        .relevantId(notification.getRelevantId())
+                                        .createdAt(notification.getCreatedAt())
+                                        .username(u.getUsername())
+                                        .fullname(u.getFullname())
+                                        .profilePictureUrl(u.getProfileImageUrl())
+                                        .build();
+                            }
+                            return null;
+                        })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     public void deleteAllNotifications(String notificationUserId) {
         notificationRepository.deleteByNotificationUserId(notificationUserId);
     }
-
 }

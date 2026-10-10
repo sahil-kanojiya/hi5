@@ -2,7 +2,6 @@ package com.app.Hi5.controller;
 
 import com.app.Hi5.dto.request.SaveRequest;
 import com.app.Hi5.model.Enum.SaveType;
-import com.app.Hi5.repository.SaveRepository;
 import com.app.Hi5.security.UserDetailsImpl;
 import com.app.Hi5.service.SaveService;
 import lombok.RequiredArgsConstructor;
@@ -23,15 +22,19 @@ public class SaveController {
     private final SaveService saveService;
 
     @PostMapping
-    public ResponseEntity<String> addSavedPost(@RequestBody SaveRequest request, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> addSavedPost(
+            @RequestBody SaveRequest request,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         saveService.save(userDetails.getUser(), request.getRelevantId(), request.getType());
         return new ResponseEntity<>("saved successfully!", HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity<String> removeSavedPost(@RequestParam("relevantId") String relevantId, @RequestParam("type") SaveType type, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> removeSavedPost(
+            @RequestParam("relevantId") String relevantId,
+            @RequestParam("type") SaveType type,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         saveService.remove(userDetails.getUser(), relevantId, type);
         return new ResponseEntity<>("unsaved successfully!", HttpStatus.OK);
     }
-
 }

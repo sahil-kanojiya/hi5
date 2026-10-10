@@ -27,78 +27,150 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({InsufficientAuthenticationException.class})
-    public ResponseEntity<ErrorResponse> handleInsufficientAuthenticationException(RuntimeException e) {
+    public ResponseEntity<ErrorResponse> handleInsufficientAuthenticationException(
+            RuntimeException e) {
         log.warn("InsufficientAuthenticationException occured: {}", e.getMessage(), e);
-        return ErrorResponse.builder().status(HttpStatus.FORBIDDEN).statusCode(HttpStatus.FORBIDDEN.value()).message("Insufficient Authentication error!").build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.FORBIDDEN)
+                .statusCode(HttpStatus.FORBIDDEN.value())
+                .message("Insufficient Authentication error!")
+                .build()
+                .toResponseEntity();
     }
 
     @ExceptionHandler({UsernameNotFoundException.class, BadCredentialsException.class})
-    public ResponseEntity<ErrorResponse> handleUsernameNotFoundOrBadCredentialsException(RuntimeException e) {
+    public ResponseEntity<ErrorResponse> handleUsernameNotFoundOrBadCredentialsException(
+            RuntimeException e) {
         log.warn("UsernameNotFoundException occurred: {}", e.getMessage(), e);
         if (e instanceof UsernameNotFoundException) {
-            return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message(e.getMessage()).build().toResponseEntity();
+            return ErrorResponse.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .message(e.getMessage())
+                    .build()
+                    .toResponseEntity();
         } else {
-            return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message("Either email/username or password is invalid!").build().toResponseEntity();
+            return ErrorResponse.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .message("Either email/username or password is invalid!")
+                    .build()
+                    .toResponseEntity();
         }
     }
 
     @ExceptionHandler({InvalidOtpException.class})
     public ResponseEntity<ErrorResponse> handleInvalidOtpException(RuntimeException e) {
         log.warn("InvalidOtpException occurred: {}", e.getMessage(), e);
-        return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message(e.getMessage()).build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .build()
+                .toResponseEntity();
     }
 
     @ExceptionHandler({ActionNotAllowedException.class})
     public ResponseEntity<ErrorResponse> handleActionNotAllowedException(RuntimeException e) {
         log.warn("ActionNotAllowedException occurred: {}", e.getMessage(), e);
-        return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message(e.getMessage()).build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .build()
+                .toResponseEntity();
     }
+
     @ExceptionHandler({EntityNotFoundException.class})
     public ResponseEntity<ErrorResponse> handleBadRequestException(RuntimeException e) {
         log.error("Bad Request: {}", e.getMessage(), e);
-        return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message(e.getMessage()).build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .build()
+                .toResponseEntity();
     }
 
     @ExceptionHandler({EntityAlreadyExistsException.class})
     public ResponseEntity<ErrorResponse> handleEntityAlreadyExistsException(RuntimeException e) {
         log.warn("EntityAlreadyExistsException occurred: {}", e.getMessage(), e);
-        return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message(e.getMessage()).build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .build()
+                .toResponseEntity();
     }
 
     @ExceptionHandler({UnauthorizedAccessException.class})
     public ResponseEntity<ErrorResponse> handleUnauthorizedAccessException(RuntimeException e) {
         log.warn("UnauthorizedAccessException occurred: {}", e.getMessage(), e);
-        return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message(e.getMessage()).build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .build()
+                .toResponseEntity();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException e) {
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(
+            MethodArgumentNotValidException e) {
         if (e.getBindingResult().hasErrors()) {
             String message = e.getBindingResult().getAllErrors().getFirst().getDefaultMessage();
             log.warn("Validation exception occurred: {}", message, e);
-            return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message(message).build().toResponseEntity();
+            return ErrorResponse.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .message(message)
+                    .build()
+                    .toResponseEntity();
         }
         log.warn("Validation errors occurred: {}", e.getMessage());
-        return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message("Invalid request").build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message("Invalid request")
+                .build()
+                .toResponseEntity();
     }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(ValidationException e) {
         log.warn("Validation exception occurred :", e);
-        return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message(e.getMessage()).build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .build()
+                .toResponseEntity();
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(
+            HttpMessageNotReadableException e) {
         log.warn("Http message not readable exception occurred: {}", e.getMessage());
-        return ErrorResponse.builder().status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).message(e.getLocalizedMessage()).build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getLocalizedMessage())
+                .build()
+                .toResponseEntity();
     }
 
-    @ExceptionHandler({ExpiredJwtException.class, UnsupportedJwtException.class, MalformedJwtException.class, SignatureException.class, IllegalArgumentException.class})
+    @ExceptionHandler({
+        ExpiredJwtException.class,
+        UnsupportedJwtException.class,
+        MalformedJwtException.class,
+        SignatureException.class,
+        IllegalArgumentException.class
+    })
     public ResponseEntity<ErrorResponse> jwtDecodeException(RuntimeException e) {
         String message;
         if (e instanceof ExpiredJwtException) {
-            message = "The provided JWT token has expired. Please login again to obtain a new token.";
+            message =
+                    "The provided JWT token has expired. Please login again to obtain a new token.";
         } else if (e instanceof UnsupportedJwtException) {
             message = "The provided JWT token is unsupported. Ensure you are using a valid token.";
         } else if (e instanceof MalformedJwtException) {
@@ -106,18 +178,30 @@ public class GlobalExceptionHandler {
         } else if (e instanceof SignatureException) {
             message = "JWT token signature is invalid. The token may have been tampered with.";
         } else if (e instanceof IllegalArgumentException) {
-            message = "An error occurred while processing the JWT token. The token may be empty or invalid.";
+            message =
+                    "An error occurred while processing the JWT token. The token may be empty or"
+                            + " invalid.";
         } else {
             message = "An unknown error occurred while processing the JWT token.";
         }
         log.warn("JWT decoding exception occurred: {}", message, e);
-        return ErrorResponse.builder().status(HttpStatus.UNAUTHORIZED).statusCode(HttpStatus.UNAUTHORIZED.value()).message(message).build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.UNAUTHORIZED)
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .message(message)
+                .build()
+                .toResponseEntity();
     }
 
     @ExceptionHandler(MailSendException.class)
     public ResponseEntity<ErrorResponse> handleMailSendException(RuntimeException e) {
         log.warn("Mail send exception occurred: {}", e.getMessage(), e);
-        return ErrorResponse.builder().status(HttpStatus.INTERNAL_SERVER_ERROR).statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).message(e.getLocalizedMessage()).build().toResponseEntity();
+        return ErrorResponse.builder()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .message(e.getLocalizedMessage())
+                .build()
+                .toResponseEntity();
     }
 
     @ExceptionHandler({MessagingException.class})
@@ -134,5 +218,4 @@ public class GlobalExceptionHandler {
     public void OAuth2AuthenticationProcessingException(RuntimeException e) {
         log.warn(e.getMessage());
     }
-
 }

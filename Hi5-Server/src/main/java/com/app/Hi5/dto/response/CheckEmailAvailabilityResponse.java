@@ -16,6 +16,7 @@ public class CheckEmailAvailabilityResponse {
 
     @JsonProperty("isAvailable")
     private boolean isAvailable;
+
     private HttpStatus status;
     private int statusCode;
     private String message;
@@ -23,5 +24,4 @@ public class CheckEmailAvailabilityResponse {
     public ResponseEntity<CheckEmailAvailabilityResponse> toResponseEntity() {
         return new ResponseEntity<>(this, this.status);
     }
-
 }

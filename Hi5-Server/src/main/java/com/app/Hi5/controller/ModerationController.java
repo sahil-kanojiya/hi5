@@ -17,6 +17,8 @@ import com.app.Hi5.repository.*;
 import com.app.Hi5.security.UserDetailsImpl;
 import com.app.Hi5.service.*;
 import com.app.Hi5.utility.FileStorage;
+import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -25,10 +27,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -46,14 +44,21 @@ public class ModerationController {
 
     @GetMapping("/user/search/{keyword}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public ResponseEntity<List<UserCardResponse>> getUsersByPrefix(@PathVariable("keyword") String keyword, @RequestParam("page") Integer page, @RequestParam("size") Integer size, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        List<UserCardResponse> responses = userService.getUsersByKeywordForModeration(keyword, page, size, userDetails.getUser());
+    public ResponseEntity<List<UserCardResponse>> getUsersByPrefix(
+            @PathVariable("keyword") String keyword,
+            @RequestParam("page") Integer page,
+            @RequestParam("size") Integer size,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        List<UserCardResponse> responses =
+                userService.getUsersByKeywordForModeration(
+                        keyword, page, size, userDetails.getUser());
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
     @PatchMapping("/user/{userId}/ban")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public ResponseEntity<String> banUser(@PathVariable("userId") String userId, @RequestBody BanUserRequest request) {
+    public ResponseEntity<String> banUser(
+            @PathVariable("userId") String userId, @RequestBody BanUserRequest request) {
         userService.banUser(userId, request.getBanToDate());
         return new ResponseEntity<>("user banned", HttpStatus.OK);
     }
@@ -82,7 +87,8 @@ public class ModerationController {
     @PostMapping("/moderator")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> addModerator(@RequestBody NewModeratorAccountRequest request) {
-        userService.makeModeratorAccount(request.getEmail(), request.getUsername(), request.getPassword());
+        userService.makeModeratorAccount(
+                request.getEmail(), request.getUsername(), request.getPassword());
         return new ResponseEntity<>("moderator account created successfully", HttpStatus.OK);
     }
 
@@ -95,44 +101,58 @@ public class ModerationController {
 
     @GetMapping("/content/post")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public List<ReportedPostResponse> getReportedPosts(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    public List<ReportedPostResponse> getReportedPosts(
+            @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
         return reportService.findReportedPostsForModeration(page, size);
     }
 
     @GetMapping("/content/reel")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public List<ReportedReelResponse> getReportedReels(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    public List<ReportedReelResponse> getReportedReels(
+            @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
         return reportService.findReportedReelsForModeration(page, size);
     }
 
     @GetMapping("/content/comment")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public List<ReportedCommentResponse> getReportedComments(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    public List<ReportedCommentResponse> getReportedComments(
+            @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
         return reportService.getReportedCommentsForModeration(page, size);
     }
 
     @DeleteMapping("/content/report")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public String deleteAllReports(@RequestParam("reportType") ReportType type, @RequestParam("relevantId") String relevantId) {
+    public String deleteAllReports(
+            @RequestParam("reportType") ReportType type,
+            @RequestParam("relevantId") String relevantId) {
         if (!ObjectId.isValid(relevantId)) {
             throw new ValidationException("Invalid id");
         }
-        reportService.deleteAllReports(relevantId,type);
+        reportService.deleteAllReports(relevantId, type);
         return "all reports deleted";
     }
 
     @DeleteMapping("/content")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public String deleteEntity(@RequestParam("reportType") ReportType type, @RequestParam("relevantId") String relevantId) {
+    public String deleteEntity(
+            @RequestParam("reportType") ReportType type,
+            @RequestParam("relevantId") String relevantId) {
         if (!ObjectId.isValid(relevantId)) {
             throw new ValidationException("Invalid id");
         }
         switch (type) {
             case POST -> {
-                Post post = postRepository.findById(new ObjectId(relevantId)).orElseThrow(() -> new EntityNotFoundException("Post not found."));
-                User user = userRepository.findById(new ObjectId(post.getUserId())).orElseThrow(() -> new EntityNotFoundException("User not found."));
+                Post post =
+                        postRepository
+                                .findById(new ObjectId(relevantId))
+                                .orElseThrow(() -> new EntityNotFoundException("Post not found."));
+                User user =
+                        userRepository
+                                .findById(new ObjectId(post.getUserId()))
+                                .orElseThrow(() -> new EntityNotFoundException("User not found."));
                 if (!post.getUserId().equals(user.getId().toHexString())) {
-                    throw new UnauthorizedAccessException("You are not authorized to delete this post.");
+                    throw new UnauthorizedAccessException(
+                            "You are not authorized to delete this post.");
                 }
                 try {
                     if (post.getImageUrl() != null) {
@@ -151,10 +171,17 @@ public class ModerationController {
                 postRepository.delete(post);
             }
             case REEL -> {
-                Reel reel = reelRepository.findById(new ObjectId(relevantId)).orElseThrow(() -> new EntityNotFoundException("Reel not found."));
-                User user = userRepository.findById(new ObjectId(reel.getUserId())).orElseThrow(() -> new EntityNotFoundException("User not found."));
+                Reel reel =
+                        reelRepository
+                                .findById(new ObjectId(relevantId))
+                                .orElseThrow(() -> new EntityNotFoundException("Reel not found."));
+                User user =
+                        userRepository
+                                .findById(new ObjectId(reel.getUserId()))
+                                .orElseThrow(() -> new EntityNotFoundException("User not found."));
                 if (!reel.getUserId().equals(user.getId().toHexString())) {
-                    throw new UnauthorizedAccessException("You are not authorized to delete this post.");
+                    throw new UnauthorizedAccessException(
+                            "You are not authorized to delete this post.");
                 }
                 try {
                     if (reel.getVideoUrl() != null) {
@@ -170,19 +197,38 @@ public class ModerationController {
                 reelRepository.delete(reel);
             }
             case COMMENT -> {
-                Comment comment = commentRepository.findById(new ObjectId(relevantId)).orElseThrow(() -> new EntityNotFoundException("Comment not found."));
-                User user = userRepository.findById(new ObjectId(comment.getUserId())).orElseThrow(() -> new EntityNotFoundException("User not found."));
+                Comment comment =
+                        commentRepository
+                                .findById(new ObjectId(relevantId))
+                                .orElseThrow(
+                                        () -> new EntityNotFoundException("Comment not found."));
+                User user =
+                        userRepository
+                                .findById(new ObjectId(comment.getUserId()))
+                                .orElseThrow(() -> new EntityNotFoundException("User not found."));
                 if (comment.getType().equals(CommentType.POST)) {
-                    Post post = postRepository.findById(new ObjectId(comment.getRelevantId())).orElseThrow(() -> new EntityNotFoundException("Post not found"));
-                    if (!(comment.getUserId().equals(user.getId().toHexString()) || post.getUserId().equals(user.getId().toHexString()))) {
-                        throw new UnauthorizedAccessException("You are not authorized to delete this post.");
+                    Post post =
+                            postRepository
+                                    .findById(new ObjectId(comment.getRelevantId()))
+                                    .orElseThrow(
+                                            () -> new EntityNotFoundException("Post not found"));
+                    if (!(comment.getUserId().equals(user.getId().toHexString())
+                            || post.getUserId().equals(user.getId().toHexString()))) {
+                        throw new UnauthorizedAccessException(
+                                "You are not authorized to delete this post.");
                     }
                     post.getCommentIds().remove(comment.getId().toHexString());
                     postRepository.save(post);
                 } else if (comment.getType().equals(CommentType.REEL)) {
-                    Reel reel = reelRepository.findById(new ObjectId(comment.getRelevantId())).orElseThrow(() -> new EntityNotFoundException("Reel not found"));
-                    if ((!comment.getUserId().equals(user.getId().toHexString())) || reel.getUserId().equals(user.getId().toHexString())) {
-                        throw new UnauthorizedAccessException("You are not authorized to delete this reel.");
+                    Reel reel =
+                            reelRepository
+                                    .findById(new ObjectId(comment.getRelevantId()))
+                                    .orElseThrow(
+                                            () -> new EntityNotFoundException("Reel not found"));
+                    if ((!comment.getUserId().equals(user.getId().toHexString()))
+                            || reel.getUserId().equals(user.getId().toHexString())) {
+                        throw new UnauthorizedAccessException(
+                                "You are not authorized to delete this reel.");
                     }
                     reel.getCommentIds().remove(comment.getId().toHexString());
                     reelRepository.save(reel);
@@ -198,14 +244,20 @@ public class ModerationController {
 
     @GetMapping("/report-summary")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public List<ReportDetailResponse> getReportSummary(@RequestParam("reportType") ReportType type, @RequestParam("relevantId") String relevantId) {
+    public List<ReportDetailResponse> getReportSummary(
+            @RequestParam("reportType") ReportType type,
+            @RequestParam("relevantId") String relevantId) {
         return reportService.getReportCountsByTypeAndId(type, relevantId);
     }
 
     @GetMapping("/report-users")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public List<ReportedUserResponse> getReportUsers(@RequestParam("reportType") ReportType type, @RequestParam("relevantId") String relevantId, @RequestParam("reportReason") ReportReason reason, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    public List<ReportedUserResponse> getReportUsers(
+            @RequestParam("reportType") ReportType type,
+            @RequestParam("relevantId") String relevantId,
+            @RequestParam("reportReason") ReportReason reason,
+            @RequestParam("page") Integer page,
+            @RequestParam("size") Integer size) {
         return reportService.getReportedUsersByReason(type, relevantId, reason, page, size);
     }
-
 }

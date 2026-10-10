@@ -1,35 +1,35 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import GuestGuard from "./guards/GuestGuard";
-import TokenManager from "./components/test/TokenManager";
-import AuthGuard from "./guards/AuthGuard";
-import RoleGuard from "./guards/RoleGuard";
-import LoginPage from "./views/LoginPage";
-import SignUpPage from "./views/SignUpPage";
-import { useSelector } from "react-redux";
-import SignUpOAuth2Handler from "./components/auth/SignUpOAuth2Handler";
-import LoginOAuth2Handler from "./components/auth/LoginOAuth2Handler";
-import ForgotPasswordPage from "./views/ForgotPasswordPage";
-import OAuth2Error from "./components/auth/OAuth2Error";
-import NotFound from "./components/common/NotFound";
-import HomePage from "./views/HomePage";
-import ReelsPage from "./views/ReelsPage";
-import SearchPage from "./views/SearchPage";
-import ChatPage from "./views/ChatPage";
-import NotificationsPage from "./views/NotificationsPage";
-import ProfilePage from "./views/ProfilePage";
-import SharedMediaPage from "./views/SharedMediaPage";
-import SettingsPage from "./views/SettingsPage";
-import AdminDashboardPage from "./views/AdminDashboardPage";
-import ContentControlPage from "./views/ContentControlPage";
-import UserControlPage from "./views/UserControlPage";
-import ModeratorControlPage from "./views/ModeratorControlPage";
-import BanPage from "./views/BanPage";
+import { Routes, Route, Navigate } from 'react-router-dom';
+import GuestGuard from './guards/GuestGuard';
+import TokenManager from './components/test/TokenManager';
+import AuthGuard from './guards/AuthGuard';
+import RoleGuard from './guards/RoleGuard';
+import LoginPage from './views/LoginPage';
+import SignUpPage from './views/SignUpPage';
+import { useSelector } from 'react-redux';
+import SignUpOAuth2Handler from './components/auth/SignUpOAuth2Handler';
+import LoginOAuth2Handler from './components/auth/LoginOAuth2Handler';
+import ForgotPasswordPage from './views/ForgotPasswordPage';
+import OAuth2Error from './components/auth/OAuth2Error';
+import NotFound from './components/common/NotFound';
+import HomePage from './views/HomePage';
+import ReelsPage from './views/ReelsPage';
+import SearchPage from './views/SearchPage';
+import ChatPage from './views/ChatPage';
+import NotificationsPage from './views/NotificationsPage';
+import ProfilePage from './views/ProfilePage';
+import SharedMediaPage from './views/SharedMediaPage';
+import SettingsPage from './views/SettingsPage';
+import AdminDashboardPage from './views/AdminDashboardPage';
+import ContentControlPage from './views/ContentControlPage';
+import UserControlPage from './views/UserControlPage';
+import ModeratorControlPage from './views/ModeratorControlPage';
+import BanPage from './views/BanPage';
 
 const roleRedirect = (user) => {
   switch (user?.role) {
-    case "ADMIN":
+    case 'ADMIN':
       return <Navigate to="/admin" />;
-    case "MODERATOR":
+    case 'MODERATOR':
       return <Navigate to="/moderator" />;
     default:
       return <Navigate to="/home" />;
@@ -103,7 +103,7 @@ const RoutesConfig = () => {
         path="/home"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"USER"}>
+            <RoleGuard requiredRole={'USER'}>
               <HomePage />
             </RoleGuard>
           </AuthGuard>
@@ -114,7 +114,7 @@ const RoutesConfig = () => {
         path="/search"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"USER"}>
+            <RoleGuard requiredRole={'USER'}>
               <SearchPage />
             </RoleGuard>
           </AuthGuard>
@@ -125,7 +125,7 @@ const RoutesConfig = () => {
         path="/chat"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"USER"}>
+            <RoleGuard requiredRole={'USER'}>
               <ChatPage />
             </RoleGuard>
           </AuthGuard>
@@ -136,7 +136,7 @@ const RoutesConfig = () => {
         path="/chat/:userId"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"USER"}>
+            <RoleGuard requiredRole={'USER'}>
               <ChatPage />
             </RoleGuard>
           </AuthGuard>
@@ -147,7 +147,7 @@ const RoutesConfig = () => {
         path="/reels"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"USER"}>
+            <RoleGuard requiredRole={'USER'}>
               <ReelsPage />
             </RoleGuard>
           </AuthGuard>
@@ -158,7 +158,7 @@ const RoutesConfig = () => {
         path="/profile/:userId"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"USER"}>
+            <RoleGuard requiredRole={'USER'}>
               <ProfilePage />
             </RoleGuard>
           </AuthGuard>
@@ -169,7 +169,7 @@ const RoutesConfig = () => {
         path="/notifications"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"USER"}>
+            <RoleGuard requiredRole={'USER'}>
               <NotificationsPage />
             </RoleGuard>
           </AuthGuard>
@@ -180,7 +180,7 @@ const RoutesConfig = () => {
         path="/settings"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"USER"}>
+            <RoleGuard requiredRole={'USER'}>
               <SettingsPage />
             </RoleGuard>
           </AuthGuard>
@@ -193,7 +193,7 @@ const RoutesConfig = () => {
         path="/moderator"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"MODERATOR"}>
+            <RoleGuard requiredRole={'MODERATOR'}>
               <Navigate to="/moderator/moderate/content" />
             </RoleGuard>
           </AuthGuard>
@@ -204,7 +204,7 @@ const RoutesConfig = () => {
         path="/moderator/moderate/content"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"MODERATOR"}>
+            <RoleGuard requiredRole={'MODERATOR'}>
               <ContentControlPage />
             </RoleGuard>
           </AuthGuard>
@@ -215,7 +215,7 @@ const RoutesConfig = () => {
         path="/moderator/moderate/user"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"MODERATOR"}>
+            <RoleGuard requiredRole={'MODERATOR'}>
               <UserControlPage />
             </RoleGuard>
           </AuthGuard>
@@ -226,7 +226,7 @@ const RoutesConfig = () => {
         path="/admin"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"ADMIN"}>
+            <RoleGuard requiredRole={'ADMIN'}>
               <Navigate to="/admin/dashboard" />
             </RoleGuard>
           </AuthGuard>
@@ -237,7 +237,7 @@ const RoutesConfig = () => {
         path="/admin/dashboard"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"ADMIN"}>
+            <RoleGuard requiredRole={'ADMIN'}>
               <AdminDashboardPage />
             </RoleGuard>
           </AuthGuard>
@@ -248,7 +248,7 @@ const RoutesConfig = () => {
         path="/admin/moderate/content"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"ADMIN"}>
+            <RoleGuard requiredRole={'ADMIN'}>
               <ContentControlPage />
             </RoleGuard>
           </AuthGuard>
@@ -259,7 +259,7 @@ const RoutesConfig = () => {
         path="/admin/moderate/user"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"ADMIN"}>
+            <RoleGuard requiredRole={'ADMIN'}>
               <UserControlPage />
             </RoleGuard>
           </AuthGuard>
@@ -270,7 +270,7 @@ const RoutesConfig = () => {
         path="/admin/moderators"
         element={
           <AuthGuard>
-            <RoleGuard requiredRole={"ADMIN"}>
+            <RoleGuard requiredRole={'ADMIN'}>
               <ModeratorControlPage />
             </RoleGuard>
           </AuthGuard>

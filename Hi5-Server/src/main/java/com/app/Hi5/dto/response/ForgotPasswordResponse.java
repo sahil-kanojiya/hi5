@@ -20,5 +20,4 @@ public class ForgotPasswordResponse {
     public ResponseEntity<ForgotPasswordResponse> toResponseEntity() {
         return new ResponseEntity<>(this, this.status);
     }
-
 }

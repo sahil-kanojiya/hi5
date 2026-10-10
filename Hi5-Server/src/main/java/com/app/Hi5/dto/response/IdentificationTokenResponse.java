@@ -21,5 +21,4 @@ public class IdentificationTokenResponse {
     public ResponseEntity<IdentificationTokenResponse> toResponseEntity() {
         return new ResponseEntity<>(this, this.status);
     }
-
 }

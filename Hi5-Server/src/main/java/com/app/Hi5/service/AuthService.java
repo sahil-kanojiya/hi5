@@ -4,26 +4,20 @@ import com.app.Hi5.exceptions.EntityAlreadyExistsException;
 import com.app.Hi5.exceptions.InvalidIdentificationTokenException;
 import com.app.Hi5.exceptions.InvalidOtpException;
 import com.app.Hi5.model.Enum.Gender;
-import com.app.Hi5.model.Enum.IdentityProvider;
 import com.app.Hi5.model.Enum.OtpType;
-import com.app.Hi5.model.Enum.Role;
 import com.app.Hi5.model.User;
 import com.app.Hi5.repository.UserRepository;
 import com.app.Hi5.security.AuthTokenService;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 @Slf4j
 @Service
@@ -60,19 +54,23 @@ public class AuthService {
         }
         if (!otpService.isValid(email, otp, OtpType.REGISTER)) {
             log.error("Invalid OTP for email: {}", email);
-            throw new InvalidOtpException("The provided OTP is invalid or has expired. Please request a new OTP.");
+            throw new InvalidOtpException(
+                    "The provided OTP is invalid or has expired. Please request a new OTP.");
         }
-        User user = User.builder()
-                .email(email)
-                .password(passwordEncoder.encode(password))
-                .build();
+        User user = User.builder().email(email).password(passwordEncoder.encode(password)).build();
         userRepository.save(user);
         log.info("User registered with email: {}", email);
         return identificationTokenService.generateToken(email);
     }
 
-    public String verifyIdentificationTokenAndActivateAccount(String identificationToken, String username, String fullname, Date dateOfBirth, Gender gender) {
-        log.debug("Verifying identification token and activating account for username: {}", username);
+    public String verifyIdentificationTokenAndActivateAccount(
+            String identificationToken,
+            String username,
+            String fullname,
+            Date dateOfBirth,
+            Gender gender) {
+        log.debug(
+                "Verifying identification token and activating account for username: {}", username);
         if (!identificationTokenService.validateToken(identificationToken)) {
             log.error("Invalid identification token provided.");
             throw new InvalidIdentificationTokenException("Identification token is invalid.");
@@ -81,7 +79,11 @@ public class AuthService {
             log.error("Username already exists: {}", username);
             throw new EntityAlreadyExistsException("username already exists!");
         }
-        User user = userRepository.findByEmail(identificationTokenService.extractSub(identificationToken)).orElseThrow(() -> new UsernameNotFoundException("Invalid email or username!"));
+        User user =
+                userRepository
+                        .findByEmail(identificationTokenService.extractSub(identificationToken))
+                        .orElseThrow(
+                                () -> new UsernameNotFoundException("Invalid email or username!"));
         user.setUsername(username);
         user.setFullname(fullname);
         user.setDateOfBirth(dateOfBirth);
@@ -92,13 +94,26 @@ public class AuthService {
         return authTokenService.generateToken(user.getEmail());
     }
 
-    public String GenerateAuthTokenIf2FAIsOffAndPassIsValid(String email, String username, String password) {
+    public String GenerateAuthTokenIf2FAIsOffAndPassIsValid(
+            String email, String username, String password) {
         log.debug("Generating auth token for email: {} or username: {}", email, username);
         User user;
         if (email != null) {
-            user = userRepository.findByEmailAndIsActiveTrue(email).orElseThrow(() -> new UsernameNotFoundException("Invalid email or username!"));
+            user =
+                    userRepository
+                            .findByEmailAndIsActiveTrue(email)
+                            .orElseThrow(
+                                    () ->
+                                            new UsernameNotFoundException(
+                                                    "Invalid email or username!"));
         } else {
-            user = userRepository.findByUsernameAndIsActiveTrue(username).orElseThrow(() -> new UsernameNotFoundException("Invalid email or username!"));
+            user =
+                    userRepository
+                            .findByUsernameAndIsActiveTrue(username)
+                            .orElseThrow(
+                                    () ->
+                                            new UsernameNotFoundException(
+                                                    "Invalid email or username!"));
             email = user.getEmail();
         }
 
@@ -107,7 +122,8 @@ public class AuthService {
             throw new BadCredentialsException("Invalid email/username or password");
         }
 
-//        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        //        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,
+        // password));
 
         if (!user.getTwoFactorAuthentication()) {
             log.info("2FA is off, returning auth token for email: {}", email);
@@ -121,12 +137,14 @@ public class AuthService {
         log.debug("Verifying identification token for login.");
         if (!identificationTokenService.validateToken(identificationToken)) {
             log.error("Invalid identification token provided.");
-            throw new InvalidIdentificationTokenException("provided identification token is invalid.");
+            throw new InvalidIdentificationTokenException(
+                    "provided identification token is invalid.");
         }
         String email = identificationTokenService.extractSub(identificationToken);
         if (!otpService.isValid(email, otp, OtpType.LOGIN)) {
             log.error("Invalid OTP for login: {}", email);
-            throw new InvalidOtpException("The provided OTP is invalid or has expired. Please request a new OTP.");
+            throw new InvalidOtpException(
+                    "The provided OTP is invalid or has expired. Please request a new OTP.");
         }
         log.info("Login successful for email: {}", email);
         return authTokenService.generateToken(email);
@@ -136,14 +154,27 @@ public class AuthService {
         log.debug("Handling forgot password for email: {} or username: {}", email, username);
         User user;
         if (email != null) {
-            user = userRepository.findByEmailAndIsActiveTrue(email).orElseThrow(() -> new UsernameNotFoundException("Invalid email or username!"));
+            user =
+                    userRepository
+                            .findByEmailAndIsActiveTrue(email)
+                            .orElseThrow(
+                                    () ->
+                                            new UsernameNotFoundException(
+                                                    "Invalid email or username!"));
         } else {
-            user = userRepository.findByUsernameAndIsActiveTrue(username).orElseThrow(() -> new UsernameNotFoundException("Invalid email or username!"));
+            user =
+                    userRepository
+                            .findByUsernameAndIsActiveTrue(username)
+                            .orElseThrow(
+                                    () ->
+                                            new UsernameNotFoundException(
+                                                    "Invalid email or username!"));
             email = user.getEmail();
         }
         if (!otpService.isValid(email, otp, OtpType.FORGOT_PASSWORD)) {
             log.error("Invalid OTP for password reset: {}", email);
-            throw new InvalidOtpException("The provided OTP is invalid or has expired. Please request a new OTP.");
+            throw new InvalidOtpException(
+                    "The provided OTP is invalid or has expired. Please request a new OTP.");
         } else {
             user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);

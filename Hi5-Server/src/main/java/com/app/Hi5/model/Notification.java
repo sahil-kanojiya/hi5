@@ -1,6 +1,7 @@
 package com.app.Hi5.model;
 
 import com.app.Hi5.model.Enum.NotificationType;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +12,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
-
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,8 +19,7 @@ import java.util.Date;
 @Document(collection = "notification")
 public class Notification {
 
-    @Id
-    private ObjectId id;
+    @Id private ObjectId id;
 
     @Field("user")
     private String notificationUserId;
@@ -39,5 +36,4 @@ public class Notification {
     @Field("created_at")
     @CreatedDate
     private Date createdAt;
-
 }

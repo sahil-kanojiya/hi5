@@ -1,5 +1,8 @@
 package com.app.Hi5.model;
 
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +13,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,8 +20,7 @@ import java.util.Set;
 @Document(collection = "reel")
 public class Reel {
 
-    @Id
-    private ObjectId id;
+    @Id private ObjectId id;
 
     @Field("user")
     private String userId;
@@ -63,5 +61,4 @@ public class Reel {
     @Field("saved")
     @Builder.Default
     private Set<String> savedUserIds = new LinkedHashSet<>();
-
 }

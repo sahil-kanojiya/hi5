@@ -1,14 +1,14 @@
-import ReelUploadModal from "./ReelUploadModel";
-import { useCallback, useEffect, useRef, useState } from "react";
-import axiosInstance from "../../services/axios.config";
-import { useNavigate } from "react-router-dom";
-import Reel from "./Reel";
-import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import ReelUploadModal from './ReelUploadModel';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import axiosInstance from '../../services/axios.config';
+import { useNavigate } from 'react-router-dom';
+import Reel from './Reel';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const Reels = ({
   feedType,
-  userId = "",
+  userId = '',
   isMyProfileReels = false,
   showBackButton = true,
   showCreateReelButton = true,
@@ -24,11 +24,11 @@ const Reels = ({
   const size = 5;
   const getReelEndpoint = useCallback(() => {
     switch (feedType) {
-      case "RANDOM":
+      case 'RANDOM':
         return `/reel?size=${size}`;
-      case "REELS":
+      case 'REELS':
         return `/reel/user/${userId}?page=${page}&size=${size}`;
-      case "SAVED":
+      case 'SAVED':
         return `/reel/saved?page=${page}&size=${size}`;
       default:
         return `/reel?size=${size}`;
@@ -102,7 +102,7 @@ const Reels = ({
     if (window.history.length > 1) {
       navigate(-1);
     } else {
-      navigate("/");
+      navigate('/');
     }
   };
 
@@ -123,14 +123,12 @@ const Reels = ({
     <>
       <div
         id="video-container"
-        className="bg-white dark:bg-black mt-14 md:mt-0 w-full max-w-md h-[87dvh] md:h-screen overflow-scroll snap-mandatory snap-y hide-scrollbar"
+        className="hide-scrollbar mt-14 h-[87dvh] w-full max-w-md snap-y snap-mandatory overflow-scroll bg-white dark:bg-black md:mt-0 md:h-screen"
       >
         {!hasMore && !isLoading && reels.length === 0 && (
-          <div className="flex justify-center items-center px-20 sm:px-40 !w-full !h-full p">
-            <div className="bg-white shadow-md px-4 py-2 rounded-lg text-center">
-              <p className="font-semibold text-gray-500 text-lg">
-                No Reels
-              </p>
+          <div className="p flex !h-full !w-full items-center justify-center px-20 sm:px-40">
+            <div className="rounded-lg bg-white px-4 py-2 text-center shadow-md">
+              <p className="text-lg font-semibold text-gray-500">No Reels</p>
             </div>
           </div>
         )}
@@ -153,18 +151,12 @@ const Reels = ({
               />
             ))}
             {!isLoading && error === null && (
-              <div
-                ref={loaderRef}
-                className="flex justify-center items-center h-16 text-white"
-              >
+              <div ref={loaderRef} className="flex h-16 items-center justify-center text-white">
                 Loading more...
               </div>
             )}
             {!isLoading && error !== null && (
-              <div
-                ref={loaderRef}
-                className="flex justify-center items-center h-16 text-white"
-              >
+              <div ref={loaderRef} className="flex h-16 items-center justify-center text-white">
                 Something error occured.
               </div>
             )}

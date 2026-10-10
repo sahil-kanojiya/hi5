@@ -13,5 +13,4 @@ public class UpdateImagesResponse {
 
     private String profilePictureUrl;
     private String coverPictureUrl;
-
 }

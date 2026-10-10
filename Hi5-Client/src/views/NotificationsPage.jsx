@@ -1,20 +1,13 @@
-import { Link } from "react-router-dom";
-import {
-  Favorite,
-  ChatBubble,
-  PersonAdd,
-  Email,
-  Public,
-  Notifications,
-} from "@mui/icons-material";
-import MainLayout from "../components/layout/MainLayout";
-import { useCallback, useEffect, useRef, useState } from "react";
-import axiosInstance from "../services/axios.config";
-import DeleteConfirmationModal from "../components/modal/DeleteConfirmationModal";
-import TimeAgo from "../components/common/TimeAgo";
-import { useWebSocket } from "../socket/WebSocketProvider";
-import { useSelector } from "react-redux";
-import toast from "react-hot-toast";
+import { Link } from 'react-router-dom';
+import { Favorite, ChatBubble, PersonAdd, Email, Public, Notifications } from '@mui/icons-material';
+import MainLayout from '../components/layout/MainLayout';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import axiosInstance from '../services/axios.config';
+import DeleteConfirmationModal from '../components/modal/DeleteConfirmationModal';
+import TimeAgo from '../components/common/TimeAgo';
+import { useWebSocket } from '../socket/WebSocketProvider';
+import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const NotificationsPage = () => {
   const userId = useSelector((state) => state?.user?.profile?.id);
@@ -35,17 +28,14 @@ const NotificationsPage = () => {
     if (isConnected) {
       let notificationSubscription;
       try {
-        notificationSubscription = subscribeTopic(
-          `/notification/${userId}`,
-          (message) => {
-            const msg = JSON.parse(message);
-            setNotifications((prev) => {
-              return [msg, ...prev];
-            });
-          }
-        );
+        notificationSubscription = subscribeTopic(`/notification/${userId}`, (message) => {
+          const msg = JSON.parse(message);
+          setNotifications((prev) => {
+            return [msg, ...prev];
+          });
+        });
       } catch (e) {
-        console.log("error:" + e);
+        console.log('error:' + e);
       }
       return () => {
         unsubscribeTopic(notificationSubscription);
@@ -55,7 +45,7 @@ const NotificationsPage = () => {
 
   const fetchNotifications = useCallback(async () => {
     try {
-      const response = await axiosInstance.get("/notification", {
+      const response = await axiosInstance.get('/notification', {
         params: {
           page,
           size: 10,
@@ -65,10 +55,7 @@ const NotificationsPage = () => {
       if (response.data.length === 0) {
         setHasMore(false);
       } else {
-        setNotifications((prevNotifications) => [
-          ...prevNotifications,
-          ...response.data,
-        ]);
+        setNotifications((prevNotifications) => [...prevNotifications, ...response.data]);
       }
     } catch (err) {
       setError(err.message);
@@ -119,18 +106,18 @@ const NotificationsPage = () => {
     if (notifications?.length > 0) {
       setIsDeleteModalOpen(true);
     } else {
-      toast.error("No notifications to delete!");
+      toast.error('No notifications to delete!');
     }
   };
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
   const confirmDelete = async () => {
     setIsDeleting(true);
     try {
-      const response = await axiosInstance.delete("/notification");
+      const response = await axiosInstance.delete('/notification');
       console.log(response);
       setNotifications([]);
     } catch (error) {
-      console.error("Error deleting story: ", error);
+      console.error('Error deleting story: ', error);
     } finally {
       setIsDeleting(false);
       closeDeleteModal();
@@ -139,69 +126,65 @@ const NotificationsPage = () => {
 
   const handleAllowClick = async (notificationId) => {
     try {
-      const response = await axiosInstance.post("/user/follow/allow", {
+      const response = await axiosInstance.post('/user/follow/allow', {
         notificationId,
       });
       console.log(response.data);
       if (response.status === 200) {
-        toast.success("Follow request accepted successfully!");
+        toast.success('Follow request accepted successfully!');
         setNotifications((prevNotifications) =>
-          prevNotifications.filter(
-            (notification) => notification.id !== notificationId
-          )
+          prevNotifications.filter((notification) => notification.id !== notificationId)
         );
       } else {
-        toast.warn("Request processed, but check the response.");
+        toast.warn('Request processed, but check the response.');
       }
     } catch {
-      toast.error("Something went wrong! Please try again.");
+      toast.error('Something went wrong! Please try again.');
     }
   };
 
   const handleDenyClick = async (notificationId) => {
     try {
-      const response = await axiosInstance.post("/user/follow/deny", {
+      const response = await axiosInstance.post('/user/follow/deny', {
         notificationId,
       });
       console.log(response.data);
       if (response.status === 200) {
-        toast.success("Follow request denied successfully.");
+        toast.success('Follow request denied successfully.');
         setNotifications((prevNotifications) =>
-          prevNotifications.filter(
-            (notification) => notification.id !== notificationId
-          )
+          prevNotifications.filter((notification) => notification.id !== notificationId)
         );
       } else {
-        toast.warn("Request processed, but check the response.");
+        toast.warn('Request processed, but check the response.');
       }
     } catch {
-      toast.error("Something went wrong! Please try again.");
+      toast.error('Something went wrong! Please try again.');
     }
   };
 
   const getIcon = (type) => {
     switch (type) {
-      case "LIKE_POST":
-      case "LIKE_REEL":
-      case "LIKE_STORY":
-      case "LIKE_COMMENT":
+      case 'LIKE_POST':
+      case 'LIKE_REEL':
+      case 'LIKE_STORY':
+      case 'LIKE_COMMENT':
         return <Favorite className="text-red-500" />;
 
-      case "COMMENT_POST":
-      case "COMMENT_REEL":
+      case 'COMMENT_POST':
+      case 'COMMENT_REEL':
         return <ChatBubble className="text-blue-500" />;
 
-      case "FOLLOW":
-      case "FOLLOW_REQUEST":
-      case "FOLLOW_REQUEST_ACCEPT":
+      case 'FOLLOW':
+      case 'FOLLOW_REQUEST':
+      case 'FOLLOW_REQUEST_ACCEPT':
         return <PersonAdd className="text-green-500" />;
 
-      case "NETWORK_NEW_POST":
-      case "NETWORK_NEW_REEL":
-      case "NETWORK_NEW_STORY":
+      case 'NETWORK_NEW_POST':
+      case 'NETWORK_NEW_REEL':
+      case 'NETWORK_NEW_STORY':
         return <Public className="text-purple-500" />;
 
-      case "MESSAGE":
+      case 'MESSAGE':
         return <Email className="text-yellow-500" />;
 
       default:
@@ -211,38 +194,32 @@ const NotificationsPage = () => {
 
   const getMsg = (type, username) => {
     switch (type) {
-      case "LIKE_POST":
-      case "LIKE_REEL":
-      case "LIKE_STORY":
-      case "LIKE_COMMENT":
-        return `@${username} liked your ${type
-          .replace("LIKE_", "")
-          .toLowerCase()}`;
+      case 'LIKE_POST':
+      case 'LIKE_REEL':
+      case 'LIKE_STORY':
+      case 'LIKE_COMMENT':
+        return `@${username} liked your ${type.replace('LIKE_', '').toLowerCase()}`;
 
-      case "COMMENT_POST":
-      case "COMMENT_REEL":
-        return `@${username} commented on your ${type
-          .replace("COMMENT_", "")
-          .toLowerCase()}`;
+      case 'COMMENT_POST':
+      case 'COMMENT_REEL':
+        return `@${username} commented on your ${type.replace('COMMENT_', '').toLowerCase()}`;
 
-      case "FOLLOW":
+      case 'FOLLOW':
         return `@${username} started following you`;
 
-      case "FOLLOW_REQUEST":
+      case 'FOLLOW_REQUEST':
         return `@${username} sent you a follow request`;
 
-      case "FOLLOW_REQUEST_ACCEPT":
+      case 'FOLLOW_REQUEST_ACCEPT':
         return `@${username} accepted your follow request`;
 
-      case "NETWORK_NEW_POST":
-      case "NETWORK_NEW_REEL":
-      case "NETWORK_NEW_STORY":
-        return `@${username} posted a new ${type
-          .replace("NETWORK_NEW_", "")
-          .toLowerCase()}`;
+      case 'NETWORK_NEW_POST':
+      case 'NETWORK_NEW_REEL':
+      case 'NETWORK_NEW_STORY':
+        return `@${username} posted a new ${type.replace('NETWORK_NEW_', '').toLowerCase()}`;
 
       default:
-        return "You have a new notification";
+        return 'You have a new notification';
     }
   };
 
@@ -289,26 +266,26 @@ const NotificationsPage = () => {
 
   return (
     <MainLayout>
-      <div className="flex justify-center mx-auto pt-[70px] md:pt-0 md:pl-[70px] lg:pl-[260px] w-full h-full">
-        <div className="flex justify-center w-full max-w-3xl">
-          <div className="flex flex-col justify-center bg-white dark:bg-black shadow-lg my-0 md:my-4 px-4 rounded-lg w-full">
-            <div className="top-0 z-0 sticky p-2 md:p-6 rounded-md">
-              <div className="flex justify-between items-center">
-                <p className="font-semibold text-gray-800 dark:text-gray-100 text-2xl">
+      <div className="mx-auto flex h-full w-full justify-center pt-[70px] md:pl-[70px] md:pt-0 lg:pl-[260px]">
+        <div className="flex w-full max-w-3xl justify-center">
+          <div className="my-0 flex w-full flex-col justify-center rounded-lg bg-white px-4 shadow-lg dark:bg-black md:my-4">
+            <div className="sticky top-0 z-0 rounded-md p-2 md:p-6">
+              <div className="flex items-center justify-between">
+                <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
                   Notifications
                 </p>
                 <button
-                  className="bg-red-500 hover:bg-red-600 px-2 sm:px-3 py-1 sm:py-2 rounded-md text-md text-white transition"
+                  className="text-md rounded-md bg-red-500 px-2 py-1 text-white transition hover:bg-red-600 sm:px-3 sm:py-2"
                   onClick={openDeleteModal}
                 >
                   Remove All
                 </button>
               </div>
             </div>
-            <div className="bg-slate-200 dark:bg-slate-800 sm:mx-3 rounded-lg h-1"></div>
-            <div className="flex flex-col flex-1 space-y-3 mt-0 mb-10 sm:mb-3 min-[450px]:p-4 pb-4 overflow-y-auto hide-scrollbar">
+            <div className="h-1 rounded-lg bg-slate-200 dark:bg-slate-800 sm:mx-3"></div>
+            <div className="hide-scrollbar mb-10 mt-0 flex flex-1 flex-col space-y-3 overflow-y-auto pb-4 min-[450px]:p-4 sm:mb-3">
               {!isLoading && notifications.length === 0 && (
-                <div className="flex flex-1 justify-center items-center">
+                <div className="flex flex-1 items-center justify-center">
                   <p>No Notifications</p>
                 </div>
               )}
@@ -317,44 +294,41 @@ const NotificationsPage = () => {
                   {notifications.map((notification) => (
                     <div
                       key={notification?.id}
-                      className="flex sm:flex-row flex-col justify-between items-start sm:gap-4 bg-white hover:bg-gray-200 dark:bg-black dark:hover:bg-gray-800 shadow-md dark:shadow-gray-900 p-4 rounded-lg transition-colors"
+                      className="flex flex-col items-start justify-between rounded-lg bg-white p-4 shadow-md transition-colors hover:bg-gray-200 dark:bg-black dark:shadow-gray-900 dark:hover:bg-gray-800 sm:flex-row sm:gap-4"
                     >
                       <div className="flex items-center gap-1 sm:gap-2">
                         <Link
                           to={`/profile/${notification?.userId}`}
-                          className="rounded-full w-10 sm:w-12 h-10 sm:h-12 overflow-hidden avatar"
+                          className="avatar h-10 w-10 overflow-hidden rounded-full sm:h-12 sm:w-12"
                         >
                           <img
                             src={notification.profilePictureUrl}
                             alt="Profile"
-                            className="rounded-full w-full h-full object-cover"
+                            className="h-full w-full rounded-full object-cover"
                           />
                         </Link>
                         <div className="flex items-center gap-3">
                           <div>
-                            <p className="flex sm:flex-row flex-col gap-2 font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">
+                            <p className="flex flex-col gap-2 text-sm font-semibold text-gray-900 dark:text-gray-100 sm:flex-row sm:text-base">
                               <span className="flex items-center gap-2">
                                 {getIcon(notification.type)}
                                 {notification.fullname}
                               </span>
                               <span className="font-normal text-gray-600 dark:text-gray-400">
-                                {getMsg(
-                                  notification.type,
-                                  notification.username
-                                )}
+                                {getMsg(notification.type, notification.username)}
                               </span>
                             </p>
 
-                            <p className="text-gray-500 text-xs sm:text-sm">
+                            <p className="text-xs text-gray-500 sm:text-sm">
                               <TimeAgo date={notification.createdAt} />
                             </p>
                           </div>
                         </div>
                       </div>
-                      {notification.type === "FOLLOW_REQUEST" ? (
-                        <div className="flex gap-2 ml-auto">
+                      {notification.type === 'FOLLOW_REQUEST' ? (
+                        <div className="ml-auto flex gap-2">
                           <button
-                            className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-md text-white text-sm sm:text-base"
+                            className="rounded-md bg-green-500 px-4 py-2 text-sm text-white hover:bg-green-600 sm:text-base"
                             onClick={() => {
                               handleAllowClick(notification?.id);
                             }}
@@ -362,7 +336,7 @@ const NotificationsPage = () => {
                             Allow
                           </button>
                           <button
-                            className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white text-sm sm:text-base"
+                            className="rounded-md bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-600 sm:text-base"
                             onClick={() => {
                               handleDenyClick(notification?.id);
                             }}
@@ -383,15 +357,12 @@ const NotificationsPage = () => {
                     </div>
                   ))}
                   {!isLoading && error === null && (
-                    <div
-                      ref={loaderRef}
-                      className="flex justify-center items-center h-11"
-                    ></div>
+                    <div ref={loaderRef} className="flex h-11 items-center justify-center"></div>
                   )}
                   {!isLoading && error !== null && (
                     <div
                       ref={loaderRef}
-                      className="flex justify-center items-center h-16 text-white"
+                      className="flex h-16 items-center justify-center text-white"
                     >
                       Something error occured.
                     </div>

@@ -93,6 +93,12 @@ Hi5/
    ./mvnw spring-boot:run
    ```
 
+5. Format and check backend code (Spotless):
+   ```bash
+   ./mvnw spotless:apply   # Automatically format all Java files
+   ./mvnw spotless:check   # Verify formatting in CI/CD
+   ```
+
 ---
 
 ---
@@ -102,13 +108,19 @@ Hi5/
 ### Setup Instructions
 
 1.  Navigate to the `client` directory:
-    ```
-    cd cd Hi5-Client
+    ```bash
+    cd Hi5-Client
     ```
 2.  Install dependencies:
 
-    ```
+    ```bash
     npm install
+    ```
+
+3.  Format and check frontend code (Prettier + Tailwind Plugin):
+    ```bash
+    npm run format         # Automatically format code and sort Tailwind classes
+    npm run format:check   # Verify formatting in CI/CD
     ```
 
 3.  Configure Vite server proxy for local development:

@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -53,5 +52,4 @@ public class SettingsRequest {
 
     @NotNull(message = "User follow request notification setting is required")
     private Boolean isAllowedUsersFollowRequestNotification;
-
 }

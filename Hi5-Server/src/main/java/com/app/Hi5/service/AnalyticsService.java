@@ -8,16 +8,15 @@ import com.app.Hi5.repository.PostRepository;
 import com.app.Hi5.repository.ReelRepository;
 import com.app.Hi5.repository.UserActivityRepository;
 import com.app.Hi5.repository.UserRepository;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 @Slf4j
 @Service
@@ -35,7 +34,27 @@ public class AnalyticsService {
     public void sendAnalyticsReport() {
         try {
             System.out.println("Sending analytics");
-            simpMessagingTemplate.convertAndSend("/analytics", AnalyticsDataPayload.builder().totalUsers(userRepository.countByRole(Role.USER)).totalModerators(userRepository.countByRole(Role.MODERATOR)).totalPosts(postRepository.count()).totalReels(reelRepository.count()).activeUsers(userActivityRepository.countByActivityStatus(ActivityStatus.ONLINE)).bannedUsers(userRepository.countByBanUntilAfter(new Date())).userGrowthDayStatsResponse(getUserCountForLast7Days()).userGrowthMonthStatsResponse(getUserCountForLast12Months()).userGrowthYearStatsResponse(getUserCountForLast6Years()).contentEngagementGrowthDayStatsResponse(getContentImpressionsCountForLast7Days()).contentEngagementGrowthMonthStatsResponse(getContentImpressionsCountForLast12Months()).contentEngagementGrowthYearStatsResponse(getContentImpressionsCountForLast6Years()).build());
+            simpMessagingTemplate.convertAndSend(
+                    "/analytics",
+                    AnalyticsDataPayload.builder()
+                            .totalUsers(userRepository.countByRole(Role.USER))
+                            .totalModerators(userRepository.countByRole(Role.MODERATOR))
+                            .totalPosts(postRepository.count())
+                            .totalReels(reelRepository.count())
+                            .activeUsers(
+                                    userActivityRepository.countByActivityStatus(
+                                            ActivityStatus.ONLINE))
+                            .bannedUsers(userRepository.countByBanUntilAfter(new Date()))
+                            .userGrowthDayStatsResponse(getUserCountForLast7Days())
+                            .userGrowthMonthStatsResponse(getUserCountForLast12Months())
+                            .userGrowthYearStatsResponse(getUserCountForLast6Years())
+                            .contentEngagementGrowthDayStatsResponse(
+                                    getContentImpressionsCountForLast7Days())
+                            .contentEngagementGrowthMonthStatsResponse(
+                                    getContentImpressionsCountForLast12Months())
+                            .contentEngagementGrowthYearStatsResponse(
+                                    getContentImpressionsCountForLast6Years())
+                            .build());
         } catch (Exception e) {
             log.error("Failed to send analytics: {}", e.getMessage());
         }
@@ -54,7 +73,8 @@ public class AnalyticsService {
     }
 
     private StatsResponse getStatsForPeriod(int calendarField, int periods, String dateFormat) {
-        StatsResponse statsResponse = StatsResponse.builder().x(new ArrayList<>()).y(new ArrayList<>()).build();
+        StatsResponse statsResponse =
+                StatsResponse.builder().x(new ArrayList<>()).y(new ArrayList<>()).build();
         Calendar calendar = Calendar.getInstance();
         if (calendarField == Calendar.YEAR) {
             calendar.set(Calendar.MONTH, 0);
@@ -80,7 +100,6 @@ public class AnalyticsService {
         return statsResponse;
     }
 
-
     public StatsResponse getContentImpressionsCountForLast7Days() {
         return getContentImpressionsForPeriod(Calendar.DAY_OF_YEAR, 6, "EEE, dd MMM");
     }
@@ -93,8 +112,10 @@ public class AnalyticsService {
         return getContentImpressionsForPeriod(Calendar.YEAR, 5, "yyyy");
     }
 
-    private StatsResponse getContentImpressionsForPeriod(int calendarField, int periods, String dateFormat) {
-        StatsResponse statsResponse = StatsResponse.builder().x(new ArrayList<>()).y(new ArrayList<>()).build();
+    private StatsResponse getContentImpressionsForPeriod(
+            int calendarField, int periods, String dateFormat) {
+        StatsResponse statsResponse =
+                StatsResponse.builder().x(new ArrayList<>()).y(new ArrayList<>()).build();
         Calendar calendar = Calendar.getInstance();
         if (calendarField == Calendar.YEAR) {
             calendar.set(Calendar.MONTH, 0);
@@ -113,11 +134,12 @@ public class AnalyticsService {
             Calendar periodEnd = (Calendar) periodStart.clone();
             periodEnd.add(calendarField, 1);
             Date endDate = periodEnd.getTime();
-            long count = postRepository.countByCreatedAtBetween(startDate, endDate) + reelRepository.countByCreatedAtBetween(startDate, endDate);
+            long count =
+                    postRepository.countByCreatedAtBetween(startDate, endDate)
+                            + reelRepository.countByCreatedAtBetween(startDate, endDate);
             statsResponse.getX().add(new SimpleDateFormat(dateFormat).format(startDate));
             statsResponse.getY().add(count);
         }
         return statsResponse;
     }
-
 }

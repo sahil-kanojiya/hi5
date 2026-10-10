@@ -22,15 +22,19 @@ public class LikeController {
     private final LikeService likeService;
 
     @PostMapping
-    public ResponseEntity<String> like(@RequestBody LikeRequest request, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> like(
+            @RequestBody LikeRequest request,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         likeService.like(userDetails.getUser(), request.getRelevantId(), request.getType());
         return new ResponseEntity<>("saved successfully!", HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity<String> unlike(@RequestParam("relevantId") String relevantId, @RequestParam("type") LikeType type, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> unlike(
+            @RequestParam("relevantId") String relevantId,
+            @RequestParam("type") LikeType type,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         likeService.unlike(userDetails.getUser(), relevantId, type);
         return new ResponseEntity<>("unsaved successfully!", HttpStatus.OK);
     }
-
 }

@@ -1,15 +1,13 @@
 package com.app.Hi5.dto.response;
 
-
 import com.app.Hi5.dto.enums.FollowStatus;
 import com.app.Hi5.model.Enum.Gender;
 import com.app.Hi5.model.Enum.ProfileType;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -32,5 +30,4 @@ public class UserProfileResponse {
     private Long postsCount;
     private FollowStatus followStatus;
     private ProfileType profileType;
-
 }

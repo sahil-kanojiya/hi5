@@ -1,14 +1,11 @@
 package com.app.Hi5.dto.response;
 
-import com.app.Hi5.model.Enum.ReportReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -38,5 +35,4 @@ public class ReportedPostResponse {
     private Date banUntil;
 
     private Long totalReportsCount;
-
 }

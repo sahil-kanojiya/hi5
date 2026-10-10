@@ -20,5 +20,4 @@ public class ErrorResponse {
     public ResponseEntity<ErrorResponse> toResponseEntity() {
         return new ResponseEntity<>(this, this.status);
     }
-
 }

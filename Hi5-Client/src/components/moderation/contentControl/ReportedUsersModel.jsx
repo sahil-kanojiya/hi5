@@ -1,153 +1,150 @@
-import PropTypes from "prop-types";
-import { useCallback, useEffect, useState } from "react";
-import axiosInstance from "../../../services/axios.config";
-import { CloseRounded } from "@mui/icons-material";
-import InfiniteScroll from "react-infinite-scroll-component";
+import PropTypes from 'prop-types';
+import { useCallback, useEffect, useState } from 'react';
+import axiosInstance from '../../../services/axios.config';
+import { CloseRounded } from '@mui/icons-material';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const ReportedUsersModel = ({ isOpen, closeModal, type, relevantId, reason }) => {
-
-    useEffect(() => {
-        document.body.style.overflow = isOpen ? "hidden" : "auto";
-        return () => {
-            document.body.style.overflow = "auto";
-        };
-    }, [isOpen]);
-
-    const handleOutsideClick = (event) => {
-        if (event.target === event.currentTarget) {
-            closeModal();
-        }
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    return () => {
+      document.body.style.overflow = 'auto';
     };
+  }, [isOpen]);
 
-    const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(0);
-    const [error, setError] = useState(null);
+  const handleOutsideClick = (event) => {
+    if (event.target === event.currentTarget) {
+      closeModal();
+    }
+  };
 
-    const fetchRequests = useCallback(async () => {
-        try {
-            setIsLoading(true);
-            const response = await axiosInstance.get("/moderate/report-users", {
-                params: {
-                    reportType: type,
-                    relevantId,
-                    reportReason: reason,
-                    page,
-                    size: 10,
-                },
-            });
-            console.log(response.data);
-            if (response.data.length === 0) {
-                setHasMore(false);
-            } else {
-                setUsers((prevUsers) => [...prevUsers, ...response.data]);
-            }
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [page, type, relevantId, reason]);
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        if (isOpen) {
-            setUsers([]);
-            setPage(0);
-            setHasMore(true);
-            setError(null);
-            setIsLoading(true);
-        }
-    }, [isOpen, type]);
+  const fetchRequests = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await axiosInstance.get('/moderate/report-users', {
+        params: {
+          reportType: type,
+          relevantId,
+          reportReason: reason,
+          page,
+          size: 10,
+        },
+      });
+      console.log(response.data);
+      if (response.data.length === 0) {
+        setHasMore(false);
+      } else {
+        setUsers((prevUsers) => [...prevUsers, ...response.data]);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [page, type, relevantId, reason]);
 
-    useEffect(() => {
-        if (isOpen) {
-            fetchRequests();
-        }
-    }, [isOpen, page, fetchRequests, type]);
+  useEffect(() => {
+    if (isOpen) {
+      setUsers([]);
+      setPage(0);
+      setHasMore(true);
+      setError(null);
+      setIsLoading(true);
+    }
+  }, [isOpen, type]);
 
-    const loadMoreUsers = useCallback(() => {
-        if (!isLoading && hasMore) {
-            setPage((prevPage) => prevPage + 1);
-        }
-    }, [isLoading, hasMore, setPage]);
+  useEffect(() => {
+    if (isOpen) {
+      fetchRequests();
+    }
+  }, [isOpen, page, fetchRequests, type]);
 
-    if (!isOpen) return null;
+  const loadMoreUsers = useCallback(() => {
+    if (!isLoading && hasMore) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  }, [isLoading, hasMore, setPage]);
 
+  if (!isOpen) return null;
 
-    return (
-        <>
-            <div
-                className="z-20 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 transition-opacity duration-300"
-                onClick={handleOutsideClick}
+  return (
+    <>
+      <div
+        className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300"
+        onClick={handleOutsideClick}
+      >
+        <div
+          className={`w-full max-w-md transform rounded-lg border border-gray-500 bg-white p-4 shadow-lg transition-transform duration-300 dark:bg-black sm:w-3/4 md:w-2/3 lg:w-1/2 ${
+            isOpen ? 'scale-100' : 'scale-95'
+          }`}
+        >
+          <div className="mb-4 flex items-center justify-between text-xl">
+            <h2 className="text-lg font-semibold">Users</h2>
+            <button
+              onClick={closeModal}
+              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
             >
+              <CloseRounded
+                sx={{
+                  fontSize: { xs: 25, sm: 28, md: 30 },
+                }}
+                className="text-gray-500 transition duration-200 hover:text-red-500"
+              />
+            </button>
+          </div>
+          <div className="hide-scrollbar max-h-60 overflow-y-auto rounded-lg">
+            <InfiniteScroll
+              dataLength={users.length}
+              next={loadMoreUsers}
+              hasMore={hasMore}
+              loader={<></>}
+              endMessage={<p className="text-center">No more users</p>}
+            >
+              {users.map((user) => (
                 <div
-                    className={`bg-white dark:bg-black border border-gray-500 shadow-lg rounded-lg p-4  w-full sm:w-3/4 md:w-2/3 lg:w-1/2 max-w-md transition-transform duration-300 transform ${isOpen ? "scale-100" : "scale-95"
-                        }`}
+                  key={user?.id}
+                  className="flex items-center justify-between gap-5 rounded-lg bg-white p-3 transition dark:bg-black sm:gap-0"
                 >
-                    <div className="flex justify-between items-center mb-4 text-xl">
-                        <h2 className="font-semibold text-lg">Users</h2>
-                        <button
-                            onClick={closeModal}
-                            className="text-gray-600 hover:text-gray-800 dark:hover:text-gray-100 dark:text-gray-300"
-                        >
-                            <CloseRounded
-                                sx={{
-                                    fontSize: { xs: 25, sm: 28, md: 30 },
-                                }}
-                                className="text-gray-500 hover:text-red-500 transition duration-200"
-                            />
-                        </button>
+                  <div className="flex items-center gap-1 transition duration-150 min-[410px]:gap-4">
+                    <div className="h-10 w-10 overflow-hidden rounded-full min-[410px]:h-12 min-[410px]:w-12">
+                      <img
+                        src={user?.profilePictureUrl}
+                        alt={`${user?.fullname}'s profile`}
+                        className="h-full w-full object-cover"
+                      />
                     </div>
-                    <div className="rounded-lg max-h-60 overflow-y-auto hide-scrollbar">
-                        <InfiniteScroll
-                            dataLength={users.length}
-                            next={loadMoreUsers}
-                            hasMore={hasMore}
-                            loader={<></>}
-                            endMessage={<p className="text-center">No more users</p>}
-                        >
-                            {users.map((user) => (
-                                <div
-                                    key={user?.id}
-                                    className="flex justify-between items-center gap-5 sm:gap-0 bg-white dark:bg-black p-3 rounded-lg transition"
-                                >
-                                    <div className="flex items-center gap-1 min-[410px]:gap-4 transition duration-150">
-                                        <div className="rounded-full w-10 min-[410px]:w-12 h-10 min-[410px]:h-12 overflow-hidden">
-                                            <img
-                                                src={user?.profilePictureUrl}
-                                                alt={`${user?.fullname}'s profile`}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold min-[410px]:text-md text-sm md:text-lg break-normal whitespace-nowrap">
-                                                {user?.fullname}
-                                            </p>
-                                            <p className="text-gray-400 text-sm break-normal whitespace-nowrap">
-                                                @{user?.username}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </InfiniteScroll>
-                        {!isLoading && error && (
-                            <p className="text-red-500 text-center">{error}</p>
-                        )}
+                    <div>
+                      <p className="min-[410px]:text-md whitespace-nowrap break-normal text-sm font-semibold md:text-lg">
+                        {user?.fullname}
+                      </p>
+                      <p className="whitespace-nowrap break-normal text-sm text-gray-400">
+                        @{user?.username}
+                      </p>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </>
-    );
-}
+              ))}
+            </InfiniteScroll>
+            {!isLoading && error && <p className="text-center text-red-500">{error}</p>}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 ReportedUsersModel.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired,
-    type: PropTypes.string.isRequired,
-    relevantId: PropTypes.string.isRequired,
-    reason: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  relevantId: PropTypes.string.isRequired,
+  reason: PropTypes.string.isRequired,
 };
 
 export default ReportedUsersModel;

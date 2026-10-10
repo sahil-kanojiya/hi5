@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import { Provider } from "react-redux";
-import store from "../../redux/store.js";
+import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import store from '../../redux/store.js';
 
 const StoreProvider = ({ children }) => {
-  console.log("StoreProvider");
+  console.log('StoreProvider');
   return <Provider store={store}>{children}</Provider>;
 };
 

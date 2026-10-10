@@ -23,5 +23,4 @@ public class AnalyticsDataResponse {
     private StatsResponse contentEngagementGrowthDayStatsResponse;
     private StatsResponse contentEngagementGrowthMonthStatsResponse;
     private StatsResponse contentEngagementGrowthYearStatsResponse;
-
 }

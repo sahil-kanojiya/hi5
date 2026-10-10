@@ -18,5 +18,4 @@ public class ChatResponse {
     private String receiverUsername;
     private String receiverProfileImageUrl;
     private ActivityStatus receiverStatus;
-
 }

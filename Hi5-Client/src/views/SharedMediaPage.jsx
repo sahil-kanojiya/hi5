@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   follow,
   getSharedPost,
@@ -12,7 +12,7 @@ import {
   unfollow,
   unlikeEntity,
   unsave,
-} from "../services/api";
+} from '../services/api';
 import {
   BookmarkBorderOutlined,
   BookmarkSharp,
@@ -30,13 +30,13 @@ import {
   ShareSharp,
   VolumeOffOutlined,
   VolumeUpOutlined,
-} from "@mui/icons-material";
-import logo from "../assets/images/logo/hi5.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../redux/slices/themeSlice";
-import TimeAgo from "../components/common/TimeAgo";
-import ReportConfirmationModal from "../components/modal/ReportConfirmationModal";
-import CommentModel from "../components/comment/CommentModel";
+} from '@mui/icons-material';
+import logo from '../assets/images/logo/hi5.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTheme } from '../redux/slices/themeSlice';
+import TimeAgo from '../components/common/TimeAgo';
+import ReportConfirmationModal from '../components/modal/ReportConfirmationModal';
+import CommentModel from '../components/comment/CommentModel';
 
 const SharedMediaPage = () => {
   const { entity, entityId } = useParams();
@@ -51,12 +51,12 @@ const SharedMediaPage = () => {
 
   useEffect(() => {
     const fetchEntity = async () => {
-      if (!entityId || entityId.trim() === "") {
-        setError("Invalid ID provided.");
+      if (!entityId || entityId.trim() === '') {
+        setError('Invalid ID provided.');
         setIsLoading(false);
         return;
       }
-      if (entity === "post") {
+      if (entity === 'post') {
         try {
           setIsLoading(true);
           if (isAuthenticated) {
@@ -70,15 +70,15 @@ const SharedMediaPage = () => {
           }
         } catch (err) {
           if (err?.response?.data?.statusCode === 400) {
-            console.log("error set");
+            console.log('error set');
             setError(err?.response?.data?.message);
           } else {
-            setError("Failed to load post. Please try again later.");
+            setError('Failed to load post. Please try again later.');
           }
         } finally {
           setIsLoading(false);
         }
-      } else if (entity === "reel") {
+      } else if (entity === 'reel') {
         try {
           setIsLoading(true);
           if (isAuthenticated) {
@@ -92,12 +92,12 @@ const SharedMediaPage = () => {
           }
         } catch (err) {
           console.log(err);
-          setError("Failed to load post. Please try again later.");
+          setError('Failed to load post. Please try again later.');
         } finally {
           setIsLoading(false);
         }
       } else {
-        setError("Invalid entity type.");
+        setError('Invalid entity type.');
         setIsLoading(false);
         return;
       }
@@ -120,11 +120,11 @@ const SharedMediaPage = () => {
     (data) => {
       setEntityData(data);
       setIsMyEntity(data?.userId === user?.id);
-      setIsReported(data?.reportStatus === "REPORTED");
-      setIsLiked(data?.likeStatus === "LIKED");
+      setIsReported(data?.reportStatus === 'REPORTED');
+      setIsLiked(data?.likeStatus === 'LIKED');
       setLikesCount(data?.likesCount);
       setCommentCount(data?.commentsCount);
-      setIsSaved(data?.saveStatus === "SAVED");
+      setIsSaved(data?.saveStatus === 'SAVED');
       if (data?.followStatus) {
         setFollowStatus(data?.followStatus);
       }
@@ -136,7 +136,7 @@ const SharedMediaPage = () => {
   const [isCommentModelOpen, setIsCommentModelOpen] = useState(false);
   const openCommentModel = () => {
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate('/login');
       return;
     }
     setIsCommentModelOpen(true);
@@ -145,14 +145,12 @@ const SharedMediaPage = () => {
     setIsCommentModelOpen(false);
   };
 
-  const [isReported, setIsReported] = useState(
-    entityData?.reportStatus === "REPORTED"
-  );
+  const [isReported, setIsReported] = useState(entityData?.reportStatus === 'REPORTED');
   const [isReporting, setIsReporting] = useState(false);
   const [isReportModalOpen, setIsReportModal] = useState(false);
   const openReportModal = () => {
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate('/login');
       return;
     }
     setIsReportModal(true);
@@ -161,7 +159,7 @@ const SharedMediaPage = () => {
   const confirmReport = useCallback(
     async (reportReason) => {
       if (!isAuthenticated) {
-        navigate("/login");
+        navigate('/login');
         return;
       }
       setIsReporting(true);
@@ -171,11 +169,9 @@ const SharedMediaPage = () => {
           reason: reportReason,
           type: entity.toUpperCase(),
         });
-        console.log(
-          "Entity reported: " + entityData?.id + "  reason: " + reportReason
-        );
+        console.log('Entity reported: ' + entityData?.id + '  reason: ' + reportReason);
       } catch (error) {
-        console.error("Error reporting post: ", error);
+        console.error('Error reporting post: ', error);
       } finally {
         setIsReporting(false);
         setIsReported(true);
@@ -185,11 +181,11 @@ const SharedMediaPage = () => {
     [isAuthenticated, navigate, entityData, entity, closeReportModal]
   );
 
-  const [isLiked, setIsLiked] = useState(entityData?.likeStatus === "LIKED");
+  const [isLiked, setIsLiked] = useState(entityData?.likeStatus === 'LIKED');
   const [likesCount, setLikesCount] = useState(entityData?.likesCount);
   const likeClickHandler = useCallback(async () => {
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate('/login');
       return;
     }
     const id = entityData?.id;
@@ -200,7 +196,7 @@ const SharedMediaPage = () => {
       });
       setLikesCount((prevCount) => prevCount - 1);
       setIsLiked(false);
-      console.log("unliked " + id);
+      console.log('unliked ' + id);
     } else {
       likeEntity({
         relevantId: id,
@@ -208,14 +204,14 @@ const SharedMediaPage = () => {
       });
       setLikesCount((prevCount) => prevCount + 1);
       setIsLiked(true);
-      console.log("liked " + id);
+      console.log('liked ' + id);
     }
   }, [isAuthenticated, navigate, isLiked, entityData, entity]);
 
-  const [isSaved, setIsSaved] = useState(entityData?.saveStatus === "SAVED");
+  const [isSaved, setIsSaved] = useState(entityData?.saveStatus === 'SAVED');
   const saveClickHandler = useCallback(() => {
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate('/login');
       return;
     }
     const id = entityData?.id;
@@ -225,14 +221,14 @@ const SharedMediaPage = () => {
         type: entity.toUpperCase(),
       });
       setIsSaved(false);
-      console.log("unsaved " + id);
+      console.log('unsaved ' + id);
     } else {
       save({
         relevantId: id,
         type: entity.toUpperCase(),
       });
       setIsSaved(true);
-      console.log("saved " + id);
+      console.log('saved ' + id);
     }
   }, [isAuthenticated, navigate, isSaved, entityData, entity]);
 
@@ -240,14 +236,14 @@ const SharedMediaPage = () => {
     if (navigator?.share) {
       navigator
         .share({
-          title: "Check out this post!",
-          text: "This is an interesting post I found.",
+          title: 'Check out this post!',
+          text: 'This is an interesting post I found.',
           url: `http://localhost:3000/share/${entity}/${entityId}`,
         })
-        .then(() => console.log("Share successful"))
-        .catch((error) => console.error("Share failed:", error));
+        .then(() => console.log('Share successful'))
+        .catch((error) => console.error('Share failed:', error));
     } else {
-      alert("Web Share API not supported in this browser.");
+      alert('Web Share API not supported in this browser.');
     }
   };
 
@@ -275,27 +271,27 @@ const SharedMediaPage = () => {
 
   const followStatusClickHandler = async () => {
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate('/login');
       return;
     }
-    if (followStatus === "FOLLOWED") {
+    if (followStatus === 'FOLLOWED') {
       try {
         const response = await unfollow(entityData?.userId);
         setFollowStatus(response.data?.currentStatus);
       } catch (e) {
         console.log(e);
       }
-    } else if (followStatus === "NOT_FOLLOWED") {
+    } else if (followStatus === 'NOT_FOLLOWED') {
       try {
         const response = await follow(entityData?.userId);
         setFollowStatus(response.data?.currentStatus);
       } catch (e) {
         console.log(e);
       }
-    } else if (followStatus === "REQUEST_SENT") {
-      console.log("already request sent");
+    } else if (followStatus === 'REQUEST_SENT') {
+      console.log('already request sent');
     } else {
-      console.log("Invalid Status");
+      console.log('Invalid Status');
     }
   };
 
@@ -305,26 +301,24 @@ const SharedMediaPage = () => {
 
   return (
     <>
-      <header className="bg-white dark:bg-black shadow-md p-3">
-        <div className="flex justify-between items-center mx-auto container">
-          <Link to="/" className="flex justify-center items-center gap-3">
+      <header className="bg-white p-3 shadow-md dark:bg-black">
+        <div className="container mx-auto flex items-center justify-between">
+          <Link to="/" className="flex items-center justify-center gap-3">
             <img src={logo} alt="Hi5 Logo" className="w-10" />
-            <p className="hidden md:hidden sm:block lg:block font-lobster text-4xl">
-              Hi5
-            </p>
+            <p className="hidden font-lobster text-4xl sm:block md:hidden lg:block">Hi5</p>
           </Link>
           <div className="flex items-center gap-2 sm:gap-6">
-            <div className="flex justify-center items-center gap-2 sm:gap-3">
+            <div className="flex items-center justify-center gap-2 sm:gap-3">
               {!isAuthenticated && (
                 <>
                   <Link to="/login">
-                    <button className="bg-gray-200 hover:bg-blue-100 dark:bg-gray-800 dark:hover:bg-blue-900 shadow-md px-2 sm:px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 transition">
+                    <button className="rounded-lg bg-gray-200 px-2 py-2 text-gray-700 shadow-md transition hover:bg-blue-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-blue-900 sm:px-4">
                       Login
                     </button>
                   </Link>
 
                   <Link to="/signup">
-                    <button className="bg-gray-200 hover:bg-blue-100 dark:bg-gray-800 dark:hover:bg-blue-900 shadow-md px-2 sm:px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 transition">
+                    <button className="rounded-lg bg-gray-200 px-2 py-2 text-gray-700 shadow-md transition hover:bg-blue-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-blue-900 sm:px-4">
                       SignUp
                     </button>
                   </Link>
@@ -333,24 +327,24 @@ const SharedMediaPage = () => {
             </div>
 
             <button
-              className="flex justify-center items-center bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 p-2 rounded-md transition-all duration-300 cursor-pointer"
+              className="flex cursor-pointer items-center justify-center rounded-md bg-gray-200 p-2 transition-all duration-300 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700"
               onClick={changeThemeClickHandler}
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? (
+              {theme === 'dark' ? (
                 <LightMode className="text-gray-200 transition-all duration-300" />
               ) : (
-                <DarkMode className="text-gray-800 dark:text-gray-200 transition-all duration-300" />
+                <DarkMode className="text-gray-800 transition-all duration-300 dark:text-gray-200" />
               )}
             </button>
 
-            {isAuthenticated && user?.role === "USER" && (
-              <div className="flex justify-center items-center lg:gap-2">
-                <Link to={isAuthenticated ? `/profile/${user.id}` : "/login"}>
+            {isAuthenticated && user?.role === 'USER' && (
+              <div className="flex items-center justify-center lg:gap-2">
+                <Link to={isAuthenticated ? `/profile/${user.id}` : '/login'}>
                   <img
                     src={user.profilePictureUrl}
                     alt={`${user.username}'s profile image`}
-                    className="rounded-full w-8 lg:w-10 h-8 lg:h-10"
+                    className="h-8 w-8 rounded-full lg:h-10 lg:w-10"
                   />
                 </Link>
               </div>
@@ -359,49 +353,39 @@ const SharedMediaPage = () => {
         </div>
       </header>
 
-      <div className="flex justify-center items-center space-x-2 pt-5 min-h-[calc(100dvh-80px)]">
+      <div className="flex min-h-[calc(100dvh-80px)] items-center justify-center space-x-2 pt-5">
         {isLoading && (
           <>
-            <div className="border-4 border-t-transparent border-blue-500 rounded-full w-5 h-5 animate-spin"></div>
-            <p className="font-semibold text-blue-600 text-lg">
-              {entity === "post" && "Loading post, please wait..."}
-              {entity === "reel" && "Loading reel, please wait..."}
+            <div className="h-5 w-5 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+            <p className="text-lg font-semibold text-blue-600">
+              {entity === 'post' && 'Loading post, please wait...'}
+              {entity === 'reel' && 'Loading reel, please wait...'}
             </p>
           </>
         )}
         {error && (
-          <div className="shadow-xl px-5 py-2 rounded-lg text-red-600 text-center">
-            {error}
-          </div>
+          <div className="rounded-lg px-5 py-2 text-center text-red-600 shadow-xl">{error}</div>
         )}
-        {!isLoading && !error && entity == "post" && entityData && (
+        {!isLoading && !error && entity == 'post' && entityData && (
           <>
-            <div className="bg-white dark:bg-black shadow-md mx-auto mb-6 p-3 sm:p-4 rounded-lg w-full max-w-xl">
-              <div className="flex justify-between items-center mb-4">
+            <div className="mx-auto mb-6 w-full max-w-xl rounded-lg bg-white p-3 shadow-md dark:bg-black sm:p-4">
+              <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <Link
-                    to={
-                      isAuthenticated
-                        ? `/profile/${entityData.userId}`
-                        : "/login"
-                    }
-                  >
+                  <Link to={isAuthenticated ? `/profile/${entityData.userId}` : '/login'}>
                     <img
                       src={entityData.profilePictureUrl}
                       alt={`${entityData.fullname}'s profile`}
-                      className="rounded-full w-10 h-10 object-cover"
+                      className="h-10 w-10 rounded-full object-cover"
                     />
                   </Link>
                   <div className="flex flex-col">
-                    <p className="font-semibold text-md sm:text-lg">
-                      {entityData.fullname}
-                    </p>
-                    <p className="flex sm:flex-row flex-col items-start sm:items-center space-x-1 text-gray-500 text-sm whitespace-nowrap">
+                    <p className="text-md font-semibold sm:text-lg">{entityData.fullname}</p>
+                    <p className="flex flex-col items-start space-x-1 whitespace-nowrap text-sm text-gray-500 sm:flex-row sm:items-center">
                       <span>@{entityData.username}</span>
                       <span className="hidden sm:block">•</span>
                       <TimeAgo
                         date={entityData.createdAt}
-                        className="pt-1 sm:pt-0 font-medium sm:text-md text-xs whitespace-nowrap"
+                        className="sm:text-md whitespace-nowrap pt-1 text-xs font-medium sm:pt-0"
                       />
                     </p>
                   </div>
@@ -410,12 +394,12 @@ const SharedMediaPage = () => {
                   {!isMyEntity &&
                     (isReported ? (
                       <Report
-                        className="text-red-500 transition duration-200 cursor-not-allowed transform"
+                        className="transform cursor-not-allowed text-red-500 transition duration-200"
                         title="This post has already been reported"
                       />
                     ) : (
                       <ReportGmailerrorred
-                        className="text-gray-600 hover:text-red-500 hover:scale-110 transition duration-200 cursor-pointer transform"
+                        className="transform cursor-pointer text-gray-600 transition duration-200 hover:scale-110 hover:text-red-500"
                         onClick={openReportModal}
                         title="Report this post"
                       />
@@ -423,13 +407,13 @@ const SharedMediaPage = () => {
 
                   {isSaved ? (
                     <BookmarkSharp
-                      className="text-yellow-600 hover:scale-110 transition duration-200 cursor-pointer transform"
+                      className="transform cursor-pointer text-yellow-600 transition duration-200 hover:scale-110"
                       onClick={saveClickHandler}
                       title="Unsave this post"
                     />
                   ) : (
                     <BookmarkBorderOutlined
-                      className="text-gray-600 hover:text-yellow-600 hover:scale-110 transition duration-200 cursor-pointer transform"
+                      className="transform cursor-pointer text-gray-600 transition duration-200 hover:scale-110 hover:text-yellow-600"
                       onClick={saveClickHandler}
                       title="Save this post"
                     />
@@ -438,79 +422,75 @@ const SharedMediaPage = () => {
               </div>
 
               <div className="mb-4 w-full">
-                <p className="px-2 w-full text-gray-800 dark:text-gray-200 text-sm sm:text-base break-words whitespace-pre-wrap">
+                <p className="w-full whitespace-pre-wrap break-words px-2 text-sm text-gray-800 dark:text-gray-200 sm:text-base">
                   {entityData.content}
                 </p>
               </div>
 
               {entityData.imageUrl && (
-                <div className="mb-4 w-full h-full">
+                <div className="mb-4 h-full w-full">
                   <img
                     src={entityData.imageUrl}
                     alt="Post content"
-                    className="rounded-md w-full h-auto max-h-[90dvh] object-contain"
+                    className="h-auto max-h-[90dvh] w-full rounded-md object-contain"
                   />
                 </div>
               )}
               {entityData.videoUrl && (
-                <div className="mb-4 w-full h-full">
+                <div className="mb-4 h-full w-full">
                   <video
                     src={entityData.videoUrl}
                     controls
-                    className="rounded-md w-full h-auto max-h-[90dvh] object-contain"
+                    className="h-auto max-h-[90dvh] w-full rounded-md object-contain"
                   />
                 </div>
               )}
 
-              <div className="flex justify-between items-center text-gray-500">
-                <div className="flex items-center space-x-5 ml-2">
+              <div className="flex items-center justify-between text-gray-500">
+                <div className="ml-2 flex items-center space-x-5">
                   <button
-                    className="group flex items-center space-x-2 hover:scale-110 transition duration-200 transform"
+                    className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110"
                     onClick={likeClickHandler}
                   >
                     {isLiked ? (
-                      <FavoriteSharp className="w-5 h-5 text-red-600 transition-colors duration-200" />
+                      <FavoriteSharp className="h-5 w-5 text-red-600 transition-colors duration-200" />
                     ) : (
-                      <FavoriteBorderSharp className="w-5 h-5 text-gray-500 group-hover:text-red-600 transition-colors duration-200" />
+                      <FavoriteBorderSharp className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-red-600" />
                     )}
-                    <span className="font-medium group-hover:text-red-500 text-sm">
+                    <span className="text-sm font-medium group-hover:text-red-500">
                       {likesCount}
                     </span>
                   </button>
 
                   {entityData?.isCommentsDisabled === true ? (
-                    <button className="flex items-center space-x-2 cursor-not-allowed">
+                    <button className="flex cursor-not-allowed items-center space-x-2">
                       <CommentsDisabled
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="w-5 sm:w-6 h-5 sm:h-6"
+                        className="h-5 w-5 sm:h-6 sm:w-6"
                       />
-                      <span className="font-medium text-xs sm:text-sm">0</span>
+                      <span className="text-xs font-medium sm:text-sm">0</span>
                     </button>
                   ) : (
-                    <button className="group flex items-center space-x-2 hover:scale-110 transition duration-200 transform">
+                    <button className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110">
                       <CommentOutlined
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="w-5 sm:w-6 h-5 sm:h-6 hover:text-blue-500 transition-colors duration-200"
+                        className="h-5 w-5 transition-colors duration-200 hover:text-blue-500 sm:h-6 sm:w-6"
                         onClick={openCommentModel}
                       />
-                      <span className="font-medium text-xs sm:text-sm">
-                        {commentCount}
-                      </span>
+                      <span className="text-xs font-medium sm:text-sm">{commentCount}</span>
                     </button>
                   )}
 
                   <button
-                    className="group flex items-center space-x-2 hover:scale-110 transition duration-200 transform"
+                    className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110"
                     onClick={shareClickHandler}
                   >
-                    <ShareSharp className="w-5 h-5 text-gray-500 group-hover:text-green-500 transition-colors duration-200" />
-                    <span className="group-hover:text-green-500 text-xs">
-                      Share
-                    </span>
+                    <ShareSharp className="h-5 w-5 text-gray-500 transition-colors duration-200 group-hover:text-green-500" />
+                    <span className="text-xs group-hover:text-green-500">Share</span>
                   </button>
                 </div>
               </div>
@@ -537,19 +517,19 @@ const SharedMediaPage = () => {
             </div>
           </>
         )}
-        {!isLoading && !error && entity == "reel" && (
+        {!isLoading && !error && entity == 'reel' && (
           <>
             <div
               id="video-container"
-              className="bg-white dark:bg-black w-full max-w-md h-[87dvh] md:h-screen overflow-scroll snap-mandatory snap-y hide-scrollbar"
+              className="hide-scrollbar h-[87dvh] w-full max-w-md snap-y snap-mandatory overflow-scroll bg-white dark:bg-black md:h-screen"
             >
-              <div className="relative w-full h-full snap-start">
-                <div className="top-0 left-1/2 z-10 absolute flex justify-center items-center bg-white/15 dark:bg-black/20 mt-6 sm:mt-4 md:mt-2 lg:mt-4 mb-3 p-2 px-4 sm:px-5 md:px-6 lg:px-7 rounded-lg w-full text-black dark:text-white text-xs -translate-x-1/2 transform">
-                  <p className="font-bold text-lg text-center">Reels</p>
+              <div className="relative h-full w-full snap-start">
+                <div className="absolute left-1/2 top-0 z-10 mb-3 mt-6 flex w-full -translate-x-1/2 transform items-center justify-center rounded-lg bg-white/15 p-2 px-4 text-xs text-black dark:bg-black/20 dark:text-white sm:mt-4 sm:px-5 md:mt-2 md:px-6 lg:mt-4 lg:px-7">
+                  <p className="text-center text-lg font-bold">Reels</p>
                 </div>
 
                 <video
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                   src={entityData.videoUrl}
                   ref={videoRef}
                   autoPlay
@@ -559,7 +539,7 @@ const SharedMediaPage = () => {
                 />
 
                 <div
-                  className="right-14 bottom-40 absolute flex flex-col justify-center items-center bg-black dark:bg-white bg-opacity-15 p-2 rounded-full text-white cursor-pointer textfrom-white"
+                  className="textfrom-white absolute bottom-40 right-14 flex cursor-pointer flex-col items-center justify-center rounded-full bg-black bg-opacity-15 p-2 text-white dark:bg-white"
                   onClick={toggleMute}
                 >
                   {isMuted ? (
@@ -577,9 +557,9 @@ const SharedMediaPage = () => {
                   )}
                 </div>
 
-                <div className="top-1/2 right-4 sm:right-5 absolute flex flex-col items-center sm:gap-2 md:gap-3 lg:gap-4 space-y-6 text-white -translate-y-1/2 transform">
+                <div className="absolute right-4 top-1/2 flex -translate-y-1/2 transform flex-col items-center space-y-6 text-white sm:right-5 sm:gap-2 md:gap-3 lg:gap-4">
                   <button
-                    className="group flex flex-col items-center space-y-2 hover:scale-110 transition duration-200 transform"
+                    className="group flex transform flex-col items-center space-y-2 transition duration-200 hover:scale-110"
                     onClick={likeClickHandler}
                   >
                     {isLiked ? (
@@ -587,59 +567,55 @@ const SharedMediaPage = () => {
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="w-5 sm:w-6 h-5 sm:h-6 text-red-600 transition-colors duration-200"
+                        className="h-5 w-5 text-red-600 transition-colors duration-200 sm:h-6 sm:w-6"
                       />
                     ) : (
                       <FavoriteBorderSharp
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="w-5 sm:w-6 h-5 sm:h-6 hover:text-red-600 transition-colors duration-200"
+                        className="h-5 w-5 transition-colors duration-200 hover:text-red-600 sm:h-6 sm:w-6"
                       />
                     )}
-                    <span className="font-medium text-xs sm:text-sm">
-                      {likesCount}
-                    </span>
+                    <span className="text-xs font-medium sm:text-sm">{likesCount}</span>
                   </button>
 
                   {entityData?.isCommentsDisabled === true ? (
-                    <button className="flex flex-col items-center space-y-1 cursor-not-allowed">
+                    <button className="flex cursor-not-allowed flex-col items-center space-y-1">
                       <CommentsDisabled
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="w-5 sm:w-6 h-5 sm:h-6"
+                        className="h-5 w-5 sm:h-6 sm:w-6"
                       />
-                      <span className="font-medium text-xs sm:text-sm">0</span>
+                      <span className="text-xs font-medium sm:text-sm">0</span>
                     </button>
                   ) : (
-                    <button className="group flex flex-col items-center space-y-2 hover:scale-110 transition duration-200 transform">
+                    <button className="group flex transform flex-col items-center space-y-2 transition duration-200 hover:scale-110">
                       <CommentOutlined
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="w-5 sm:w-6 h-5 sm:h-6 hover:text-blue-500 transition-colors duration-200"
+                        className="h-5 w-5 transition-colors duration-200 hover:text-blue-500 sm:h-6 sm:w-6"
                         onClick={openCommentModel}
                       />
-                      <span className="font-medium text-xs sm:text-sm">
-                        {commentCount}
-                      </span>
+                      <span className="text-xs font-medium sm:text-sm">{commentCount}</span>
                     </button>
                   )}
 
                   <button
-                    className="group flex items-center space-x-2 hover:scale-110 transition duration-200 transform"
+                    className="group flex transform items-center space-x-2 transition duration-200 hover:scale-110"
                     onClick={shareClickHandler}
                   >
                     <ShareSharp
                       sx={{
                         fontSize: { xs: 21, sm: 23, md: 25 },
                       }}
-                      className="w-5 sm:w-6 h-5 sm:h-6 hover:text-green-500 transition-colors duration-200"
+                      className="h-5 w-5 transition-colors duration-200 hover:text-green-500 sm:h-6 sm:w-6"
                     />
                   </button>
                   <button
-                    className="group flex flex-col items-center space-y-2 hover:scale-110 transition duration-200 transform"
+                    className="group flex transform flex-col items-center space-y-2 transition duration-200 hover:scale-110"
                     onClick={saveClickHandler}
                   >
                     {isSaved ? (
@@ -647,14 +623,14 @@ const SharedMediaPage = () => {
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="w-5 sm:w-6 h-5 sm:h-6 text-yellow-600 transition-colors duration-200"
+                        className="h-5 w-5 text-yellow-600 transition-colors duration-200 sm:h-6 sm:w-6"
                       />
                     ) : (
                       <BookmarkBorderOutlined
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="w-5 sm:w-6 h-5 sm:h-6 hover:text-yellow-600 transition-colors duration-200"
+                        className="h-5 w-5 transition-colors duration-200 hover:text-yellow-600 sm:h-6 sm:w-6"
                       />
                     )}
                   </button>
@@ -665,7 +641,7 @@ const SharedMediaPage = () => {
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="text-red-500 transition duration-200 cursor-not-allowed transform"
+                        className="transform cursor-not-allowed text-red-500 transition duration-200"
                         title="This post has already been reported"
                       />
                     ) : (
@@ -673,35 +649,31 @@ const SharedMediaPage = () => {
                         sx={{
                           fontSize: { xs: 21, sm: 23, md: 25 },
                         }}
-                        className="hover:text-red-500 hover:scale-110 transition duration-200 cursor-pointer transform"
+                        className="transform cursor-pointer transition duration-200 hover:scale-110 hover:text-red-500"
                         onClick={openReportModal}
                         title="Report this post"
                       />
                     ))}
                 </div>
 
-                <div className="bottom-8 left-1/2 z-10 absolute flex flex-col justify-between items-center bg-white/15 dark:bg-black/20 p-2 px-3 sm:px-5 md:px-6 lg:px-7 rounded-lg w-full text-white dark:text-black text-xs -translate-x-1/2 transform">
-                  <div className="flex justify-between items-center w-full">
+                <div className="absolute bottom-8 left-1/2 z-10 flex w-full -translate-x-1/2 transform flex-col items-center justify-between rounded-lg bg-white/15 p-2 px-3 text-xs text-white dark:bg-black/20 dark:text-black sm:px-5 md:px-6 lg:px-7">
+                  <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4">
                       <Link
-                        to={
-                          isAuthenticated
-                            ? `/profile/${entityData.userId}`
-                            : "/login"
-                        }
-                        className="flex-shrink-0 w-10 sm:w-12 lg:w-14 h-10 sm:h-12 lg:h-14"
+                        to={isAuthenticated ? `/profile/${entityData.userId}` : '/login'}
+                        className="h-10 w-10 flex-shrink-0 sm:h-12 sm:w-12 lg:h-14 lg:w-14"
                       >
                         <img
                           src={entityData.profilePictureUrl}
                           alt={`${entityData.username}'s profile image`}
-                          className="shadow-md border-2 border-gray-800 dark:border-gray-200 rounded-full w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          className="h-full w-full rounded-full border-2 border-gray-800 object-cover shadow-md transition-transform duration-300 hover:scale-105 dark:border-gray-200"
                         />
                       </Link>
                       <div className="flex flex-col text-black dark:text-white">
-                        <span className="font-semibold text-sm sm:text-lg md:text-lg truncate">
+                        <span className="truncate text-sm font-semibold sm:text-lg md:text-lg">
                           {entityData.fullname}
                         </span>
-                        <span className="flex sm:flex-row flex-col flex-wrap gap-1 text-gray-600 dark:text-gray-400 text-xs sm:text-sm truncate">
+                        <span className="flex flex-col flex-wrap gap-1 truncate text-xs text-gray-600 dark:text-gray-400 sm:flex-row sm:text-sm">
                           <span>@{entityData.username}</span>
                           <TimeAgo date={entityData.createdAt} />
                         </span>
@@ -711,39 +683,29 @@ const SharedMediaPage = () => {
                     {!isMyEntity && (
                       <button
                         onClick={followStatusClickHandler}
-                        className={`flex items-center gap-2 min-[410px]:px-4  px-2 py-2 rounded-full text-white text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-md
-                          ${
-                            followStatus === "FOLLOWED"
-                              ? "bg-green-500 hover:bg-green-600"
-                              : ""
-                          }
-                          ${
-                            followStatus === "NOT_FOLLOWED"
-                              ? "bg-blue-500 hover:bg-blue-600"
-                              : ""
-                          }
-                          ${
-                            followStatus === "REQUEST_SENT"
-                              ? "bg-yellow-500 hover:bg-yellow-600"
-                              : ""
-                          }
-                      `}
+                        className={`flex transform items-center gap-2 rounded-full px-2 py-2 text-sm font-medium text-white shadow-md transition-all duration-300 hover:scale-105 min-[410px]:px-4 ${
+                          followStatus === 'FOLLOWED' ? 'bg-green-500 hover:bg-green-600' : ''
+                        } ${
+                          followStatus === 'NOT_FOLLOWED' ? 'bg-blue-500 hover:bg-blue-600' : ''
+                        } ${
+                          followStatus === 'REQUEST_SENT' ? 'bg-yellow-500 hover:bg-yellow-600' : ''
+                        } `}
                       >
-                        {followStatus === "FOLLOWED" && (
+                        {followStatus === 'FOLLOWED' && (
                           <>
-                            <CheckCircle className="w-5 h-5 text-white" />
+                            <CheckCircle className="h-5 w-5 text-white" />
                             <span className="hidden md:inline">Following</span>
                           </>
                         )}
-                        {followStatus === "NOT_FOLLOWED" && (
+                        {followStatus === 'NOT_FOLLOWED' && (
                           <>
-                            <PersonAdd className="w-5 h-5 text-white" />
+                            <PersonAdd className="h-5 w-5 text-white" />
                             <span className="hidden md:inline">Follow</span>
                           </>
                         )}
-                        {followStatus === "REQUEST_SENT" && (
+                        {followStatus === 'REQUEST_SENT' && (
                           <>
-                            <HourglassEmpty className="w-5 h-5 text-white" />
+                            <HourglassEmpty className="h-5 w-5 text-white" />
                             <span className="hidden md:inline">Requested</span>
                           </>
                         )}
@@ -751,19 +713,19 @@ const SharedMediaPage = () => {
                     )}
                   </div>
 
-                  <div className="pt-2 w-full">
+                  <div className="w-full pt-2">
                     <p
-                      className={`w-full text-black dark:text-white text-xs sm:text-sm ${
-                        expanded ? "" : "line-clamp-1"
+                      className={`w-full text-xs text-black dark:text-white sm:text-sm ${
+                        expanded ? '' : 'line-clamp-1'
                       }`}
                     >
                       {entityData.description}
                     </p>
                     <button
                       onClick={() => setExpanded(!expanded)}
-                      className="float-end mt-1 text-blue-500 text-xs sm:text-sm"
+                      className="float-end mt-1 text-xs text-blue-500 sm:text-sm"
                     >
-                      {expanded ? "See Less" : "See More"}
+                      {expanded ? 'See Less' : 'See More'}
                     </button>
                   </div>
                 </div>

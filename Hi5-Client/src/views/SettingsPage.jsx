@@ -1,20 +1,15 @@
-import { useEffect, useState } from "react";
-import MainLayout from "../components/layout/MainLayout";
-import * as Yup from "yup";
-import {
-  ArrowBackSharp,
-  LightMode,
-  DarkMode,
-  Logout,
-} from "@mui/icons-material";
-import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
-import useLogout from "../hooks/useLogout";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../redux/slices/themeSlice";
-import axiosInstance from "../services/axios.config";
-import toast from "react-hot-toast";
-import { setUser } from "../redux/slices/userSlice";
+import { useEffect, useState } from 'react';
+import MainLayout from '../components/layout/MainLayout';
+import * as Yup from 'yup';
+import { ArrowBackSharp, LightMode, DarkMode, Logout } from '@mui/icons-material';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import useLogout from '../hooks/useLogout';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTheme } from '../redux/slices/themeSlice';
+import axiosInstance from '../services/axios.config';
+import toast from 'react-hot-toast';
+import { setUser } from '../redux/slices/userSlice';
 
 const SettingsPage = () => {
   const userProfileData = useSelector((state) => state.user.profile);
@@ -24,7 +19,7 @@ const SettingsPage = () => {
     if (window.history.length > 1) {
       navigate(-1);
     } else {
-      navigate("/");
+      navigate('/');
     }
   };
 
@@ -34,28 +29,27 @@ const SettingsPage = () => {
     dispatch(toggleTheme());
   };
 
-  const [username, setUsername] = useState("");
-  const [isUsernameUpdateModalOpen, setIsUsernameUpdateModalOpen] =
-    useState(false);
+  const [username, setUsername] = useState('');
+  const [isUsernameUpdateModalOpen, setIsUsernameUpdateModalOpen] = useState(false);
 
   const handleUsernameUpdate = async () => {
     const usernameSchema = Yup.string()
-      .min(3, "Username must be at least 3 characters")
-      .max(15, "Username must not exceed 15 characters")
+      .min(3, 'Username must be at least 3 characters')
+      .max(15, 'Username must not exceed 15 characters')
       .matches(
         /^[a-z0-9_]+$/,
-        "Username can only contain lowercase letters, numbers, and underscores"
+        'Username can only contain lowercase letters, numbers, and underscores'
       )
-      .required("Username is required");
+      .required('Username is required');
 
     try {
       await usernameSchema.validate(username);
 
-      const response = await axiosInstance.post("/user/change-username", {
+      const response = await axiosInstance.post('/user/change-username', {
         username,
       });
       console.log(response);
-      toast.success("Username updated successfully!");
+      toast.success('Username updated successfully!');
       setIsUsernameUpdateModalOpen(false);
       dispatch(
         setUser({
@@ -67,10 +61,7 @@ const SettingsPage = () => {
       if (e instanceof Yup.ValidationError) {
         toast.error(e.message);
       } else {
-        toast.error(
-          e?.response?.data?.message ||
-          "Failed to update username. Please try again."
-        );
+        toast.error(e?.response?.data?.message || 'Failed to update username. Please try again.');
         console.error(e);
       }
     }
@@ -78,45 +69,32 @@ const SettingsPage = () => {
 
   const logout = useLogout();
 
-  const [isProfileTypeSettingModalOpen, setIsProfileTypeSettingModalOpen] =
-    useState(false);
-  const [profileType, setProfileType] = useState("public");
+  const [isProfileTypeSettingModalOpen, setIsProfileTypeSettingModalOpen] = useState(false);
+  const [profileType, setProfileType] = useState('public');
 
-  const [autoFollow, setAutoFollow] = useState("ask");
-  const [isAutoFollowSettingModalOpen, setIsAutoFollowSettingModalOpen] =
-    useState(false);
+  const [autoFollow, setAutoFollow] = useState('ask');
+  const [isAutoFollowSettingModalOpen, setIsAutoFollowSettingModalOpen] = useState(false);
 
-  const [isNotificationsModalOpen, setIsNotificationsModalOpen] =
-    useState(false);
-  const [notificationsNetworkPosts, setNotificationsNetworkPosts] =
-    useState(false);
-  const [notificationsNetworkReels, setNotificationsNetworkReels] =
-    useState(false);
-  const [notificationsNetworkStories, setNotificationsNetworkStories] =
-    useState(false);
+  const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
+  const [notificationsNetworkPosts, setNotificationsNetworkPosts] = useState(false);
+  const [notificationsNetworkReels, setNotificationsNetworkReels] = useState(false);
+  const [notificationsNetworkStories, setNotificationsNetworkStories] = useState(false);
   const [notificationsPostLikes, setNotificationsPostLikes] = useState(false);
   const [notificationsReelLikes, setNotificationsReelLikes] = useState(false);
   const [notificationsStoryLikes, setNotificationsStoryLikes] = useState(false);
-  const [notificationsCommentLikes, setNotificationsCommentLikes] =
-    useState(false);
-  const [notificationsPostComments, setNotificationsPostComments] =
-    useState(false);
-  const [notificationsReelComments, setNotificationsReelComments] =
-    useState(false);
-  const [notificationsUserFollows, setNotificationsUserFollows] =
-    useState(false);
-  const [notificationsFollowRequests, setNotificationsFollowRequests] =
-    useState(false);
+  const [notificationsCommentLikes, setNotificationsCommentLikes] = useState(false);
+  const [notificationsPostComments, setNotificationsPostComments] = useState(false);
+  const [notificationsReelComments, setNotificationsReelComments] = useState(false);
+  const [notificationsUserFollows, setNotificationsUserFollows] = useState(false);
+  const [notificationsFollowRequests, setNotificationsFollowRequests] = useState(false);
 
   const [twoFactorAuth, setTwoFactorAuth] = useState(false);
-  const [isTwoFactorAuthModalOpen, setIsTwoFactorAuthModalOpen] =
-    useState(false);
+  const [isTwoFactorAuthModalOpen, setIsTwoFactorAuthModalOpen] = useState(false);
 
-  const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] =
-    useState(false);
+  const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
   const handleDeleteAccount = async () => {
     try {
-      await axiosInstance.delete("/user/myaccount");
+      await axiosInstance.delete('/user/myaccount');
       setIsDeleteAccountModalOpen(false);
       logout();
     } catch (e) {
@@ -131,46 +109,24 @@ const SettingsPage = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await axiosInstance.get("/user/settings");
+        const response = await axiosInstance.get('/user/settings');
         const data = response?.data;
-        setProfileType(data?.profileType.toLowerCase() || "public");
-        setAutoFollow((data?.followRequestBehaviourAuto && "auto") || "ask");
-        setNotificationsNetworkPosts(
-          data?.isAllowedNetworkPostNotification || false
-        );
-        setNotificationsNetworkReels(
-          data?.isAllowedNetworkReelNotification || false
-        );
-        setNotificationsNetworkStories(
-          data?.isAllowedNetworkStoryNotification || false
-        );
-        setNotificationsPostLikes(
-          data?.isAllowedPostsLikeNotification || false
-        );
-        setNotificationsReelLikes(
-          data?.isAllowedReelsLikeNotification || false
-        );
-        setNotificationsStoryLikes(
-          data?.isAllowedStorysLikeNotification || false
-        );
-        setNotificationsCommentLikes(
-          data?.isAllowedCommentsLikeNotification || false
-        );
-        setNotificationsPostComments(
-          data?.isAllowedPostsCommentNotification || false
-        );
-        setNotificationsReelComments(
-          data?.isAllowedReelsCommentNotification || false
-        );
-        setNotificationsUserFollows(
-          data?.isAllowedUsersFollowNotification || false
-        );
-        setNotificationsFollowRequests(
-          data?.isAllowedUsersFollowRequestNotification || false
-        );
+        setProfileType(data?.profileType.toLowerCase() || 'public');
+        setAutoFollow((data?.followRequestBehaviourAuto && 'auto') || 'ask');
+        setNotificationsNetworkPosts(data?.isAllowedNetworkPostNotification || false);
+        setNotificationsNetworkReels(data?.isAllowedNetworkReelNotification || false);
+        setNotificationsNetworkStories(data?.isAllowedNetworkStoryNotification || false);
+        setNotificationsPostLikes(data?.isAllowedPostsLikeNotification || false);
+        setNotificationsReelLikes(data?.isAllowedReelsLikeNotification || false);
+        setNotificationsStoryLikes(data?.isAllowedStorysLikeNotification || false);
+        setNotificationsCommentLikes(data?.isAllowedCommentsLikeNotification || false);
+        setNotificationsPostComments(data?.isAllowedPostsCommentNotification || false);
+        setNotificationsReelComments(data?.isAllowedReelsCommentNotification || false);
+        setNotificationsUserFollows(data?.isAllowedUsersFollowNotification || false);
+        setNotificationsFollowRequests(data?.isAllowedUsersFollowRequestNotification || false);
         setTwoFactorAuth(data?.twoFactorAuthentication || false);
       } catch (error) {
-        console.error("Error fetching user settings:", error);
+        console.error('Error fetching user settings:', error);
       }
     };
 
@@ -182,7 +138,7 @@ const SettingsPage = () => {
       const payload = {
         twoFactorAuthentication: twoFactorAuth,
         profileType: profileType.toUpperCase(),
-        followRequestBehaviourAuto: autoFollow === "auto",
+        followRequestBehaviourAuto: autoFollow === 'auto',
         isAllowedNetworkPostNotification: notificationsNetworkPosts,
         isAllowedNetworkReelNotification: notificationsNetworkReels,
         isAllowedNetworkStoryNotification: notificationsNetworkStories,
@@ -195,10 +151,10 @@ const SettingsPage = () => {
         isAllowedUsersFollowNotification: notificationsUserFollows,
         isAllowedUsersFollowRequestNotification: notificationsFollowRequests,
       };
-      const response = await axiosInstance.put("/user/settings", payload);
-      console.log("Settings updated successfully:", response.data);
+      const response = await axiosInstance.put('/user/settings', payload);
+      console.log('Settings updated successfully:', response.data);
     } catch (error) {
-      console.error("Error updating user settings:", error);
+      console.error('Error updating user settings:', error);
     } finally {
       setIsProfileTypeSettingModalOpen(false);
       setIsAutoFollowSettingModalOpen(false);
@@ -209,51 +165,52 @@ const SettingsPage = () => {
 
   return (
     <MainLayout>
-      <div className="flex justify-center mx-auto pt-[60px] sm:pt-[80px] md:pt-[0px] md:pl-[70px] lg:pl-[260px] w-full h-screen">
-        <div className="flex justify-center bg-gray-100 dark:bg-gray-900 mx-auto p-3 sm:p-6 w-full">
-          <div className="flex flex-col bg-white dark:bg-black shadow-lg mb-10 p-6 rounded-lg w-full max-w-2xl">
+      <div className="mx-auto flex h-screen w-full justify-center pt-[60px] sm:pt-[80px] md:pl-[70px] md:pt-[0px] lg:pl-[260px]">
+        <div className="mx-auto flex w-full justify-center bg-gray-100 p-3 dark:bg-gray-900 sm:p-6">
+          <div className="mb-10 flex w-full max-w-2xl flex-col rounded-lg bg-white p-6 shadow-lg dark:bg-black">
             {/* Header */}
-            <div className="flex items-center gap-4 mb-6">
+            <div className="mb-6 flex items-center gap-4">
               <div
                 onClick={handleBackClick}
-                className="text-gray-500 dark:text-gray-400 cursor-pointer"
+                className="cursor-pointer text-gray-500 dark:text-gray-400"
               >
                 <ArrowBackSharp className="text-2xl" />
               </div>
-              <h1 className="font-semibold text-gray-800 dark:text-gray-200 text-2xl">
-                Settings
-              </h1>
+              <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">Settings</h1>
             </div>
 
             {/* Content */}
-            <div className="flex flex-col space-y-8 h-screen overflow-y-auto hide-scrollbar">
+            <div className="hide-scrollbar flex h-screen flex-col space-y-8 overflow-y-auto">
               <section className="flex flex-col">
-                <h2 className="mb-4 font-bold text-gray-800 dark:text-gray-200 text-xl">
+                <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
                   Theme Settings
                 </h2>
                 <div
                   onClick={changeThemeClickHandler}
-                  className="flex items-center space-x-4 text-xl cursor-pointer"
+                  className="flex cursor-pointer items-center space-x-4 text-xl"
                 >
                   {/* Sun Icon */}
                   <div className="text-gray-800">
                     <LightMode
-                      className={`transition-all duration-300 ${theme === "dark" ? "opacity-0" : "opacity-100"
-                        }`}
+                      className={`transition-all duration-300 ${
+                        theme === 'dark' ? 'opacity-0' : 'opacity-100'
+                      }`}
                     />
                   </div>
 
-                  <div className="relative bg-gray-300 dark:bg-gray-700 rounded-full w-12 h-6">
+                  <div className="relative h-6 w-12 rounded-full bg-gray-300 dark:bg-gray-700">
                     <div
-                      className={`w-6 h-6 bg-blue-400 dark:bg-blue-600 rounded-full absolute transition-all duration-300 transform ${theme === "dark" ? "translate-x-6" : "translate-x-0"
-                        }`}
+                      className={`absolute h-6 w-6 transform rounded-full bg-blue-400 transition-all duration-300 dark:bg-blue-600 ${
+                        theme === 'dark' ? 'translate-x-6' : 'translate-x-0'
+                      }`}
                     />
                   </div>
 
                   <div className="dark:text-gray-200">
                     <DarkMode
-                      className={`transition-all duration-300 ${theme === "light" ? "opacity-0" : "opacity-100"
-                        }`}
+                      className={`transition-all duration-300 ${
+                        theme === 'light' ? 'opacity-0' : 'opacity-100'
+                      }`}
                     />
                   </div>
                 </div>
@@ -261,19 +218,17 @@ const SettingsPage = () => {
 
               {/* Account Settings */}
               <section className="flex flex-col">
-                <h2 className="mb-4 font-bold text-gray-800 dark:text-gray-200 text-xl">
+                <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
                   Account Settings
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   Update your username to personalize your account.
                 </p>
-                <div className="flex sm:flex-row flex-col justify-between sm:items-center mt-4">
-                  <span className="text-gray-600 dark:text-gray-400">
-                    Username: {username}
-                  </span>
+                <div className="mt-4 flex flex-col justify-between sm:flex-row sm:items-center">
+                  <span className="text-gray-600 dark:text-gray-400">Username: {username}</span>
                   <button
                     onClick={() => setIsUsernameUpdateModalOpen(true)}
-                    className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 mt-1 sm:mt-0 px-4 py-2 rounded-md sm:w-max text-white"
+                    className="mt-1 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 sm:mt-0 sm:w-max"
                   >
                     Change Username
                   </button>
@@ -281,12 +236,10 @@ const SettingsPage = () => {
               </section>
 
               <section className="flex flex-col">
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Logout your account.
-                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Logout your account.</p>
                 <button
                   onClick={logout}
-                  className="flex justify-center items-center gap-2 bg-red-600 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-900 mt-2 px-4 py-2 rounded-md sm:w-max text-white"
+                  className="mt-2 flex items-center justify-center gap-2 rounded-md bg-red-600 px-4 py-2 text-white hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-900 sm:w-max"
                 >
                   <Logout className="text-xl" />
                   Logout
@@ -295,22 +248,22 @@ const SettingsPage = () => {
 
               {/* Privacy Settings */}
               <section className="flex flex-col">
-                <h2 className="flex flex-col mb-4 font-bold text-gray-800 dark:text-gray-200 text-xl">
+                <h2 className="mb-4 flex flex-col text-xl font-bold text-gray-800 dark:text-gray-200">
                   Privacy Settings
                 </h2>
-                <p className="mb-3 text-gray-600 dark:text-gray-400 text-sm">
+                <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
                   Manage your profile visibility and follow request behavior.
                 </p>
-                <div className="flex sm:flex-row flex-col gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <button
                     onClick={() => setIsProfileTypeSettingModalOpen(true)}
-                    className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2 rounded-md text-white whitespace-nowrap"
+                    className="whitespace-nowrap rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900"
                   >
                     Profile Type
                   </button>
                   <button
                     onClick={() => setIsAutoFollowSettingModalOpen(true)}
-                    className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2 rounded-md text-white whitespace-nowrap"
+                    className="whitespace-nowrap rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900"
                   >
                     Follow Request Behavior
                   </button>
@@ -319,15 +272,15 @@ const SettingsPage = () => {
 
               {/* Notification Settings */}
               <section className="flex flex-col">
-                <h2 className="mb-4 font-bold text-gray-800 dark:text-gray-200 text-xl">
+                <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
                   Notification Settings
                 </h2>
-                <p className="mb-3 text-gray-600 dark:text-gray-400 text-sm">
+                <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
                   Customize your notifications.
                 </p>
                 <button
                   onClick={() => setIsNotificationsModalOpen(true)}
-                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2 rounded-md sm:w-max text-white"
+                  className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 sm:w-max"
                 >
                   Notifications
                 </button>
@@ -335,15 +288,15 @@ const SettingsPage = () => {
 
               {/* Security Settings */}
               <section className="flex flex-col">
-                <h2 className="mb-4 font-bold text-gray-800 dark:text-gray-200 text-xl">
+                <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
                   Security Settings
                 </h2>
-                <p className="mb-3 text-gray-600 dark:text-gray-400 text-sm">
+                <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
                   Enable two-factor authentication to secure your account.
                 </p>
                 <button
                   onClick={() => setIsTwoFactorAuthModalOpen(true)}
-                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2 rounded-md sm:w-max text-white"
+                  className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 sm:w-max"
                 >
                   Enable Two-Factor Authentication
                 </button>
@@ -351,15 +304,15 @@ const SettingsPage = () => {
 
               {/* Danger Zone */}
               <section className="flex flex-col">
-                <h2 className="mb-4 font-bold text-red-500 dark:text-red-400 text-xl">
+                <h2 className="mb-4 text-xl font-bold text-red-500 dark:text-red-400">
                   Danger Zone
                 </h2>
-                <p className="mb-3 text-gray-600 dark:text-gray-400 text-sm">
+                <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
                   This is where you can permanently delete your account.
                 </p>
                 <button
                   onClick={() => setIsDeleteAccountModalOpen(true)}
-                  className="bg-red-600 hover:bg-red-700 shadow-2xl p-2 rounded-md sm:w-max text-white dark:text-gray-200 transition duration-200"
+                  className="rounded-md bg-red-600 p-2 text-white shadow-2xl transition duration-200 hover:bg-red-700 dark:text-gray-200 sm:w-max"
                 >
                   Delete Account
                 </button>
@@ -397,7 +350,7 @@ const SettingsPage = () => {
             label="Profile Type"
             value={profileType}
             onChange={(e) => setProfileType(e.target.value)}
-            options={["public", "private"]}
+            options={['public', 'private']}
           />
         }
         onSave={updateSettings}
@@ -413,7 +366,7 @@ const SettingsPage = () => {
             label="Behavior"
             value={autoFollow}
             onChange={(e) => setAutoFollow(e.target.value)}
-            options={["auto", "ask"]}
+            options={['auto', 'ask']}
           />
         }
         onSave={updateSettings}
@@ -507,8 +460,7 @@ const SettingsPage = () => {
         content={
           <div>
             <p className="text-gray-700 dark:text-gray-400">
-              Are you sure you want to delete your account? This action cannot
-              be undone.
+              Are you sure you want to delete your account? This action cannot be undone.
             </p>
           </div>
         }
@@ -523,7 +475,7 @@ const InputField = ({ label, type, value, onChange }) => (
   <div className="mb-4">
     <label
       htmlFor={label}
-      className="block mb-2 font-medium text-gray-700 dark:text-gray-400 text-sm"
+      className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-400"
     >
       {label}
     </label>
@@ -532,7 +484,7 @@ const InputField = ({ label, type, value, onChange }) => (
       id={label}
       value={value}
       onChange={onChange}
-      className="dark:bg-black px-3 py-2 border dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+      className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-black"
     />
   </div>
 );
@@ -548,7 +500,7 @@ const SelectField = ({ label, value, onChange, options }) => (
   <div className="mb-4">
     <label
       htmlFor={label}
-      className="block mb-2 font-medium text-gray-700 dark:text-gray-400 text-sm"
+      className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-400"
     >
       {label}
     </label>
@@ -556,7 +508,7 @@ const SelectField = ({ label, value, onChange, options }) => (
       id={label}
       value={value}
       onChange={onChange}
-      className="dark:bg-black px-3 py-2 border dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+      className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-black"
     >
       {options.map((option, index) => (
         <option key={index} value={option}>
@@ -576,13 +528,7 @@ SelectField.propTypes = {
 
 const CheckboxField = ({ label, checked, onChange }) => (
   <div className="mb-4">
-    <input
-      type="checkbox"
-      id={label}
-      checked={checked}
-      onChange={onChange}
-      className="mr-2"
-    />
+    <input type="checkbox" id={label} checked={checked} onChange={onChange} className="mr-2" />
     <label htmlFor={label} className="text-gray-700 dark:text-gray-400">
       {label}
     </label>
@@ -598,54 +544,49 @@ CheckboxField.propTypes = {
 const Modal = ({ isOpen, onClose, title, content, onSave, type }) => {
   const getButtonStyle = (type) => {
     switch (type) {
-      case "UPDATE":
-        return "bg-blue-500 hover:bg-blue-600 text-white";
-      case "SETTING":
-        return "bg-gray-500 hover:bg-gray-600 text-white";
-      case "SECURITY":
-        return "bg-gray-500 hover:bg-gray-600 text-white";
-      case "DANGER":
-        return "bg-red-500 hover:bg-red-600 text-white";
+      case 'UPDATE':
+        return 'bg-blue-500 hover:bg-blue-600 text-white';
+      case 'SETTING':
+        return 'bg-gray-500 hover:bg-gray-600 text-white';
+      case 'SECURITY':
+        return 'bg-gray-500 hover:bg-gray-600 text-white';
+      case 'DANGER':
+        return 'bg-red-500 hover:bg-red-600 text-white';
       default:
-        return "bg-gray-300 hover:bg-gray-400 text-black";
+        return 'bg-gray-300 hover:bg-gray-400 text-black';
     }
   };
 
   const getButtonText = (type) => {
     switch (type) {
-      case "UPDATE":
-        return "Save Changes";
-      case "SETTING":
-        return "Update Settings";
-      case "SECURITY":
-        return "Enable Security";
-      case "DANGER":
-        return "Delete Account";
+      case 'UPDATE':
+        return 'Save Changes';
+      case 'SETTING':
+        return 'Update Settings';
+      case 'SECURITY':
+        return 'Enable Security';
+      case 'DANGER':
+        return 'Delete Account';
       default:
-        return "Save";
+        return 'Save';
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="z-20 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-      <div className="bg-white dark:bg-black shadow-lg p-6 border border-gray-500 rounded-lg w-full max-w-sm">
-        <h3 className="mb-4 font-semibold text-black dark:text-white text-lg">
-          {title}
-        </h3>
+    <div className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-full max-w-sm rounded-lg border border-gray-500 bg-white p-6 shadow-lg dark:bg-black">
+        <h3 className="mb-4 text-lg font-semibold text-black dark:text-white">{title}</h3>
         {content}
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="mt-4 flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="bg-gray-200 dark:bg-gray-600 mr-2 px-4 py-2 rounded-md text-gray-600 dark:text-gray-200"
+            className="mr-2 rounded-md bg-gray-200 px-4 py-2 text-gray-600 dark:bg-gray-600 dark:text-gray-200"
           >
             Cancel
           </button>
-          <button
-            onClick={onSave}
-            className={`px-4 py-2 rounded-md ${getButtonStyle(type)}`}
-          >
+          <button onClick={onSave} className={`rounded-md px-4 py-2 ${getButtonStyle(type)}`}>
             {getButtonText(type)}
           </button>
         </div>
@@ -660,7 +601,7 @@ Modal.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.node.isRequired,
   onSave: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(["CONFIRM", "ALERT"]).isRequired,
+  type: PropTypes.oneOf(['CONFIRM', 'ALERT']).isRequired,
 };
 
 export default SettingsPage;

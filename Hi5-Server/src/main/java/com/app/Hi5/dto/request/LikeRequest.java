@@ -12,5 +12,4 @@ public class LikeRequest {
 
     private String relevantId;
     private LikeType type;
-
 }

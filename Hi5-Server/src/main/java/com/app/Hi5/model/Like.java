@@ -1,7 +1,7 @@
 package com.app.Hi5.model;
 
 import com.app.Hi5.model.Enum.LikeType;
-import com.app.Hi5.model.Enum.SaveType;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +12,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,8 +19,7 @@ import java.util.Date;
 @Document(collection = "like")
 public class Like {
 
-    @Id
-    private ObjectId id;
+    @Id private ObjectId id;
 
     @Field("user")
     private String userId;
@@ -39,5 +36,4 @@ public class Like {
     @LastModifiedDate
     @Field("created_at")
     private Date createdAt;
-
 }

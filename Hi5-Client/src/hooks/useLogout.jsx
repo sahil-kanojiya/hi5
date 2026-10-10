@@ -1,8 +1,8 @@
-import { useDispatch } from "react-redux";
-import { useCallback } from "react";
-import { removeAuth } from "../redux/slices/authSlice";
-import { removeUser } from "../redux/slices/userSlice";
-import { removeToken } from "../utils/localStorage";
+import { useDispatch } from 'react-redux';
+import { useCallback } from 'react';
+import { removeAuth } from '../redux/slices/authSlice';
+import { removeUser } from '../redux/slices/userSlice';
+import { removeToken } from '../utils/localStorage';
 
 const useLogout = () => {
   const dispatch = useDispatch();

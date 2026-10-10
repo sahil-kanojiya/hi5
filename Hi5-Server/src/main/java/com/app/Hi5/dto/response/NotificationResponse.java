@@ -1,16 +1,11 @@
 package com.app.Hi5.dto.response;
 
 import com.app.Hi5.model.Enum.NotificationType;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -35,5 +30,4 @@ public class NotificationResponse {
     private String fullname;
 
     private String profilePictureUrl;
-
 }

@@ -7,23 +7,20 @@ import com.app.Hi5.model.User;
 import com.app.Hi5.repository.OtpRepository;
 import com.app.Hi5.repository.UserRepository;
 import com.app.Hi5.utility.Conversion;
-import lombok.RequiredArgsConstructor;
+import java.security.SecureRandom;
+import java.util.Date;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSendException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.security.SecureRandom;
-import java.util.Date;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -40,7 +37,16 @@ public class OtpService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public OtpService(SecureRandom random, OtpRepository otpRepository, MailerService mailerService, UserRepository userRepository, AuthenticationManager authenticationManager, IdentificationTokenService identificationTokenService, @Value("${otp.expiration-time}") String otpExpirationTimeStr, UserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
+    public OtpService(
+            SecureRandom random,
+            OtpRepository otpRepository,
+            MailerService mailerService,
+            UserRepository userRepository,
+            AuthenticationManager authenticationManager,
+            IdentificationTokenService identificationTokenService,
+            @Value("${otp.expiration-time}") String otpExpirationTimeStr,
+            UserDetailsService userDetailsService,
+            BCryptPasswordEncoder passwordEncoder) {
         this.RANDOM = random;
         this.otpRepository = otpRepository;
         this.mailerService = mailerService;
@@ -85,15 +91,23 @@ public class OtpService {
         Otp otpEntity = createOrUpdateOtp(email, OtpType.REGISTER);
         if (!mailerService.sendOtpForRegistration(email, otpEntity.getOtp())) {
             log.error("Failed to send OTP for registration to email: {}", email);
-            throw new MailSendException("An error occurred while sending the OTP for registration. Please try again.");
+            throw new MailSendException(
+                    "An error occurred while sending the OTP for registration. Please try again.");
         }
         log.info("OTP sent for registration to email: {}", email);
     }
 
-    public String generateIdentificationTokenAndSendOtpForLogin(String email, String username, String password) {
+    public String generateIdentificationTokenAndSendOtpForLogin(
+            String email, String username, String password) {
         log.info("Generating OTP for login for email: {} and username: {}", email, username);
         if (email == null) {
-            User user = userRepository.findByUsernameAndIsActiveTrue(username).orElseThrow(() -> new UsernameNotFoundException("Invalid username or password!"));
+            User user =
+                    userRepository
+                            .findByUsernameAndIsActiveTrue(username)
+                            .orElseThrow(
+                                    () ->
+                                            new UsernameNotFoundException(
+                                                    "Invalid username or password!"));
             email = user.getEmail();
         }
 
@@ -101,29 +115,44 @@ public class OtpService {
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid email/username or password");
         }
-//        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        //        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,
+        // password));
 
         Otp otpEntity = createOrUpdateOtp(email, OtpType.LOGIN);
         if (!mailerService.sendOtpForLogin(email, otpEntity.getOtp())) {
             log.error("Failed to send OTP for login to email: {}", email);
-            throw new MailSendException("An error occurred while sending the OTP for login. Please try again.");
+            throw new MailSendException(
+                    "An error occurred while sending the OTP for login. Please try again.");
         }
         log.info("OTP sent for login to email: {}", email);
         return identificationTokenService.generateToken(email);
     }
 
     public void generateAndSendOtpForForgetPassword(String email, String username) {
-        log.info("Generating OTP for forget password for email: {} and username: {}", email, username);
+        log.info(
+                "Generating OTP for forget password for email: {} and username: {}",
+                email,
+                username);
         if (email != null) {
-            userRepository.findByEmailAndIsActiveTrue(email).orElseThrow(() -> new UsernameNotFoundException("Invalid email or username!"));
+            userRepository
+                    .findByEmailAndIsActiveTrue(email)
+                    .orElseThrow(() -> new UsernameNotFoundException("Invalid email or username!"));
         } else {
-            User user = userRepository.findByUsernameAndIsActiveTrue(username).orElseThrow(() -> new UsernameNotFoundException("Invalid email or username!"));
+            User user =
+                    userRepository
+                            .findByUsernameAndIsActiveTrue(username)
+                            .orElseThrow(
+                                    () ->
+                                            new UsernameNotFoundException(
+                                                    "Invalid email or username!"));
             email = user.getEmail();
         }
         Otp otpEntity = createOrUpdateOtp(email, OtpType.FORGOT_PASSWORD);
         if (!mailerService.sendOtpForForgetPassword(email, otpEntity.getOtp())) {
             log.error("Failed to send OTP for forget password to email: {}", email);
-            throw new MailSendException("An error occurred while sending the OTP for password recovery. Please try again.");
+            throw new MailSendException(
+                    "An error occurred while sending the OTP for password recovery. Please try"
+                            + " again.");
         }
         log.info("OTP sent for forget password to email: {}", email);
     }

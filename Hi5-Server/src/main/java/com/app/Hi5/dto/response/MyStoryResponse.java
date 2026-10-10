@@ -1,12 +1,10 @@
 package com.app.Hi5.dto.response;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
-
 
 @Data
 @NoArgsConstructor
@@ -20,5 +18,4 @@ public class MyStoryResponse {
     private Date createdAt;
     private Integer likeCount;
     private Integer viewCount;
-
 }

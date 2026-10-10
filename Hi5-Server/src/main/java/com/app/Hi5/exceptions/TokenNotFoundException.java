@@ -1,7 +1,7 @@
-//package com.app.Echohub.exceptions;
+// package com.app.Echohub.exceptions;
 //
 //
-//public class TokenNotFoundException extends RuntimeException {
+// public class TokenNotFoundException extends RuntimeException {
 //
 //    public TokenNotFoundException() {
 //        super("invalid token!");
@@ -11,4 +11,4 @@
 //        super(message);
 //    }
 //
-//}
+// }

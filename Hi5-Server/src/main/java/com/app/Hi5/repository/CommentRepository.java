@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends MongoRepository<Comment, ObjectId> {
 
-    Page<Comment> findByTypeAndRelevantId(CommentType commentType, String relevantId, PageRequest pageRequest);
-
+    Page<Comment> findByTypeAndRelevantId(
+            CommentType commentType, String relevantId, PageRequest pageRequest);
 }

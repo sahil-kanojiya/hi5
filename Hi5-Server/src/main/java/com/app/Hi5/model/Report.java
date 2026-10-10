@@ -2,14 +2,13 @@ package com.app.Hi5.model;
 
 import com.app.Hi5.model.Enum.ReportReason;
 import com.app.Hi5.model.Enum.ReportType;
+import java.util.Date;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -18,8 +17,7 @@ import java.util.Date;
 @Document(collection = "report")
 public class Report {
 
-    @Id
-    private ObjectId id;
+    @Id private ObjectId id;
 
     @Field("relevant")
     private String relevantId;
@@ -35,5 +33,4 @@ public class Report {
     @Field("created_at")
     @CreatedDate
     private Date createdAt;
-
 }

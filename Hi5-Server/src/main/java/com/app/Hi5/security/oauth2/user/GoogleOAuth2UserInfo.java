@@ -1,8 +1,7 @@
 package com.app.Hi5.security.oauth2.user;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class GoogleOAuth2UserInfo extends OAuth2UserInfo {
@@ -39,5 +38,4 @@ public class GoogleOAuth2UserInfo extends OAuth2UserInfo {
         log.debug("Retrieved Google user image URL: {}", imageUrl);
         return imageUrl;
     }
-
 }

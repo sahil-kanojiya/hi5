@@ -1,15 +1,15 @@
-//package com.app.Echohub.config;
+// package com.app.Echohub.config;
 //
-//import com.github.benmanes.caffeine.cache.Caffeine;
-//import org.springframework.cache.CacheManager;
-//import org.springframework.cache.caffeine.CaffeineCacheManager;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
+// import com.github.benmanes.caffeine.cache.Caffeine;
+// import org.springframework.cache.CacheManager;
+// import org.springframework.cache.caffeine.CaffeineCacheManager;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
 //
-//import java.util.concurrent.TimeUnit;
+// import java.util.concurrent.TimeUnit;
 //
-//@Configuration
-//public class CacheConfig {
+// @Configuration
+// public class CacheConfig {
 //
 //    @Bean
 //    public CacheManager cacheManager() {
@@ -26,4 +26,4 @@
 //
 ////    @CacheEvict(value = "users", key = "#id")   in set del --- cache
 ////    @Cacheable(value = "users", key = "#id")    in get
-//}
+// }

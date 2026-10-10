@@ -15,5 +15,4 @@ public class ConnectionRequestResponse {
     private String username;
     private String fullname;
     private String profilePictureUrl;
-
 }

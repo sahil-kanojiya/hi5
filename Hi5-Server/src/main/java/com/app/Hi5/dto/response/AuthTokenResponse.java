@@ -21,19 +21,18 @@ public class AuthTokenResponse {
     public ResponseEntity<AuthTokenResponse> toResponseEntity() {
         return new ResponseEntity<>(this, this.status);
     }
-
 }
 
-
-//@NotBlank(message = "Username cannot be null or blank")
-//private String username;
+// @NotBlank(message = "Username cannot be null or blank")
+// private String username;
 //
-//@NotBlank(message = "Full name cannot be null or blank")
-//private String fullname;
+// @NotBlank(message = "Full name cannot be null or blank")
+// private String fullname;
 //
-//@Past(message = "Date of Birth must be in the past")
-//@DateTimeFormat(pattern = "yyyy-MM-dd")
-//private Date DateOfBirth;
+// @Past(message = "Date of Birth must be in the past")
+// @DateTimeFormat(pattern = "yyyy-MM-dd")
+// private Date DateOfBirth;
 //
-//@NotNull(message = "Gender cannot be null or blank. Valid responses are 'MALE', 'FEMALE', 'OTHER', or 'PREFER_NOT_TO_SAY'.")
-//private Gender gender;
+// @NotNull(message = "Gender cannot be null or blank. Valid responses are 'MALE', 'FEMALE',
+// 'OTHER', or 'PREFER_NOT_TO_SAY'.")
+// private Gender gender;

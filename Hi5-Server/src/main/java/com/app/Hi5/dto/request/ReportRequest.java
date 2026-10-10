@@ -14,5 +14,4 @@ public class ReportRequest {
     private String relevantId;
     private ReportReason reason;
     private ReportType type;
-
 }

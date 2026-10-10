@@ -1,6 +1,6 @@
-//package com.app.Echohub.exceptions;
+// package com.app.Echohub.exceptions;
 //
-//public class InvalidUsernameOrPasswordException extends RuntimeException {
+// public class InvalidUsernameOrPasswordException extends RuntimeException {
 //
 //    public InvalidUsernameOrPasswordException() {
 //        super("Invalid username or password");
@@ -10,4 +10,4 @@
 //        super(message);
 //    }
 //
-//}
+// }

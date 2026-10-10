@@ -2,14 +2,14 @@ package com.app.Hi5.security.oauth2.user;
 
 import com.app.Hi5.exceptions.OAuth2AuthenticationProcessingException;
 import com.app.Hi5.model.Enum.IdentityProvider;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class OAuth2UserInfoFactory {
 
-    public static OAuth2UserInfo getOAuth2UserInfo(String registrationId, Map<String, Object> attributes) {
+    public static OAuth2UserInfo getOAuth2UserInfo(
+            String registrationId, Map<String, Object> attributes) {
         log.info("OAuth2UserInfoFactory invoked.");
         log.debug("Registration ID: {}", registrationId);
         log.debug("Attributes: {}", attributes);
@@ -22,8 +22,8 @@ public class OAuth2UserInfoFactory {
             return new GithubOAuth2UserInfo(attributes);
         } else {
             log.error("Unsupported registration ID: {}", registrationId);
-            throw new OAuth2AuthenticationProcessingException("Sorry! Login with " + registrationId + " is not supported yet.");
+            throw new OAuth2AuthenticationProcessingException(
+                    "Sorry! Login with " + registrationId + " is not supported yet.");
         }
     }
-
 }

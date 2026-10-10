@@ -17,22 +17,31 @@ public class MailerService {
     private final JavaMailSender mailSender;
 
     public boolean sendOtpForRegistration(String email, String otp) {
-        String content = EmailTemplates.REGISTER_OTP_HTML_TEMPLATE.replace("%email%", email).replace("%otp%", otp);
-//        log.info("Sending OTP for registration to email: {}", email);
+        String content =
+                EmailTemplates.REGISTER_OTP_HTML_TEMPLATE
+                        .replace("%email%", email)
+                        .replace("%otp%", otp);
+        //        log.info("Sending OTP for registration to email: {}", email);
         log.info("Sending OTP for registration to email: {} otp: {}", email, otp);
         return sendFormattedEmail(email, "Complete Your Registration - OTP Code", content);
     }
 
     public boolean sendOtpForLogin(String email, String otp) {
-        String content = EmailTemplates.LOGIN_OTP_HTML_TEMPLATE.replace("%email%", email).replace("%otp%", otp);
-//        log.info("Sending OTP for login to email: {}", email);
+        String content =
+                EmailTemplates.LOGIN_OTP_HTML_TEMPLATE
+                        .replace("%email%", email)
+                        .replace("%otp%", otp);
+        //        log.info("Sending OTP for login to email: {}", email);
         log.info("Sending OTP for login to email: {} otp: {}", email, otp);
         return sendFormattedEmail(email, "Login Verification - Your OTP Code", content);
     }
 
     public boolean sendOtpForForgetPassword(String email, String otp) {
-        String content = EmailTemplates.FORGOT_PASSWORD_OTP_HTML_TEMPLATE.replace("%email%", email).replace("%otp%", otp);
-//        log.info("Sending OTP for forget password to email: {}", email);
+        String content =
+                EmailTemplates.FORGOT_PASSWORD_OTP_HTML_TEMPLATE
+                        .replace("%email%", email)
+                        .replace("%otp%", otp);
+        //        log.info("Sending OTP for forget password to email: {}", email);
         log.info("Sending OTP for forget password to email: {} otp:{}", email, otp);
         return sendFormattedEmail(email, "Password Reset Request - OTP Code", content);
     }
@@ -44,19 +53,23 @@ public class MailerService {
             helper.setTo(email);
             helper.setSubject(subject);
             helper.setText(content, true);
-            helper.setFrom("hi5connect567@gmail.com","Hi5");
-//            helper.setFrom("superhero1000@gmail.com","Hi5");
+            helper.setFrom("hi5connect567@gmail.com", "Hi5");
+            //            helper.setFrom("superhero1000@gmail.com","Hi5");
             helper.getMimeMessage().addHeader("X-Priority", "1"); // 1 = High, 3 = Normal, 5 = Low
-            helper.setReplyTo("hi5connect567@gmail.com","Hi5");
-//            helper.setReplyTo("superhero100.1000@gmail.com","Hi5");
+            helper.setReplyTo("hi5connect567@gmail.com", "Hi5");
+            //            helper.setReplyTo("superhero100.1000@gmail.com","Hi5");
 
-//            mailSender.send(message);
+            //            mailSender.send(message);
 
             log.info("Email successfully sent to: {} with subject: {}", email, subject);
             return true;
         } catch (Exception e) {
-            log.error("Failed to send email to {} with subject '{}': {}", email, subject, e.getMessage());
-            System.out.println("MESSAGE:"+e.getMessage());
+            log.error(
+                    "Failed to send email to {} with subject '{}': {}",
+                    email,
+                    subject,
+                    e.getMessage());
+            System.out.println("MESSAGE:" + e.getMessage());
             return false;
         }
     }
@@ -72,9 +85,12 @@ public class MailerService {
             log.info("Simple email successfully sent to: {} with subject: {}", to, subject);
             return true;
         } catch (Exception e) {
-            log.error("Failed to send simple email to {} with subject '{}': {}", to, subject, e.getMessage());
+            log.error(
+                    "Failed to send simple email to {} with subject '{}': {}",
+                    to,
+                    subject,
+                    e.getMessage());
             return false;
         }
     }
-
 }

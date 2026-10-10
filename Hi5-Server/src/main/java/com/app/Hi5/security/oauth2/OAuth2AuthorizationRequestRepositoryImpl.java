@@ -2,17 +2,17 @@ package com.app.Hi5.security.oauth2;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Component
-public class OAuth2AuthorizationRequestRepositoryImpl implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
+public class OAuth2AuthorizationRequestRepositoryImpl
+        implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 
     private final Map<String, OAuth2AuthorizationRequest> requestStore = new ConcurrentHashMap<>();
 
@@ -27,15 +27,21 @@ public class OAuth2AuthorizationRequestRepositoryImpl implements AuthorizationRe
     }
 
     @Override
-    public void saveAuthorizationRequest(OAuth2AuthorizationRequest authorizationRequest, HttpServletRequest request, HttpServletResponse response) {
+    public void saveAuthorizationRequest(
+            OAuth2AuthorizationRequest authorizationRequest,
+            HttpServletRequest request,
+            HttpServletResponse response) {
         if (authorizationRequest != null) {
-            log.info("Saving OAuth2AuthorizationRequest for state: {}", authorizationRequest.getState());
+            log.info(
+                    "Saving OAuth2AuthorizationRequest for state: {}",
+                    authorizationRequest.getState());
             requestStore.put(authorizationRequest.getState(), authorizationRequest);
         }
     }
 
     @Override
-    public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request, HttpServletResponse response) {
+    public OAuth2AuthorizationRequest removeAuthorizationRequest(
+            HttpServletRequest request, HttpServletResponse response) {
         String state = request.getParameter("state");
         if (state != null) {
             log.info("Removing OAuth2AuthorizationRequest for state: {}", state);
@@ -43,5 +49,4 @@ public class OAuth2AuthorizationRequestRepositoryImpl implements AuthorizationRe
         }
         return null;
     }
-
 }

@@ -6,15 +6,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
@@ -23,16 +22,29 @@ public class AuthTokenService {
     private final String secretKey;
     private final long accessTokenExpirationTime;
 
-    public AuthTokenService(@Value("${token.secret}") String secretKey, @Value("${token.expiration}") String accessTokenExpirationTimeStr) {
+    public AuthTokenService(
+            @Value("${token.secret}") String secretKey,
+            @Value("${token.expiration}") String accessTokenExpirationTimeStr) {
         this.secretKey = secretKey;
-        this.accessTokenExpirationTime = Conversion.convertToMilliseconds(accessTokenExpirationTimeStr);
-        log.info("AuthTokenService initialized with expiration time: {}", accessTokenExpirationTimeStr);
+        this.accessTokenExpirationTime =
+                Conversion.convertToMilliseconds(accessTokenExpirationTimeStr);
+        log.info(
+                "AuthTokenService initialized with expiration time: {}",
+                accessTokenExpirationTimeStr);
     }
 
     public String generateToken(String email) {
         log.info("Generating token for email: {}", email);
         Map<String, Object> claims = new HashMap<>();
-        String token = Jwts.builder().setClaims(claims).setSubject(email).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationTime)).signWith(getKey(), SignatureAlgorithm.HS256).compact();
+        String token =
+                Jwts.builder()
+                        .setClaims(claims)
+                        .setSubject(email)
+                        .setIssuedAt(new Date())
+                        .setExpiration(
+                                new Date(System.currentTimeMillis() + accessTokenExpirationTime))
+                        .signWith(getKey(), SignatureAlgorithm.HS256)
+                        .compact();
         log.info("Token generated successfully for email: {}", email);
         return token;
     }

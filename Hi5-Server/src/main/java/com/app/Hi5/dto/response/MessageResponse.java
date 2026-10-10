@@ -1,13 +1,10 @@
 package com.app.Hi5.dto.response;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -30,5 +27,4 @@ public class MessageResponse {
     private String receiverUserId;
 
     private Date createdAt;
-
 }

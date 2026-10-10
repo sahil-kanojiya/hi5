@@ -54,5 +54,4 @@ public class SettingsResponse {
 
     @JsonProperty("isAllowedUsersFollowRequestNotification")
     private Boolean isAllowedUsersFollowRequestNotification;
-
 }

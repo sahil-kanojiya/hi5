@@ -10,15 +10,13 @@ import com.app.Hi5.model.UserActivity;
 import com.app.Hi5.repository.ChatRepository;
 import com.app.Hi5.repository.UserActivityRepository;
 import com.app.Hi5.repository.UserRepository;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 
 @Slf4j
 @Service
@@ -36,7 +34,10 @@ public class ChatService {
         if (userId.equals(otherUserId)) {
             throw new ValidationException("Other user id is same as user id");
         }
-        User user = userRepository.findById(new ObjectId(otherUserId)).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        User user =
+                userRepository
+                        .findById(new ObjectId(otherUserId))
+                        .orElseThrow(() -> new EntityNotFoundException("User not found"));
         Optional<Chat> chat = chatRepository.findByChatUserIdsContaining(userId, otherUserId);
         if (chat.isEmpty()) {
             chatRepository.save(Chat.builder().chatUserIds(List.of(userId, otherUserId)).build());
@@ -45,18 +46,38 @@ public class ChatService {
 
     public List<ChatResponse> getAllChats(String userId) {
         List<Chat> chats = chatRepository.findByChatUserIdsContaining(userId);
-        return chats.stream().map((chat -> {
-            List<String> chatUserIds = chat.getChatUserIds();
-            if (chatUserIds.getFirst().equals(userId)) {
-                chatUserIds.removeFirst();
-            }
-            String receiverId = chatUserIds.getFirst();
-            User user = userRepository.findById(new ObjectId(receiverId)).orElseThrow(() -> new EntityNotFoundException("User not found"));
-            UserActivity userActivity = userActivityRepository.findByUserId(user.getId().toHexString()).orElse(null);
-            ActivityStatus receiverStatus = userActivity != null ? userActivity.getActivityStatus() : ActivityStatus.OFFLINE;
-            return ChatResponse.builder().chatId(chat.getId().toString()).receiverId(user.getId().toHexString()).receiverFullname(user.getFullname()).receiverUsername(user.getUsername()).receiverProfileImageUrl(user.getProfileImageUrl()).receiverStatus(receiverStatus).build();
-        })).collect(Collectors.toList());
+        return chats.stream()
+                .map(
+                        (chat -> {
+                            List<String> chatUserIds = chat.getChatUserIds();
+                            if (chatUserIds.getFirst().equals(userId)) {
+                                chatUserIds.removeFirst();
+                            }
+                            String receiverId = chatUserIds.getFirst();
+                            User user =
+                                    userRepository
+                                            .findById(new ObjectId(receiverId))
+                                            .orElseThrow(
+                                                    () ->
+                                                            new EntityNotFoundException(
+                                                                    "User not found"));
+                            UserActivity userActivity =
+                                    userActivityRepository
+                                            .findByUserId(user.getId().toHexString())
+                                            .orElse(null);
+                            ActivityStatus receiverStatus =
+                                    userActivity != null
+                                            ? userActivity.getActivityStatus()
+                                            : ActivityStatus.OFFLINE;
+                            return ChatResponse.builder()
+                                    .chatId(chat.getId().toString())
+                                    .receiverId(user.getId().toHexString())
+                                    .receiverFullname(user.getFullname())
+                                    .receiverUsername(user.getUsername())
+                                    .receiverProfileImageUrl(user.getProfileImageUrl())
+                                    .receiverStatus(receiverStatus)
+                                    .build();
+                        }))
+                .collect(Collectors.toList());
     }
-
-
 }

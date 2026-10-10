@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getToken } from "../../utils/localStorage";
+import { createSlice } from '@reduxjs/toolkit';
+import { getToken } from '../../utils/localStorage';
 
 const initialState = {
   token: getToken() || null,
@@ -8,15 +8,15 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
-    setAuth : (state, action) => {
+    setAuth: (state, action) => {
       state.token = action.payload.token;
       state.isAuthenticated = action.payload.isAuthenticated;
       state.isInitializing = action.payload.isInitializing;
     },
-    removeAuth : (state) => {
+    removeAuth: (state) => {
       state.token = null;
       state.isAuthenticated = false;
       state.isInitializing = false;

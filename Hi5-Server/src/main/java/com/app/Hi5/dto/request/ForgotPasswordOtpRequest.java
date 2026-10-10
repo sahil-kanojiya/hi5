@@ -12,5 +12,4 @@ public class ForgotPasswordOtpRequest {
     private String username;
 
     private String email;
-
 }

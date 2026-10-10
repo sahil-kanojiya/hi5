@@ -3,13 +3,11 @@ package com.app.Hi5.dto.payload;
 import com.app.Hi5.model.Enum.NotificationType;
 import com.app.Hi5.model.Notification;
 import com.app.Hi5.model.User;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -36,7 +34,16 @@ public class NotificationPayload {
     private String profilePictureUrl;
 
     public static NotificationPayload convertToPayload(Notification notification, User u) {
-        return NotificationPayload.builder().id(notification.getId().toHexString()).notificationUserId(notification.getNotificationUserId()).userId(notification.getUserId()).type(notification.getType()).relevantId(notification.getRelevantId()).createdAt(notification.getCreatedAt()).username(u.getUsername()).fullname(u.getFullname()).profilePictureUrl(u.getProfileImageUrl()).build();
+        return NotificationPayload.builder()
+                .id(notification.getId().toHexString())
+                .notificationUserId(notification.getNotificationUserId())
+                .userId(notification.getUserId())
+                .type(notification.getType())
+                .relevantId(notification.getRelevantId())
+                .createdAt(notification.getCreatedAt())
+                .username(u.getUsername())
+                .fullname(u.getFullname())
+                .profilePictureUrl(u.getProfileImageUrl())
+                .build();
     }
-
 }

@@ -1,20 +1,20 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setAuth, removeAuth } from "../../redux/slices/authSlice";
-import PropTypes from "prop-types";
-import { getMe } from "../../services/api";
-import { setUser } from "../../redux/slices/userSlice";
-import { removeToken } from "../../utils/localStorage";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuth, removeAuth } from '../../redux/slices/authSlice';
+import PropTypes from 'prop-types';
+import { getMe } from '../../services/api';
+import { setUser } from '../../redux/slices/userSlice';
+import { removeToken } from '../../utils/localStorage';
 
 const AuthContext = ({ children }) => {
-  console.log("AuthContext");
+  console.log('AuthContext');
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     const checkTokenValidity = async () => {
-      console.log("Auth:" + token);
+      console.log('Auth:' + token);
       try {
         if (token) {
           const res = await getMe();
@@ -38,13 +38,13 @@ const AuthContext = ({ children }) => {
               })
             );
           } else {
-            throw new Error("Invalid token");
+            throw new Error('Invalid token');
           }
         } else {
-          throw new Error("Token not found");
+          throw new Error('Token not found');
         }
       } catch (e) {
-        console.error("Error while checking token validity", e);
+        console.error('Error while checking token validity', e);
         removeToken();
         dispatch(removeAuth());
       }
