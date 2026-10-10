@@ -11,7 +11,6 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSendException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -34,7 +33,6 @@ public class OtpService {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
     public OtpService(
             SecureRandom random,
             OtpRepository otpRepository,

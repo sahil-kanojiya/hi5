@@ -1,7 +1,13 @@
 package com.app.Hi5.exceptions.handler;
 
 import com.app.Hi5.dto.response.ErrorResponse;
-import com.app.Hi5.exceptions.*;
+import com.app.Hi5.exceptions.ActionNotAllowedException;
+import com.app.Hi5.exceptions.EntityAlreadyExistsException;
+import com.app.Hi5.exceptions.EntityNotFoundException;
+import com.app.Hi5.exceptions.InvalidOtpException;
+import com.app.Hi5.exceptions.OAuth2AuthenticationProcessingException;
+import com.app.Hi5.exceptions.UnauthorizedAccessException;
+import com.app.Hi5.exceptions.ValidationException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;

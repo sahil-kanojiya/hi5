@@ -2,7 +2,10 @@ package com.app.Hi5.model;
 
 import com.app.Hi5.model.Enum.OtpType;
 import java.util.Date;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;

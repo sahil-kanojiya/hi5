@@ -1,7 +1,19 @@
 package com.app.Hi5.controller;
 
-import com.app.Hi5.dto.request.*;
-import com.app.Hi5.dto.response.*;
+import com.app.Hi5.dto.request.ActivateAccountRequest;
+import com.app.Hi5.dto.request.CheckEmailAvailabilityRequest;
+import com.app.Hi5.dto.request.CheckUsernameAvailabilityRequest;
+import com.app.Hi5.dto.request.ForgotPasswordOtpRequest;
+import com.app.Hi5.dto.request.ForgotPasswordOtpVerificationRequest;
+import com.app.Hi5.dto.request.LoginRequest;
+import com.app.Hi5.dto.request.RegisterOtpRequest;
+import com.app.Hi5.dto.request.RegisterOtpVerificationRequest;
+import com.app.Hi5.dto.response.AuthTokenResponse;
+import com.app.Hi5.dto.response.CheckEmailAvailabilityResponse;
+import com.app.Hi5.dto.response.CheckUsernameAvailabilityResponse;
+import com.app.Hi5.dto.response.ForgotPasswordResponse;
+import com.app.Hi5.dto.response.IdentificationTokenResponse;
+import com.app.Hi5.dto.response.OtpStatusResponse;
 import com.app.Hi5.service.AuthService;
 import com.app.Hi5.service.OtpService;
 import com.app.Hi5.utility.Validator;
@@ -10,7 +22,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController

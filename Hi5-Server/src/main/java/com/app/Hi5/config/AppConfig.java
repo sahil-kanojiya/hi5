@@ -1,6 +1,9 @@
 package com.app.Hi5.config;
 
-import com.app.Hi5.model.Enum.*;
+import com.app.Hi5.model.Enum.ActivityStatus;
+import com.app.Hi5.model.Enum.Gender;
+import com.app.Hi5.model.Enum.ProfileType;
+import com.app.Hi5.model.Enum.Role;
 import com.app.Hi5.model.User;
 import com.app.Hi5.repository.UserActivityRepository;
 import com.app.Hi5.repository.UserRepository;
