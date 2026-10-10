@@ -57,7 +57,7 @@ public class ReelService {
                         .isPrivate(isPrivate)
                         .isCommentsDisabled(isCommentsDisabled)
                         .build();
-        Validator.validateReelMultipartFilesExsists(videoFile);
+        Validator.validateReelMultipartFileExists(videoFile);
         try {
             String videoUrl = fileStorage.saveFile(videoFile, FileType.REEL_VIDEO);
             reel.setVideoUrl(videoUrl);

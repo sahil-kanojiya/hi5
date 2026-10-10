@@ -30,8 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                                             "User with email '" + email + "' not found");
                                 });
 
-        System.out.println("my user:" + user);
-
+        log.debug("Successfully resolved user details for: {}", user.getUsername());
         log.info("Successfully loaded user with email: {}", email);
         return UserDetailsImpl.builder().user(user).build();
     }

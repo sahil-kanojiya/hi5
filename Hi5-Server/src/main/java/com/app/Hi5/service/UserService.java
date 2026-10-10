@@ -40,7 +40,7 @@ public class UserService {
     private final NotificationService notificationService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final NotificationRepository notificationRepository;
-    private final OtpRepository optRepository;
+    private final OtpRepository otpRepository;
     private final PostRepository postRepository;
     private final ReelRepository reelRepository;
     private final StoryRepository storyRepository;
@@ -163,15 +163,13 @@ public class UserService {
         String oldCoverPictureUrl = user.getProfileImageUrl();
         try {
             if (profilePicture != null && !profilePicture.isEmpty()) {
-                System.out.println(
-                        "profile image is not null:" + profilePicture.getOriginalFilename());
+                log.debug("Profile image is not null: {}", profilePicture.getOriginalFilename());
                 String profilePictureUrl =
                         fileStorage.saveFile(profilePicture, FileType.USER_PROFILE_IMAGE);
                 user.setProfileImageUrl(profilePictureUrl);
             }
             if (coverPicture != null && !coverPicture.isEmpty()) {
-                System.out.println(
-                        "profile image is not null:" + coverPicture.getOriginalFilename());
+                log.debug("Cover image is not null: {}", coverPicture.getOriginalFilename());
                 String coverPictureUrl =
                         fileStorage.saveFile(coverPicture, FileType.USER_COVER_IMAGE);
                 user.setCoverImageUrl(coverPictureUrl);
@@ -676,7 +674,7 @@ public class UserService {
         if (user.getRole().equals(Role.USER)) {
             userRepository.delete(user);
             userActivityRepository.findByUserId(userId).ifPresent(userActivityRepository::delete);
-            optRepository.findByEmail(user.getEmail()).ifPresent(optRepository::delete);
+            otpRepository.findByEmail(user.getEmail()).ifPresent(otpRepository::delete);
             notificationRepository.deleteByNotificationUserId(userId);
             postRepository.deleteByUserId(userId);
             reelRepository.deleteByUserId(userId);
@@ -693,7 +691,7 @@ public class UserService {
             userActivityRepository
                     .findByUserId(user.getId().toHexString())
                     .ifPresent(userActivityRepository::delete);
-            optRepository.findByEmail(user.getEmail()).ifPresent(optRepository::delete);
+            otpRepository.findByEmail(user.getEmail()).ifPresent(otpRepository::delete);
             notificationRepository.deleteByNotificationUserId(user.getId().toHexString());
             postRepository.deleteByUserId(user.getId().toHexString());
             reelRepository.deleteByUserId(user.getId().toHexString());
@@ -703,10 +701,4 @@ public class UserService {
         }
         log.info("Deleting account for user: {}", user.getUsername());
     }
-
-    //        delete all chats  delete all messages   delete all likes    delete all notifications
-    // delete all opts if exsists    by user id
-    //        delete all posts reel's report's saves story's users    delete user activity also
-    //        userRepository.delete(user);
-
 }

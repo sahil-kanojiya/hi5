@@ -11,11 +11,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
@@ -28,7 +30,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
             AccessDeniedException accessDeniedException)
             throws IOException, ServletException {
         try {
-            System.out.println("Access Denied Exception: " + accessDeniedException.getMessage());
+            log.warn("Access Denied Exception: {}", accessDeniedException.getMessage());
 
             UsernamePasswordAuthenticationToken token =
                     (UsernamePasswordAuthenticationToken) request.getUserPrincipal();
@@ -40,7 +42,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
             if (!userDetails.isAccountNonLocked()) {
                 Date banUntil = user.getBanUntil();
-                System.out.println("User is banned until: " + banUntil);
+                log.info("User is banned until: {}", banUntil);
 
                 SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
                 isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -53,13 +55,13 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
                 response.setContentType("application/json");
                 response.getWriter().write(objectMapper.writeValueAsString(responseBody));
-                //                response.getWriter().write("{\"error\": \"Access Denied\",
-                // \"message\": \"Your account is banned.\", \"banUntil\": \"" + banUntil + "\"}");
             } else {
                 response.getWriter().write("{\"error\": \"Access Denied\"}");
             }
         } catch (Exception ex) {
-            System.out.println("Failed to retrieve user details: " + ex.getMessage());
+            log.error(
+                    "Failed to retrieve user details in access denied handler: {}",
+                    ex.getMessage());
 
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.setContentType("application/json");

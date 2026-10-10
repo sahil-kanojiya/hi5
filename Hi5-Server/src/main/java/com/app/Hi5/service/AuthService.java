@@ -30,7 +30,7 @@ public class AuthService {
     private final IdentificationTokenService identificationTokenService;
     private final UserDetailsService userDetailsService;
 
-    public boolean checkEmailExsists(String email) {
+    public boolean checkEmailExists(String email) {
         log.debug("Checking if email exists: {}", email);
         boolean exists = userRepository.findByEmailAndIsActiveTrue(email).isPresent();
         log.info("Email {} exists: {}", email, exists);
@@ -92,7 +92,7 @@ public class AuthService {
         return authTokenService.generateToken(user.getEmail());
     }
 
-    public String GenerateAuthTokenIf2FAIsOffAndPassIsValid(
+    public String generateAuthTokenIf2FAIsOffAndPassIsValid(
             String email, String username, String password) {
         log.debug("Generating auth token for email: {} or username: {}", email, username);
         User user;
@@ -120,9 +120,6 @@ public class AuthService {
             throw new BadCredentialsException("Invalid email/username or password");
         }
 
-        //        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,
-        // password));
-
         if (!user.getTwoFactorAuthentication()) {
             log.info("2FA is off, returning auth token for email: {}", email);
             return authTokenService.generateToken(email);
@@ -131,7 +128,7 @@ public class AuthService {
         return null;
     }
 
-    public String varifyIdentificationTokenAndLoginUser(String identificationToken, String otp) {
+    public String verifyIdentificationTokenAndLoginUser(String identificationToken, String otp) {
         log.debug("Verifying identification token for login.");
         if (!identificationTokenService.validateToken(identificationToken)) {
             log.error("Invalid identification token provided.");

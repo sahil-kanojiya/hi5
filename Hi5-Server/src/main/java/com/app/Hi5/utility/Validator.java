@@ -9,7 +9,7 @@ public class Validator {
 
     private Validator() {}
 
-    public static void validateEitherEmailOrUsernameExsistsAndValidateFormate(
+    public static void validateEitherEmailOrUsernameExistsAndValidateFormat(
             String email, String username) throws ValidationException {
         log.info(
                 "Starting validation for email or username: email = {}, username = {}",
@@ -50,7 +50,7 @@ public class Validator {
         log.info("Validation passed successfully for email = {}, username = {}", email, username);
     }
 
-    public static void validateReelMultipartFilesExsists(MultipartFile file)
+    public static void validateReelMultipartFileExists(MultipartFile file)
             throws ValidationException {
         log.info("Starting validation for multiparts for reel");
 
@@ -60,6 +60,6 @@ public class Validator {
             throw new ValidationException("Video file must be provided.");
         }
 
-        log.info("Both thumbnail image and video file are provided and valid.");
+        log.info("Video file is provided and valid.");
     }
 }

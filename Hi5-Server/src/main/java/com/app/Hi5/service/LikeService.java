@@ -125,7 +125,7 @@ public class LikeService {
                                         .userId(user.getId().toHexString())
                                         .relevantId(relevantId)
                                         .build());
-        System.out.println(like);
+        log.debug("Updating like status to false for: {}", like);
         like.setIsLiked(false);
         likeRepository.save(like);
     }

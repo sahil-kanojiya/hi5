@@ -92,7 +92,10 @@ public class StoryService {
                         last24Hours,
                         now,
                         Sort.by(Sort.Direction.ASC, "createdAt"));
-        System.out.println(storiesFromLast24Hours);
+        log.debug(
+                "Found {} active stories for user {}",
+                storiesFromLast24Hours.size(),
+                user.getUsername());
         return storiesFromLast24Hours.stream()
                 .map(
                         story ->

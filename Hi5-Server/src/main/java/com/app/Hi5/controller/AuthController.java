@@ -26,7 +26,7 @@ public class AuthController {
             @RequestBody @Valid CheckEmailAvailabilityRequest request) {
         log.info("Checking availability for email: {}", request.getEmail());
         CheckEmailAvailabilityResponse response = new CheckEmailAvailabilityResponse();
-        if (authService.checkEmailExsists(request.getEmail())) {
+        if (authService.checkEmailExists(request.getEmail())) {
             log.warn("Email already exists: {}", request.getEmail());
             response.setAvailable(false);
             response.setStatus(HttpStatus.CONFLICT);
@@ -119,10 +119,10 @@ public class AuthController {
         log.info(
                 "Login attempt for email or username: {}",
                 request.getEmail() != null ? request.getEmail() : request.getUsername());
-        Validator.validateEitherEmailOrUsernameExsistsAndValidateFormate(
+        Validator.validateEitherEmailOrUsernameExistsAndValidateFormat(
                 request.getEmail(), request.getUsername());
         String token =
-                authService.GenerateAuthTokenIf2FAIsOffAndPassIsValid(
+                authService.generateAuthTokenIf2FAIsOffAndPassIsValid(
                         request.getEmail(), request.getUsername(), request.getPassword());
         if (token != null) {
             log.info(
@@ -157,7 +157,7 @@ public class AuthController {
             @RequestHeader(value = "IdentificationToken") String identificationToken) {
         log.info("Logging in user with identification token: {}", identificationToken);
         String authToken =
-                authService.varifyIdentificationTokenAndLoginUser(identificationToken, otp);
+                authService.verifyIdentificationTokenAndLoginUser(identificationToken, otp);
         return AuthTokenResponse.builder()
                 .authToken(authToken)
                 .status(HttpStatus.CREATED)
@@ -173,7 +173,7 @@ public class AuthController {
         log.info(
                 "Generating OTP for password recovery for email or username: {}",
                 request.getEmail() != null ? request.getEmail() : request.getUsername());
-        Validator.validateEitherEmailOrUsernameExsistsAndValidateFormate(
+        Validator.validateEitherEmailOrUsernameExistsAndValidateFormat(
                 request.getEmail(), request.getUsername());
         otpService.generateAndSendOtpForForgetPassword(request.getEmail(), request.getUsername());
         return OtpStatusResponse.builder()
@@ -192,7 +192,7 @@ public class AuthController {
         log.info(
                 "Password recovery attempt for email or username: {}",
                 request.getEmail() != null ? request.getEmail() : request.getUsername());
-        Validator.validateEitherEmailOrUsernameExsistsAndValidateFormate(
+        Validator.validateEitherEmailOrUsernameExistsAndValidateFormat(
                 request.getEmail(), request.getUsername());
         authService.forgotPassword(
                 request.getEmail(), request.getUsername(), request.getPassword(), otp);

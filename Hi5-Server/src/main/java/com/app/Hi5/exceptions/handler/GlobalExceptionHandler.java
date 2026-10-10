@@ -215,7 +215,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(OAuth2AuthenticationProcessingException.class)
-    public void OAuth2AuthenticationProcessingException(RuntimeException e) {
-        log.warn(e.getMessage());
+    public void handleOAuth2AuthenticationProcessingException(RuntimeException e) {
+        log.warn("OAuth2 authentication processing exception: {}", e.getMessage());
     }
 }

@@ -187,7 +187,6 @@ public class UserController {
     public ResponseEntity<List<UserCardResponse>> suggestUsers(
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         List<UserCardResponse> responseList = userService.getSuggestedUsers(userDetails.getUser());
-        System.out.println("responseList = " + responseList);
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 

@@ -68,8 +68,8 @@ public class MailerService {
                     "Failed to send email to {} with subject '{}': {}",
                     email,
                     subject,
-                    e.getMessage());
-            System.out.println("MESSAGE:" + e.getMessage());
+                    e.getMessage(),
+                    e);
             return false;
         }
     }

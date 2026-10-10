@@ -2,7 +2,9 @@ package com.app.Hi5.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
@@ -14,22 +16,4 @@ public class DummyController {
     public String hello() {
         return "Hello world";
     }
-
-    //    @PreAuthorize("hasRole('USER')")
-    //    @GetMapping("/hello")
-    //    public String hello(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-    //        System.out.println(userDetails);
-    //        System.out.println("userDetails.getUsername() = " + userDetails.getUsername());
-    //        System.out.println("userDetails.getPassword() = " + userDetails.getPassword());
-    //        System.out.println("userDetails.getAuthorities() = " + userDetails.getAuthorities());
-    //        System.out.println("userDetails.getUser() = " + userDetails.getUser());
-    //        return "hello world user";
-    //    }
-    //    @PreAuthorize("hasRole('ADMIN')")
-    //    @GetMapping("/hello-admin")
-    //    public String hello_admin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-    //        System.out.println(userDetails);
-    //        return "hello world admin";
-    //    }
-
 }

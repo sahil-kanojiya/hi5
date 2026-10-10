@@ -33,13 +33,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String email = null;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            System.out.println("authHeader" + authHeader);
             token = authHeader.substring(7);
-            System.out.println("token" + token);
             email = authTokenService.extractSub(token);
-            log.info("Extracted token from request header, email: {}", email);
+            log.debug("Extracted token from request header for email: {}", email);
         } else {
-            log.warn("Authorization header is missing or invalid in the request");
+            log.trace("Authorization header is missing or does not start with Bearer");
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {

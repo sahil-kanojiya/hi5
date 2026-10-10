@@ -40,7 +40,7 @@ public class HeartbeatController {
     public void handleHeartbeat(@Payload HeartbeatPayload heartbeatPayload) {
         String userId = heartbeatPayload.getUserId();
         if (validUser(userId)) {
-            System.out.println("Heartbeat received from: " + userId);
+            log.debug("Heartbeat received from: {}", userId);
             userActivityService.updateUserActivity(userId, ActivityStatus.ONLINE);
             sendPresenceUpdate(userId);
             if (activeUsers.containsKey(userId)) {
@@ -51,10 +51,9 @@ public class HeartbeatController {
                             () -> {
                                 virtualExecutor.submit(
                                         () -> {
-                                            System.out.println(
-                                                    "No heartbeat from "
-                                                            + userId
-                                                            + ", disconnecting...");
+                                            log.debug(
+                                                    "No heartbeat from {}, disconnecting...",
+                                                    userId);
                                             activeUsers.remove(userId);
                                             userActivityService.updateUserActivity(
                                                     userId, ActivityStatus.OFFLINE);

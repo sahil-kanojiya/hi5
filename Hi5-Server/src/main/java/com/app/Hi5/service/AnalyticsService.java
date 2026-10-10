@@ -32,7 +32,7 @@ public class AnalyticsService {
     @Scheduled(fixedRate = 5000)
     public void sendAnalyticsReport() {
         try {
-            System.out.println("Sending analytics");
+            log.debug("Sending scheduled analytics report");
             simpMessagingTemplate.convertAndSend(
                     "/analytics",
                     AnalyticsDataPayload.builder()

@@ -62,12 +62,12 @@ public class FileStorage {
     public void deleteFile(String filePath) throws IOException {
         Path fileToDelete = baseDirectory.resolve(filePath.substring(10));
         log.info("trying to delete {}", filePath);
-        System.out.println(fileToDelete.toAbsolutePath());
+        log.debug("Deleting file from path: {}", fileToDelete.toAbsolutePath());
         if (Files.exists(fileToDelete)) {
             Files.delete(fileToDelete);
             log.info("Deleted file: {}", filePath);
         } else {
-            log.info("unable to delete file: {}", filePath);
+            log.warn("unable to delete file: {}", filePath);
             throw new IOException("File not found: " + filePath);
         }
     }
