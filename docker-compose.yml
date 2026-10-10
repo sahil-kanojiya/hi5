@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # MongoDB Database Service
+  mongodb:
+    image: mongo:7.0
+    container_name: hi5-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=hi5
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - hi5-network
+
+  # Spring Boot Backend Service
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: hi5-server
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/hi5
+      - SERVER_PORT=8080
+      - LOG_LEVEL_ROOT=${LOG_LEVEL_ROOT:-INFO}
+      - LOG_LEVEL_APP=${LOG_LEVEL_APP:-DEBUG}
+      - MAIL_HOST=${MAIL_HOST:-smtp.gmail.com}
+      - MAIL_PORT=${MAIL_PORT:-587}
+      - MAIL_USERNAME=${MAIL_USERNAME:-email}
+      - MAIL_PASSWORD=${MAIL_PASSWORD:-app_password}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID:-github-client-id}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET:-github-client-secret}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-google-client-id}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-google-client-secret}
+      - OAUTH2_ERROR_REDIRECT_URL=${OAUTH2_ERROR_REDIRECT_URL:-http://localhost:3000/error}
+      - OAUTH2_LOGIN_REDIRECT_URL=${OAUTH2_LOGIN_REDIRECT_URL:-http://localhost:3000/login/oauth2?token=}
+      - OAUTH2_SIGNUP_REDIRECT_URL=${OAUTH2_SIGNUP_REDIRECT_URL:-http://localhost:3000/signup/oauth2?token=}
+      - TOKEN_SECRET=${TOKEN_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      - TOKEN_EXPIRATION=${TOKEN_EXPIRATION:-60 minutes}
+      - IDENTIFICATION_TOKEN_SECRET=${IDENTIFICATION_TOKEN_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      - IDENTIFICATION_TOKEN_EXPIRATION=${IDENTIFICATION_TOKEN_EXPIRATION:-10 minutes}
+      - OTP_EXPIRATION=${OTP_EXPIRATION:-5 minutes}
+    depends_on:
+      - mongodb
+    networks:
+      - hi5-network
+
+  # React Frontend Service
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: hi5-client
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+    networks:
+      - hi5-network
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  hi5-network:
+    driver: bridge

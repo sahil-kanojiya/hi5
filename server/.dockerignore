@@ -1,0 +1,15 @@
+target/
+*.class
+.mvn/
+mvnw
+mvnw.cmd
+.git/
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+*.log
+.env
+.env.local

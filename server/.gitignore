@@ -1,11 +1,8 @@
-HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !.mvn/wrapper/maven-wrapper.properties
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
+### STS & IDEs ###
 .apt_generated
 .classpath
 .factorypath
@@ -13,12 +10,11 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
-### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+.vscode/
 
 ### NetBeans ###
 /nbproject/private/
@@ -26,17 +22,19 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+### Environment & Secrets ###
+.env
+.env.local
+*.env
+!*.env.example
 
+### Logs ###
+logs/
+*.log
 
-# Ignore all .properties files
-*.properties
-
-# Ignore all .yaml and .yml files
-*.yaml
-*.yml
+### OS & Temp ###
+.DS_Store
+Thumbs.db
+tmp/
+temp/

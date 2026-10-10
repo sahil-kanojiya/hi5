@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: Hi5
+
+  banner:
+    location: classpath:Hi5_banner.txt
+
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/hi5}
+
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:email}
+    password: ${MAIL_PASSWORD:app_password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID:github-client-id}
+            client-secret: ${GITHUB_CLIENT_SECRET:github-client-secret}
+            redirect-uri: "{baseUrl}/oauth2/callback/github"
+            scope:
+              - read:user
+              - user:email
+          google:
+            clientId: ${GOOGLE_CLIENT_ID:google-client-id}
+            clientSecret: ${GOOGLE_CLIENT_SECRET:google-client-secret}
+            redirectUri: "{baseUrl}/oauth2/callback/google"
+            scope:
+              - email
+              - profile
+
+server:
+  port: ${SERVER_PORT:8080}
+
+oauth2:
+  error-redirect-url: ${OAUTH2_ERROR_REDIRECT_URL:http://localhost:3000/error}
+  login-redirect-url: ${OAUTH2_LOGIN_REDIRECT_URL:http://localhost:3000/login/oauth2?token=}
+  signup-redirect-url: ${OAUTH2_SIGNUP_REDIRECT_URL:http://localhost:3000/signup/oauth2?token=}
+
+# Auth Token Configuration
+token:
+  secret: ${TOKEN_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+  expiration: ${TOKEN_EXPIRATION:60 minutes}
+
+# Identification Token Configuration
+identification:
+  token:
+    secret: ${IDENTIFICATION_TOKEN_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    expiration: ${IDENTIFICATION_TOKEN_EXPIRATION:10 minutes}
+
+# OTP Configuration
+otp:
+  expiration-time: ${OTP_EXPIRATION:5 minutes}
+
+# Logging Configuration
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}
+    com.app.hi5: ${LOG_LEVEL_APP:DEBUG}

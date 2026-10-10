@@ -1,0 +1,18 @@
+version: '3.8'
+
+# Development compose configuration for running local infrastructure (MongoDB)
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: hi5-mongodb-dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=hi5
+    volumes:
+      - mongo_dev_data:/data/db
+
+volumes:
+  mongo_dev_data:
+    driver: local

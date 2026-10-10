@@ -1,67 +1,90 @@
-# React + Vite
+# Hi5 - Frontend Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend client for **Hi5**, built with **React 18**, **Vite 6**, **Tailwind CSS**, and **Redux Toolkit**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
 
-<!-- folder structure -->
+- **Framework**: [React 18](https://react.dev/)
+- **Build Tool**: [Vite 6](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) & [Material UI (MUI)](https://mui.com/)
+- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/)
+- **HTTP Client**: [Axios](https://axios-http.com/)
+- **Real-Time Communication**: [STOMP / SockJS](https://stomp-js.github.io/)
+- **Charts**: [ApexCharts](https://apexcharts.com/) / `react-apexcharts`
+- **Formatting & Linting**: [Prettier](https://prettier.io/) with Tailwind Plugin & [ESLint](https://eslint.org/)
 
-src/
-├── assets/ # Static assets (fonts, images, videos, etc.)
-│ ├── fonts/
-│ ├── images/
-│ ├── videos/
-│ └── styles/ # Global CSS or SCSS styles (if any)
-├── components/ # Reusable components
-│ ├── common/ # Lower-level components (e.g., Button, Input, etc.)
-│ │ ├── Button.jsx
-│ │ ├── Input.jsx
-│ │ └── ...
-│ ├── layouts/ # Layouts (e.g., Navbar, Footer)
-│ ├── auth/ # Auth-specific components (Login, Logout, Signup)
-│ │ ├── Login.jsx
-│ │ ├── Logout.jsx
-│ │ ├── Signup.jsx
-│ │ └── AuthForm.jsx # Shared between Login/Signup
-│ ├── profile/ # Profile-related components
-│ │ ├── Profile.jsx
-│ │ ├── EditProfile.jsx
-│ │ └── ...
-│ └── skeletons/ # Skeleton loaders
-│ ├── ProfileSkeleton.jsx
-│ └── ...
-├── context/ # React context for global state management
-│ └── AuthContext.jsx # AuthContext to verify tokens and set user info
-├── guards/ # Route guards
-│ ├── AuthGuard.jsx # Guards private routes (only logged-in users)
-│ ├── GuestGuard.jsx # Guards public routes (only logged-out users)
-├── hooks/ # Custom React hooks
-│ ├── useAuth.js # Hook for authentication-related logic
-│ ├── useLocalStorage.js # Hook for localStorage operations
-│ └── ...
-├── redux/ # Redux-specific files
-│ ├── store.js # Store configuration
-│ ├── slices/ # Redux slices
-│ │ ├── authSlice.js # Auth-related slice
-│ │ ├── userSlice.js # User-specific data slice
-│ │ └── ...
-│ └── providers/
-│ └── StoreProvider.jsx # Redux store provider
-├── services/ # API services (e.g., Axios configuration)
-│ ├── axios.config.js # Axios instance with interceptors
-│ └── api.js # API methods (e.g., login, fetch user)
-├── utils/ # Utility functions
-│ ├── localStorage.js # Access token setter/getter/remover
-│ ├── helpers.js # General utility functions
-│ └── constants.js # App-wide constants
-├── views/ # Main pages of the application
-│ ├── LoginPage.jsx
-│ ├── ProfilePage.jsx
-│ ├── HomePage.jsx
-│ └── ...
-├── App.jsx # Main app component
-├── index.js # Entry point
-└── routes.js # Application routes configuration
+---
+
+## 📁 Directory Structure
+
+```
+client/
+├── public/                 # Static public assets
+├── src/
+│   ├── assets/             # Images, SVGs, and brand assets
+│   ├── components/         # Reusable React components
+│   │   ├── auth/           # OAuth2 and login/signup handlers
+│   │   ├── chart/          # Analytics charts
+│   │   ├── chat/           # Real-time chat box & messages
+│   │   ├── comment/        # Post/Reel comment list & modal
+│   │   ├── common/         # Common UI elements (NotFound, TimeAgo)
+│   │   ├── layout/         # Main layout, Sidebar, Mobile Navbar
+│   │   ├── modal/          # Reusable confirmation modals
+│   │   ├── moderation/     # Content & user moderation dashboard
+│   │   ├── post/           # Post cards & post creation
+│   │   ├── preloader/      # Full-screen preloader animations
+│   │   ├── profile/        # Connections, requests & profile tabs
+│   │   ├── providers/      # Context providers (Auth, Theme, Store, Toast)
+│   │   ├── reel/           # Reel player & reel upload modal
+│   │   ├── skeletons/      # Loading skeleton components
+│   │   ├── story/          # Story viewer, user avatars & creation
+│   │   └── userSearch/     # User search cards
+│   ├── guards/             # Route protection guards (AuthGuard, GuestGuard, RoleGuard)
+│   ├── hooks/              # Custom React hooks (useLogin, useSignUp, useLogout, etc.)
+│   ├── redux/              # Redux store & slices (authSlice, userSlice, themeSlice)
+│   ├── services/           # Axios HTTP client & API service endpoints
+│   ├── socket/             # WebSocket provider and connection management
+│   ├── utils/              # Storage helpers, constants & formatting utils
+│   ├── views/              # Page views (Home, Profile, Reels, Chat, Settings, Admin)
+│   ├── App.jsx             # Main application component
+│   ├── Routes.jsx          # Application routing configuration
+│   ├── index.css           # Tailwind directives & custom global styles
+│   └── main.jsx            # Application entry point
+├── .env.example            # Environment variables template
+├── eslint.config.js        # ESLint flat configuration
+├── index.html              # HTML template
+├── nginx.conf              # Production Nginx configuration
+├── package.json            # Node dependencies and scripts
+├── tailwind.config.js      # Tailwind CSS configuration
+└── vite.config.js          # Vite bundler configuration
+```
+
+---
+
+## 🚀 Available Scripts
+
+In the `client` directory, you can run:
+
+| Command                | Description                                                            |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `npm run dev`          | Starts the Vite development server with HMR on `http://localhost:3000` |
+| `npm run build`        | Builds the production bundle to the `dist/` directory                  |
+| `npm run preview`      | Locally preview the production build                                   |
+| `npm run lint`         | Runs ESLint to check for code quality and syntax issues                |
+| `npm run format`       | Formats all code files using Prettier and sorts Tailwind CSS classes   |
+| `npm run format:check` | Checks code formatting without modifying files (used in CI/CD)         |
+
+---
+
+## ⚙️ Environment Configuration
+
+1. Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Adjust configuration values as needed:
+   ```properties
+   VITE_HI5_API_REQUEST_TIMEOUT=100000000
+   ```
