@@ -44,8 +44,8 @@ Hi5/
 ### Setup Instructions
 
 1. Navigate to the `server` directory:
-   ```
-   cd Hi5-Server
+   ```bash
+   cd server
    ```
 2. Configure environment variables:
 
@@ -109,7 +109,7 @@ Hi5/
 
 1.  Navigate to the `client` directory:
     ```bash
-    cd Hi5-Client
+    cd client
     ```
 2.  Install dependencies:
 
