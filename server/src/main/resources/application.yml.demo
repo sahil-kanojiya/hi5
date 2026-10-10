@@ -3,7 +3,7 @@ spring:
     name: Hi5
 
   banner:
-    location: classpath:Hi5_banner.txt
+    location: classpath:banner.txt
 
   data:
     mongodb:
