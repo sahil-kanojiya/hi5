@@ -157,8 +157,6 @@ export default function SocialMediaDashboard() {
     contentEngagementGrowthYearStats,
   ]);
 
-
-
   const statCards = [
     {
       label: 'Total Users',

@@ -6,7 +6,6 @@ import WebSocketService from './WebSocketService';
 const WebSocketContext = createContext(null);
 
 const WebSocketProvider = ({ children }) => {
-
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isInitializing = useSelector((state) => state.auth.isInitializing);
   const userId = useSelector((state) => state?.user?.profile?.id);
