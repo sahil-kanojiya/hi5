@@ -13,7 +13,7 @@ import NotFound from './components/common/NotFound';
 
 // Lazy loaded views
 const LoginPage = lazy(() => import('./views/LoginPage'));
-const SignUpPage = lazy(() => import('./views/SignUpPage'));
+const SignUpPage = lazy(() => import('./views/SignupPage'));
 const ForgotPasswordPage = lazy(() => import('./views/ForgotPasswordPage'));
 const HomePage = lazy(() => import('./views/HomePage'));
 const ReelsPage = lazy(() => import('./views/ReelsPage'));
